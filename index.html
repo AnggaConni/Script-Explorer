@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Global Script Explorer | By Angga Conni Saputra</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        /* --- VARIABLES --- */
+        :root {
+            --bg-paper: #F4F1EC;
+            --land: #E6DFD3;
+            --water: #C7D7D9;
+            --ink-primary: #2F2A24;
+            --highlight: #7A4A2E;
+            --blue-active: #2563EB;
+            --btn-dark: #2F2A24;
+            --warning-bg: #FEF3C7;
+            --warning-text: #92400E;
+            --danger-bg: #FEE2E2;
+            --danger-text: #991B1B;
+            --success-green: #22c55e;
+            
+            --font-serif: 'Crimson Pro', serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --font-ui: 'Inter', sans-serif;
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body, html { margin: 0; padding: 0; height: 100%; width: 100%; background-color: var(--bg-paper); color: var(--ink-primary); font-family: var(--font-ui); overflow: hidden; }
+
+        /* --- MAP --- */
+        #map { height: 100%; width: 100%; z-index: 1; background: var(--water); }
+        .leaflet-tile { filter: sepia(0.15) grayscale(0.1) brightness(1.05); }
+        path.leaflet-interactive:hover { fill-opacity: 0.8 !important; fill: var(--highlight) !important; stroke: var(--ink-primary) !important; stroke-width: 2px !important; }
+
+        /* --- UI FLOATING HEADER --- */
+        .header-float {
+            position: absolute; top: 20px; left: 20px; z-index: 1000;
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(8px);
+            padding: 12px 18px; border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            display: flex; flex-direction: column; gap: 8px;
+            border: 1px solid rgba(0,0,0,0.05); width: 300px;
+        }
+        .brand-row { display: flex; align-items: center; justify-content: space-between; }
+        .brand-left { display: flex; align-items: center; gap: 10px; }
+        
+        /* Status Indicator Lamp */
+        .status-lamp {
+            width: 12px; height: 12px; border-radius: 50%;
+            background-color: #ccc; /* Default grey */
+            transition: all 0.3s ease;
+            cursor: help;
+            display: inline-block;
+            position: relative;
+        }
+        .status-lamp.online {
+            background-color: var(--success-green);
+            box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+            animation: pulse-green 2s infinite;
+        }
+        .status-lamp.offline {
+            background-color: var(--danger-text);
+            box-shadow: 0 0 5px rgba(239, 68, 68, 0.5);
+        }
+
+        @keyframes pulse-green {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+        }
+
+        .brand h1 { margin: 0; font-size: 1.2rem; font-weight: 700; font-family: var(--font-serif); }
+        .brand p { margin: 0; font-size: 0.7rem; color: #666; text-transform: uppercase; }
+        .creator-tag { font-size: 0.65rem; color: #666; border-top: 1px solid #eee; padding-top: 4px; }
+        
+        .update-alert {
+            background: var(--danger-bg); color: var(--danger-text); padding: 8px; 
+            border-radius: 6px; font-size: 0.75rem; display: flex; align-items: center; gap: 6px;
+            border: 1px solid #FECACA;
+        }
+        
+        .lang-toggle { display: flex; background: #E5E7EB; border-radius: 8px; padding: 3px; cursor: pointer; }
+        .lang-btn { padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; color: #6B7280; transition: 0.2s; }
+        .lang-btn.active { background: var(--blue-active); color: white; }
+
+        /* --- SIDE PANEL --- */
+        .info-panel {
+            position: absolute; z-index: 1001; background: white;
+            box-shadow: 0 -4px 30px rgba(0,0,0,0.15); display: flex; flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        @media (min-width: 769px) {
+            .info-panel { top: 20px; right: 20px; bottom: 20px; width: 420px; transform: translateX(120%); border-radius: 16px; border: 1px solid #ccc; }
+            .info-panel.open { transform: translateX(0); }
+        }
+        @media (max-width: 768px) {
+            .info-panel { bottom: 0; left: 0; right: 0; max-height: 85vh; height: auto; transform: translateY(100%); border-top-left-radius: 20px; border-top-right-radius: 20px; }
+            .info-panel.open { transform: translateY(0); }
+            .header-float { left: 10px; right: 10px; top: 10px; width: auto; }
+        }
+        .panel-header { padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: flex-start; }
+        .country-meta h2 { margin: 0; font-size: 1.75rem; font-family: var(--font-serif); }
+        .close-btn { background: #F3F4F6; border: none; cursor: pointer; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .panel-body { padding: 20px; overflow-y: auto; flex: 1; background: #FAFAFA; }
+
+        /* --- SCRIPT CARD --- */
+        .script-card { background: white; border: 1px solid var(--highlight); border-radius: 12px; margin-bottom: 20px; padding: 20px; position: relative; }
+        .card-header { display: flex; justify-content: space-between; margin-bottom: 12px; }
+        .script-name { font-size: 1.1rem; font-weight: 700; font-family: var(--font-serif); }
+        .badge { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; padding: 4px 8px; border-radius: 6px; }
+        .badge-reg { background: #DCFCE7; color: #166534; }
+        .badge-miss { background: var(--danger-bg); color: var(--danger-text); }
+        .script-sample { font-size: 2.5rem; margin: 16px 0; color: #333; line-height: 1.2; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+        .meta-info { font-size: 0.85rem; color: #666; font-family: var(--font-mono); border-top: 1px dashed #ccc; padding-top: 12px; margin-top: 12px; }
+        
+        .action-row { display: flex; gap: 10px; margin-top: 16px; }
+        .btn { padding: 10px 16px; border-radius: 6px; font-size: 0.9rem; font-weight: 600; cursor: pointer; text-decoration: none; border: none; flex: 1; text-align: center; }
+        .btn-primary { background: var(--btn-dark); color: white; }
+        .btn-secondary { background: white; color: var(--highlight); border: 1px solid var(--highlight); }
+        .btn-secondary:hover { background: #FFF5F0; }
+        .btn-disabled { background: #eee; color: #999; cursor: not-allowed; border: none; }
+        
+        .font-warning { display: flex; align-items: center; gap: 6px; background: var(--warning-bg); color: var(--warning-text); font-size: 0.75rem; padding: 8px; border-radius: 6px; margin-top: 10px; }
+
+        /* --- MODAL --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 2000; display: none; align-items: center; justify-content: center; }
+        .modal-overlay.active { display: flex; }
+        .modal-content { background: white; width: 95%; max-width: 700px; height: 80vh; border-radius: 12px; display: flex; flex-direction: column; position: relative; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
+        
+        .modal-header { padding: 16px 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; background: white; }
+        .modal-title { font-family: var(--font-serif); font-size: 1.4rem; font-weight: 700; margin: 0; }
+        
+        .char-grid-container { flex: 1; overflow-y: auto; padding: 20px; background: #fafafa; position: relative; }
+        .char-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(48px, 1fr)); gap: 8px; }
+        .char-cell { aspect-ratio: 1; background: white; border: 1px solid #ddd; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; transition: 0.2s; }
+        .char-cell:hover { transform: scale(1.1); border-color: var(--blue-active); box-shadow: 0 4px 10px rgba(0,0,0,0.1); z-index: 2; }
+        
+        /* Side Arrows for Desktop */
+        .arrow-side { position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; background: white; border-radius: 50%; box-shadow: 0 2px 10px rgba(0,0,0,0.2); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10; color: var(--ink-primary); font-size: 1.2rem; transition: 0.2s; }
+        .arrow-side:hover { background: var(--highlight); color: white; }
+        .arrow-left { left: 10px; }
+        .arrow-right { right: 10px; }
+        
+        /* Bottom Pagination for Mobile */
+        .modal-footer { padding: 12px 20px; border-top: 1px solid #eee; background: white; display: flex; justify-content: space-between; align-items: center; }
+        @media (max-width: 600px) {
+            .arrow-side { display: none; } /* Hide side arrows on mobile */
+        }
+        
+        /* Zoom Modal */
+        .zoom-modal { z-index: 3000; }
+        .zoom-content { max-width: 320px; text-align: center; padding: 30px; border-radius: 20px; }
+        
+        /* Loaders */
+        .loader-overlay { padding: 40px; text-align: center; }
+        .spinner { width: 40px; height: 40px; border: 4px solid #eee; border-top-color: var(--blue-active); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 10px; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+    <div class="header-float">
+        <div class="brand-row">
+            <div class="brand-left">
+                <!-- Status Indicator -->
+                <div id="connStatus" class="status-lamp" title="Initializing..."></div>
+                <div class="brand">
+                    <h1 data-i18n="app_title">World Script Explorer</h1>
+                    <p data-i18n="app_subtitle">UNICODE DATA VIEWER</p>
+                </div>
+            </div>
+            <div class="lang-toggle" onclick="toggleLang()">
+                <div class="lang-btn" id="btn-id">ID</div>
+                <div class="lang-btn active" id="btn-en">EN</div>
+            </div>
+        </div>
+        <div id="statusArea"></div>
+        <div class="creator-tag">
+            Initiated by <strong>Angga Conni Saputra</strong>
+        </div>
+    </div>
+
+    <div id="map"></div>
+
+    <div class="info-panel" id="infoPanel">
+        <div class="panel-header">
+            <div class="country-meta">
+                <h2 id="countryName">Country</h2>
+                <span id="countryCode">ISO</span>
+            </div>
+            <button class="close-btn" onclick="closePanel()"><i class="ph ph-x"></i></button>
+        </div>
+        <div class="panel-body" id="scriptList"></div>
+    </div>
+
+    <!-- Modal Grid -->
+    <div class="modal-overlay" id="charModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h3 class="modal-title" id="modalTitle">Title</h3>
+                    <span style="font-size:0.8rem; color:#666; font-family:monospace;" id="modalRange">Range</span>
+                </div>
+                <button class="close-btn" onclick="closeModal()"><i class="ph ph-x"></i></button>
+            </div>
+            
+            <div class="char-grid-container">
+                <!-- Side Arrows (Desktop) -->
+                <button class="arrow-side arrow-left" id="btnPrevSide" onclick="changePage(-1)"><i class="ph ph-caret-left"></i></button>
+                <button class="arrow-side arrow-right" id="btnNextSide" onclick="changePage(1)"><i class="ph ph-caret-right"></i></button>
+                
+                <div class="char-grid" id="charGrid"></div>
+            </div>
+
+            <!-- Footer Pagination (Mobile) -->
+            <div class="modal-footer">
+                <button class="close-btn" id="btnPrev" onclick="changePage(-1)"><i class="ph ph-caret-left"></i></button>
+                <span id="pageInfo" style="font-size:0.85rem; font-family:var(--font-mono); color:#666;">1-300</span>
+                <button class="close-btn" id="btnNext" onclick="changePage(1)"><i class="ph ph-caret-right"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Zoom Modal -->
+    <div class="modal-overlay zoom-modal" id="zoomModal">
+        <div class="modal-content zoom-content" style="background:white;">
+            <div style="display:flex; justify-content:flex-end;">
+                <button class="close-btn" onclick="closeZoom()"><i class="ph ph-x"></i></button>
+            </div>
+            <div id="zoomDisplay" style="font-size:8rem; line-height:1.2; margin:20px 0; color:var(--ink-primary);"></div>
+            <div id="zoomCode" style="font-family:monospace; background:#f4f4f4; padding:4px 10px; border-radius:4px; color:#555; font-weight:700;"></div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <script>
+        // --- CONFIGURATION ---
+        // URL API SUDAH TERTANAM:
+        const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwVmBWHGK-BMSqMnnYfvuubesQZYGHwyIKL4UT4ascbBhZZAFJR_pyswR4R0xug0LpI0Q/exec';
+        
+        const DB_LAST_UPDATE = new Date('2025-09-12'); 
+
+        const i18n = {
+            en: {
+                app_title: "World Script Explorer",
+                app_subtitle: "UNICODE DATA VIEWER",
+                loading: "Fetching Data...",
+                reg: "REGISTERED",
+                miss: "PROPOSED",
+                btn_dl: "Download Font",
+                btn_view: "View", // Shortened as requested
+                font_missing: "Font not yet available",
+                db_old: "Warning: Database Outdated",
+                paging: "{start}-{end} of {total}",
+                api_error: "Data not found.",
+                stat_on: "Connected: Google Sheet (Live)",
+                stat_off: "Offline Mode: Using Local Backup"
+            },
+            id: {
+                app_title: "Penjelajah Aksara Dunia",
+                app_subtitle: "DATA UNICODE VIEWER",
+                loading: "Mengambil Data...",
+                reg: "TERDAFTAR",
+                miss: "BELUM ADA",
+                btn_dl: "Unduh Font",
+                btn_view: "Lihat", // Shortened as requested
+                font_missing: "Font belum tersedia",
+                db_old: "Database Unicode Kadaluarsa",
+                paging: "{start}-{end} dari {total}",
+                api_error: "Data tidak ditemukan.",
+                stat_on: "Terhubung: Google Sheet (Live)",
+                stat_off: "Mode Offline: Backup Lokal"
+            }
+        };
+
+        let currentLang = 'en';
+        let modalState = { rangeStart: 0, rangeEnd: 0, fontName: '', page: 0, pageSize: 300 };
+        
+        // --- FALLBACK DATABASE (Expansion Pack) ---
+        // Database ini aktif otomatis jika koneksi internet mati atau fetch gagal
+        const LATIN_SCRIPT = { code: "Latn", name_en: "Latin (Alphabet)", name_id: "Latin (Alfabet)", unicode: true, range: "0020-007F", ver: "1.0", font: "Noto+Sans", sample: "Abcde" };
+        const CYRILLIC_SCRIPT = { code: "Cyrl", name_en: "Cyrillic", name_id: "Sirilik", unicode: true, range: "0400-04FF", ver: "1.0", font: "Noto+Sans", sample: "Кирилица" };
+        const ARABIC_SCRIPT = { code: "Arab", name_en: "Arabic", name_id: "Arab", unicode: true, range: "0600-06FF", ver: "1.0", font: "Noto+Sans+Arabic", sample: "العربية" };
+
+        const GLOBAL_SCRIPT_DB = {
+            "ID": [
+                LATIN_SCRIPT,
+                { code: "Pegon", name_en: "Pegon", name_id: "Aksara Pegon", unicode: true, range: "0600-06FF", ver: "1.0", font: "Noto+Sans+Arabic", sample: "ڤيڮون" },
+                { code: "Java", name_en: "Javanese", name_id: "Aksara Jawa", unicode: true, range: "A980-A9DF", ver: "5.2", font: "Noto+Sans+Javanese", sample: "ꦲꦏ꧀ꦱꦫꦗꦮ" },
+                { code: "Bali", name_en: "Balinese", name_id: "Aksara Bali", unicode: true, range: "1B00-1B7F", ver: "5.0", font: "Noto+Sans+Balinese", sample: "ᬅᬓ᭄ᬱᬭᬩᬮᬶ" },
+                { code: "Sund", name_en: "Sundanese", name_id: "Aksara Sunda", unicode: true, range: "1B80-1BBF", ver: "5.1", font: "Noto+Sans+Sundanese", sample: "ᮃᮊ᮪ᮞᮒ᮪ᮓ" },
+                { code: "Batk", name_en: "Batak", name_id: "Surat Batak", unicode: true, range: "1BC0-1BFF", ver: "6.0", font: "Noto+Sans+Batak", sample: "ᯅᯖᯂ᯳" },
+                { code: "Bugi", name_en: "Buginese", name_id: "Lontara", unicode: true, range: "1A00-1A1F", ver: "4.1", font: "Noto+Sans+Buginese", sample: "ᨒᨚᨈᨑ" },
+                { code: "Kawi", name_en: "Kawi", name_id: "Aksara Kawi", unicode: true, range: "11F00-11F5F", ver: "15.0", font: "Noto+Sans+Kawi", sample: "𑼒𑼪𑼶" },
+                { code: "Maka", name_en: "Makasar", name_id: "Makassar", unicode: true, range: "11EE0-11EFF", ver: "11.0", font: null, sample: "𑻱𑻭" },
+                { code: "Rjng", name_en: "Rejang", name_id: "Aksara Rejang", unicode: true, range: "A930-A95F", ver: "5.1", font: "Noto+Sans+Rejang", sample: "ꤽꤿꤺꤴꤷ" },
+                { code: "Lamp", name_en: "Lampung", name_id: "Aksara Lampung", unicode: false, range: null, font: null, sample: "(Proposed)" },
+                { code: "Kinc", name_en: "Kerinci (Incung)", name_id: "Aksara Incung", unicode: false, range: null, font: null, sample: "(Proposed)" }
+            ],
+            "PH": [ LATIN_SCRIPT, { code: "Tglg", name_en: "Baybayin", name_id: "Baybayin", unicode: true, range: "1700-171F", ver: "3.2", font: "Noto+Sans+Tagalog", sample: "ᜊᜌ᜔ᜊᜌ᜔" }, { code: "Hano", name_en: "Hanunoo", name_id: "Hanunoo", unicode: true, range: "1720-173F", ver: "3.2", font: "Noto+Sans+Hanunoo", sample: "ᜱᜨᜳᜨᜳᜠᜳ" }, { code: "Tagb", name_en: "Tagbanwa", name_id: "Tagbanwa", unicode: true, range: "1760-177F", ver: "3.2", font: "Noto+Sans+Tagbanwa", sample: "ᝦᝢᝪ" }, { code: "Buhd", name_en: "Buhid", name_id: "Buhid", unicode: true, range: "1740-175F", ver: "3.2", font: "Noto+Sans+Buhid", sample: "ᝀᝁᝂ" } ],
+            "VN": [ LATIN_SCRIPT, { code: "Tavt", name_en: "Tai Viet", name_id: "Tai Viet", unicode: true, range: "AA80-AADF", ver: "5.2", font: "Noto+Sans+Tai+Viet", sample: "ꪼꪖꪫꪸꪝ" }, { code: "Cham", name_en: "Cham", name_id: "Cham", unicode: true, range: "AA00-AA5F", ver: "5.1", font: "Noto+Sans+Cham", sample: "ꨆꨭꨩꨣ" }, { code: "Hani", name_en: "Han (Nom)", name_id: "Aksara Nom (Han)", unicode: true, range: "20000-2A6DF", ver: "3.1", font: "Noto+Sans+TC", sample: "𠮩" } ],
+            "TH": [ { code: "Thai", name_en: "Thai", name_id: "Thai", unicode: true, range: "0E00-0E7F", ver: "1.0", font: "Noto+Sans+Thai", sample: "ไทย" } ],
+            "LA": [ { code: "Laoo", name_en: "Lao", name_id: "Lao", unicode: true, range: "0E80-0EFF", ver: "1.0", font: "Noto+Sans+Lao", sample: "ລາວ" } ],
+            "KH": [ { code: "Khmr", name_en: "Khmer", name_id: "Khmer", unicode: true, range: "1780-17FF", ver: "3.0", font: "Noto+Sans+Khmer", sample: "ខ្មែរ" } ],
+            "MM": [ { code: "Mymr", name_en: "Myanmar", name_id: "Myanmar", unicode: true, range: "1000-109F", ver: "3.0", font: "Noto+Sans+Myanmar", sample: "မြန်မာ" } ],
+            "CN": [ { code: "Hans", name_en: "Han (Simplified)", name_id: "Han (Sederhana)", unicode: true, range: "4E00-9FFF", ver: "1.0", font: "Noto+Sans+SC", sample: "汉字" }, { code: "ExtA", name_en: "Han Extension A", name_id: "Han Ext-A (Rare)", unicode: true, range: "3400-4DBF", ver: "3.0", font: "Noto+Sans+SC", sample: "㐀" }, { code: "ExtB", name_en: "Han Extension B", name_id: "Han Ext-B (Rare)", unicode: true, range: "20000-2A6DF", ver: "3.1", font: "Noto+Sans+SC", sample: "𠀀" }, { code: "ExtC", name_en: "Han Extension C", name_id: "Han Ext-C (Rare)", unicode: true, range: "2A700-2B73F", ver: "5.2", font: "Noto+Sans+SC", sample: "𪜀" }, { code: "Nshu", name_en: "Nushu", name_id: "Nushu", unicode: true, range: "1B170-1B2FF", ver: "10.0", font: "Noto+Sans+Nushu", sample: "𖿡𖿢" }, LATIN_SCRIPT ],
+            "TW": [ { code: "Hant", name_en: "Han (Traditional)", name_id: "Han (Tradisional)", unicode: true, range: "4E00-9FFF", ver: "1.0", font: "Noto+Sans+TC", sample: "漢字" }, LATIN_SCRIPT ],
+            "JP": [ { code: "Jpan", name_en: "Japanese (Hiragana)", name_id: "Hiragana", unicode: true, range: "3040-309F", ver: "1.0", font: "Noto+Sans+JP", sample: "ひらがな" }, { code: "Hani", name_en: "Kanji", name_id: "Kanji", unicode: true, range: "4E00-9FFF", ver: "1.0", font: "Noto+Sans+JP", sample: "漢字" }, { code: "Kana", name_en: "Katakana", name_id: "Katakana", unicode: true, range: "30A0-30FF", ver: "1.0", font: "Noto+Sans+JP", sample: "カタカナ" } ],
+            "KR": [ { code: "Kore", name_en: "Hangul", name_id: "Hangul", unicode: true, range: "AC00-D7A3", ver: "1.0", font: "Noto+Sans+KR", sample: "한글" } ],
+            "MN": [ { code: "Cyrl", name_en: "Cyrillic", name_id: "Sirilik", unicode: true, range: "0400-04FF", ver: "1.0", font: "Noto+Sans", sample: "Кирилица" }, { code: "Mong", name_en: "Mongolian", name_id: "Mongol", unicode: true, range: "1800-18AF", ver: "3.0", font: "Noto+Sans+Mongolian", sample: "ᠮᠣᠩᠭᠣᠯ" } ],
+            "IN": [ LATIN_SCRIPT, { code: "Deva", name_en: "Devanagari", name_id: "Devanagari", unicode: true, range: "0900-097F", ver: "1.0", font: "Noto+Sans+Devanagari", sample: "देवनागरी" }, { code: "Taml", name_en: "Tamil", name_id: "Tamil", unicode: true, range: "0B80-0BFF", ver: "1.0", font: "Noto+Sans+Tamil", sample: "தமிழ்" }, { code: "Telu", name_en: "Telugu", name_id: "Telugu", unicode: true, range: "0C00-0C7F", ver: "1.0", font: "Noto+Sans+Telugu", sample: "తెలుగు" }, { code: "Knda", name_en: "Kannada", name_id: "Kannada", unicode: true, range: "0C80-0CFF", ver: "1.0", font: "Noto+Sans+Kannada", sample: "ಕನ್ನಡ" }, { code: "Gujr", name_en: "Gujarati", name_id: "Gujarati", unicode: true, range: "0A80-0AFF", ver: "1.0", font: "Noto+Sans+Gujarati", sample: "ગુજરાતી" }, { code: "Guru", name_en: "Gurmukhi", name_id: "Gurmukhi", unicode: true, range: "0A00-0A7F", ver: "1.0", font: "Noto+Sans+Gurmukhi", sample: "ਗੁਰਮੁਖੀ" }, { code: "Orya", name_en: "Odia", name_id: "Odia", unicode: true, range: "0B00-0B7F", ver: "1.0", font: "Noto+Sans+Oriya", sample: "ଓଡ଼ିଆ" } ],
+            "LK": [ { code: "Sinh", name_en: "Sinhala", name_id: "Sinhala", unicode: true, range: "0D80-0DFF", ver: "3.0", font: "Noto+Sans+Sinhala", sample: "සිංහල" } ],
+            "BD": [ { code: "Beng", name_en: "Bengali", name_id: "Bengali", unicode: true, range: "0980-09FF", ver: "1.0", font: "Noto+Sans+Bengali", sample: "বাংলা" } ],
+            "NP": [ { code: "Deva", name_en: "Devanagari", name_id: "Devanagari", unicode: true, range: "0900-097F", ver: "1.0", font: "Noto+Sans+Devanagari", sample: "नेपाली" } ],
+            "SA": [ ARABIC_SCRIPT ], "IR": [ ARABIC_SCRIPT ], "PK": [ ARABIC_SCRIPT ],
+            "IL": [ { code: "Hebr", name_en: "Hebrew", name_id: "Ibrani", unicode: true, range: "0590-05FF", ver: "1.0", font: "Noto+Sans+Hebrew", sample: "עברית" } ],
+            "TR": [ LATIN_SCRIPT ],
+            "GB": [ LATIN_SCRIPT ], "FR": [ LATIN_SCRIPT ], "DE": [ LATIN_SCRIPT ], "IT": [ LATIN_SCRIPT ], "ES": [ LATIN_SCRIPT ], "PT": [ LATIN_SCRIPT ], "AU": [ LATIN_SCRIPT ], "BR": [ LATIN_SCRIPT ],
+            "RU": [ CYRILLIC_SCRIPT ], "UA": [ CYRILLIC_SCRIPT ],
+            "BG": [ CYRILLIC_SCRIPT, { code: "Glag", name_en: "Glagolitic", name_id: "Glagolitik", unicode: true, range: "2C00-2C5F", ver: "4.1", font: "Noto+Sans+Glagolitic", sample: "Ⰳⰾⰰⰳⱁⰾⰹⱌⰰ" } ],
+            "GR": [ { code: "Grek", name_en: "Greek", name_id: "Yunani", unicode: true, range: "0370-03FF", ver: "1.0", font: "Noto+Sans", sample: "Ελληνικά" } ],
+            "AM": [ { code: "Armn", name_en: "Armenian", name_id: "Armenia", unicode: true, range: "0530-058F", ver: "1.0", font: "Noto+Sans+Armenian", sample: "Հայերեն" } ],
+            "GE": [ { code: "Geor", name_en: "Georgian", name_id: "Georgia", unicode: true, range: "10A0-10FF", ver: "1.0", font: "Noto+Sans+Georgian", sample: "ქართული" } ],
+            "IE": [ LATIN_SCRIPT, { code: "Ogam", name_en: "Ogham", name_id: "Ogham", unicode: true, range: "1680-169F", ver: "3.0", font: "Noto+Sans+Ogham", sample: "᚛ᚑᚌᚐᚋ᚜" } ],
+            "IS": [ LATIN_SCRIPT, { code: "Runr", name_en: "Runic", name_id: "Rune", unicode: true, range: "16A0-16FF", ver: "3.0", font: "Noto+Sans+Runic", sample: "ᚠᚢᚦ" } ],
+            "EG": [ ARABIC_SCRIPT, { code: "Copt", name_en: "Coptic", name_id: "Koptik", unicode: true, range: "2C80-2CFF", ver: "4.1", font: "Noto+Sans+Coptic", sample: "ⲙⲉⲧⲣⲉⲙⲛ̀ⲭⲏⲙⲓ" }, { code: "Egyp", name_en: "Hieroglyphs", name_id: "Hieroglif", unicode: true, range: "13000-1342F", ver: "5.2", font: "Noto+Sans+Egyptian+Hieroglyphs", sample: "𓂋𓏤𓈖𓆓𓅓𓏏𓊖" } ],
+            "ET": [ { code: "Ethi", name_en: "Ethiopic", name_id: "Ge'ez", unicode: true, range: "1200-137F", ver: "3.0", font: "Noto+Sans+Ethiopic", sample: "ግዕዝ" } ],
+            "MA": [ { code: "Tfng", name_en: "Tifinagh", name_id: "Tifinagh", unicode: true, range: "2D30-2D7F", ver: "4.1", font: "Noto+Sans+Tifinagh", sample: "ⵜⵉⴼⵉⵏⴰⵖ" } ],
+            "NG": [ LATIN_SCRIPT, { code: "Nkoo", name_en: "N'Ko", name_id: "N'Ko", unicode: true, range: "07C0-07FF", ver: "5.0", font: "Noto+Sans+NKo", sample: "ߒߞߏ" } ],
+            "GN": [ { code: "Adlm", name_en: "Adlam", name_id: "Adlam", unicode: true, range: "1E900-1E95F", ver: "9.0", font: "Noto+Sans+Adlam", sample: "𞤀𞤣𞤤𞤢𞤥" } ],
+            "LR": [ { code: "Vaii", name_en: "Vai", name_id: "Vai", unicode: true, range: "A500-A63F", ver: "5.1", font: "Noto+Sans+Vai", sample: "ꕙꔤ" } ],
+            "US": [ LATIN_SCRIPT, { code: "Cher", name_en: "Cherokee", name_id: "Cherokee", unicode: true, range: "13A0-13FF", ver: "3.0", font: "Noto+Sans+Cherokee", sample: "ᏣᎳᎩ" }, { code: "Osge", name_en: "Osage", name_id: "Osage", unicode: true, range: "104B0-104FF", ver: "9.0", font: "Noto+Sans+Osage", sample: "𐒻𐓟" } ],
+            "CA": [ LATIN_SCRIPT, { code: "Cans", name_en: "Canadian Aboriginal", name_id: "Aborigin Kanada", unicode: true, range: "1400-167F", ver: "3.0", font: "Noto+Sans+Canadian+Aboriginal", sample: "ᐄᔨᔫ" } ],
+            "MX": [ LATIN_SCRIPT, { code: "Maya", name_en: "Mayan", name_id: "Maya", unicode: false, range: null, font: null, sample: "(Proposed)" } ]
+        };
+
+        const FALLBACK_LATIN = [{ code: "Latn", name_en: "Latin (System)", name_id: "Latin (Sistem)", unicode: true, range: "0020-007F", ver: "1.0", font: "Noto+Sans", sample: "Abcde" }];
+
+        // --- MAP SETUP ---
+        const map = L.map('map', { zoomControl: false, minZoom: 2, maxZoom: 8 }).setView([20, 0], 2);
+        L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+        fetch('https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json')
+            .then(res => res.json())
+            .then(data => {
+                L.geoJSON(data, {
+                    style: { fillColor: '#E6DFD3', weight: 1, opacity: 1, color: '#B0A99F', fillOpacity: 1 },
+                    onEachFeature: (f, l) => {
+                        l.on('click', (e) => {
+                            const iso = convertIso3to2(f.id);
+                            openCountry(iso, f.properties.name);
+                            L.DomEvent.stopPropagation(e);
+                        });
+                    }
+                }).addTo(map);
+            });
+
+        function convertIso3to2(iso3) {
+            const m = { 'IDN': 'ID', 'CHN': 'CN', 'USA': 'US', 'IND': 'IN', 'JPN': 'JP' };
+            return m[iso3] || iso3.substring(0, 2);
+        }
+
+        // --- ROBUST FETCH (HYBRID) ---
+        async function fetchScriptData(iso) {
+            const statusLamp = document.getElementById('connStatus');
+            
+            // 1. Try Google Sheet API
+            if (GAS_API_URL) {
+                try {
+                    const res = await fetch(`${GAS_API_URL}?iso=${iso}`, { method: 'GET', mode: 'cors' });
+                    if (!res.ok) throw new Error("Network Error");
+                    const data = await res.json();
+                    
+                    // Success: Green Lamp
+                    statusLamp.className = 'status-lamp online';
+                    statusLamp.title = i18n[currentLang].stat_on;
+                    
+                    if (data && data.length > 0) return data;
+                } catch (e) {
+                    console.warn("API Fail, switching to local:", e);
+                    // Fallthrough
+                }
+            }
+
+            // 2. Fallback / Error: Red Lamp
+            statusLamp.className = 'status-lamp offline';
+            statusLamp.title = i18n[currentLang].stat_off;
+
+            if (GLOBAL_SCRIPT_DB[iso]) {
+                return GLOBAL_SCRIPT_DB[iso];
+            }
+
+            return FALLBACK_LATIN;
+        }
+
+        // --- UI LOGIC ---
+        function openCountry(iso, name) {
+            document.getElementById('countryName').innerText = name;
+            document.getElementById('countryCode').innerText = iso;
+            document.getElementById('infoPanel').classList.add('open');
+            document.getElementById('scriptList').innerHTML = `<div class="loader-overlay"><div class="spinner"></div><span>${i18n[currentLang].loading}</span></div>`;
+            
+            fetchScriptData(iso).then(renderScripts);
+        }
+
+        function renderScripts(scripts) {
+            const list = document.getElementById('scriptList');
+            list.innerHTML = '';
+            
+            scripts.forEach(script => {
+                if (script.font && script.font !== 'null') {
+                    const l = document.createElement('link');
+                    l.href = `https://fonts.googleapis.com/css2?family=${script.font}&display=swap`;
+                    l.rel = 'stylesheet';
+                    if(!document.querySelector(`link[href*="${script.font}"]`)) document.head.appendChild(l);
+                }
+                
+                const hasFont = script.font && script.font !== 'null';
+                const isReg = script.unicode === true || script.unicode === "TRUE";
+                const fontUrl = hasFont ? `https://fonts.google.com/noto/specimen/${script.font.replace(/\+/g, '+')}` : '#';
+                const fontFamily = hasFont ? script.font.replace(/\+/g, ' ') : 'sans-serif';
+
+                const div = document.createElement('div');
+                div.className = 'script-card';
+                div.innerHTML = `
+                    <div class="card-header">
+                        <span class="script-name">${currentLang === 'id' ? script.name_id : script.name_en}</span>
+                        <span class="badge ${isReg ? 'badge-reg' : 'badge-miss'}">${isReg ? i18n[currentLang].reg : i18n[currentLang].miss}</span>
+                    </div>
+                    <div class="script-sample" style="font-family:'${fontFamily}';">${script.sample || ''}</div>
+                    <div class="meta-info">Code: ${script.code} • Range: ${script.range || 'N/A'}</div>
+                    ${!hasFont && isReg ? `<div class="font-warning">${i18n[currentLang].font_missing}</div>` : ''}
+                    <div class="action-row">
+                        <a href="${fontUrl}" target="_blank" class="btn ${hasFont?'btn-primary':'btn-disabled'}" ${!hasFont?'onclick="return false;"':''}>${i18n[currentLang].btn_dl}</a>
+                        <button class="btn ${isReg?'btn-secondary':'btn-disabled'}" onclick="openGrid('${script.name_en}', '${script.range}', '${fontFamily}')" ${!isReg?'disabled':''}>${i18n[currentLang].btn_view}</button>
+                    </div>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        // --- GRID LOGIC ---
+        function openGrid(name, range, font) {
+            document.getElementById('charModal').classList.add('active');
+            document.getElementById('modalTitle').innerText = name;
+            document.getElementById('modalRange').innerText = range;
+            
+            try {
+                const p = range.split('-');
+                if(p.length===2) {
+                    modalState.rangeStart = parseInt(p[0], 16);
+                    modalState.rangeEnd = parseInt(p[1], 16);
+                    modalState.fontName = font;
+                    modalState.page = 0;
+                    renderPage();
+                }
+            } catch(e){}
+        }
+
+        function renderPage() {
+            const grid = document.getElementById('charGrid');
+            grid.innerHTML = '';
+            grid.style.fontFamily = modalState.fontName;
+
+            const total = modalState.rangeEnd - modalState.rangeStart + 1;
+            const offset = modalState.page * modalState.pageSize;
+            const start = modalState.rangeStart + offset;
+            const end = Math.min(modalState.rangeEnd, start + modalState.pageSize - 1);
+
+            for(let i=start; i<=end; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'char-cell';
+                const char = String.fromCodePoint(i);
+                cell.innerText = char;
+                cell.onclick = () => {
+                    document.getElementById('zoomModal').classList.add('active');
+                    const d = document.getElementById('zoomDisplay');
+                    d.innerText = char;
+                    d.style.fontFamily = modalState.fontName;
+                    document.getElementById('zoomCode').innerText = `U+${i.toString(16).toUpperCase()}`;
+                };
+                grid.appendChild(cell);
+            }
+
+            const info = i18n[currentLang].paging.replace('{start}', offset+1).replace('{end}', offset + (end-start+1)).replace('{total}', total);
+            document.getElementById('pageInfo').innerText = info;
+            
+            // Update Arrows state
+            const prevDisabled = modalState.page === 0;
+            const nextDisabled = end >= modalState.rangeEnd;
+            
+            ['btnPrev', 'btnPrevSide'].forEach(id => document.getElementById(id).disabled = prevDisabled);
+            ['btnNext', 'btnNextSide'].forEach(id => document.getElementById(id).disabled = nextDisabled);
+            
+            // Hide Side Arrows if disabled (Visual Polish)
+            document.getElementById('btnPrevSide').style.opacity = prevDisabled ? 0 : 1;
+            document.getElementById('btnNextSide').style.opacity = nextDisabled ? 0 : 1;
+        }
+
+        function changePage(d) { modalState.page += d; renderPage(); }
+        function closePanel() { document.getElementById('infoPanel').classList.remove('open'); }
+        function closeModal() { document.getElementById('charModal').classList.remove('active'); }
+        function closeZoom() { document.getElementById('zoomModal').classList.remove('active'); }
+        
+        function toggleLang() {
+            currentLang = currentLang === 'en' ? 'id' : 'en';
+            document.getElementById('btn-id').classList.toggle('active');
+            document.getElementById('btn-en').classList.toggle('active');
+            // Simplified rerender triggers would go here
+            document.querySelector('[data-i18n="app_title"]').innerText = i18n[currentLang].app_title;
+            document.querySelector('[data-i18n="app_subtitle"]').innerText = i18n[currentLang].app_subtitle;
+            
+            // Refresh Status Tooltip
+            const lamp = document.getElementById('connStatus');
+            if(lamp.classList.contains('online')) lamp.title = i18n[currentLang].stat_on;
+            else if(lamp.classList.contains('offline')) lamp.title = i18n[currentLang].stat_off;
+        }
+        
+        // Date Check
+        const age = (new Date() - DB_LAST_UPDATE) / (1000*60*60*24);
+        if(age > 365) document.getElementById('statusArea').innerHTML = `<div class="update-alert">${i18n[currentLang].db_old}</div>`;
+
+    </script>
+</body>
+</html>
