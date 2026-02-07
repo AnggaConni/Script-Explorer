@@ -249,8 +249,8 @@
 
     <script>
         // --- CONFIGURATION ---
-        // URL API SUDAH TERTANAM:
-        const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwVmBWHGK-BMSqMnnYfvuubesQZYGHwyIKL4UT4ascbBhZZAFJR_pyswR4R0xug0LpI0Q/exec';
+        // URL API SUDAH DIPERBARUI:
+        const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwxV-KnhRMnRB4xmYC3M9zAkQTL8xeYQUQT_IDNtfU1FsFcse-BzoEO9MsAWmY0qxry0Q/exec';
         
         const DB_LAST_UPDATE = new Date('2025-09-12'); 
 
@@ -262,7 +262,7 @@
                 reg: "REGISTERED",
                 miss: "PROPOSED",
                 btn_dl: "Download Font",
-                btn_view: "View", // Shortened as requested
+                btn_view: "View", 
                 font_missing: "Font not yet available",
                 db_old: "Warning: Database Outdated",
                 paging: "{start}-{end} of {total}",
@@ -277,7 +277,7 @@
                 reg: "TERDAFTAR",
                 miss: "BELUM ADA",
                 btn_dl: "Unduh Font",
-                btn_view: "Lihat", // Shortened as requested
+                btn_view: "Lihat", 
                 font_missing: "Font belum tersedia",
                 db_old: "Database Unicode Kadaluarsa",
                 paging: "{start}-{end} dari {total}",
@@ -381,8 +381,16 @@
             // 1. Try Google Sheet API
             if (GAS_API_URL) {
                 try {
-                    const res = await fetch(`${GAS_API_URL}?iso=${iso}`, { method: 'GET', mode: 'cors' });
+                    // Add timestamp to prevent caching
+                    // credentials: 'omit' fixes some multi-login CORS issues
+                    const res = await fetch(`${GAS_API_URL}?iso=${iso}&t=${Date.now()}`, { 
+                        method: 'GET', 
+                        mode: 'cors',
+                        credentials: 'omit'
+                    });
+                    
                     if (!res.ok) throw new Error("Network Error");
+                    
                     const data = await res.json();
                     
                     // Success: Green Lamp
@@ -392,7 +400,7 @@
                     if (data && data.length > 0) return data;
                 } catch (e) {
                     console.warn("API Fail, switching to local:", e);
-                    // Fallthrough
+                    // Fallthrough to fallback
                 }
             }
 
