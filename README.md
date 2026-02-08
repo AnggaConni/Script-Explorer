@@ -4,6 +4,7 @@ World Script Explorer is an interactive, open-source visualization tool designed
 
 This project aims to help linguists, typography enthusiasts, and cultural preservationists explore the rich diversity of human writing systems through an interactive globe.
 
+
 🚀 Features
 
 Interactive Map: Click on any country to see the scripts associated with it.
@@ -16,17 +17,20 @@ Font Integration: Automatically loads Google Noto Fonts for accurate rendering o
 
 Open Source: Fully customizable data pipeline.
 
+
 🛠️ Data Pipeline & Contribution Guide
 
 This project relies on data from the Unicode Consortium. Since the data is massive, we use a Python Automation Script to process raw Unicode blocks into a format our web app understands.
+
 
 Step 1: Get the Raw Data
 
 Download the latest Blocks.txt file from the official Unicode FTP server. This file contains the ranges for every registered writing system.
 
-Source: Unicode 17.0.0 Blocks.txt
+Source: Unicode 17.0.0 Blocks.txt https://www.unicode.org/Public/17.0.0/ucd/Blocks.txt 
 
 Action: Copy the entire content of the text file.
+
 
 Step 2: Process with Python (via Google Colab)
 
@@ -34,7 +38,7 @@ We use Python to "enrich" the raw data—guessing the country of origin, assigni
 
 Recommended: Run this script in Google Colab. It's free, requires no installation, and runs directly in your browser.
 
-Open Google Colab.
+Open Google Colab https://colab.google 
 
 Create a New Notebook.
 
@@ -46,11 +50,13 @@ Run the script (Play button).
 
 Copy the Output (The Tab-Separated values generated at the bottom).
 
+
 Step 3: Convert to JSON
 
 The Python script outputs raw tabular data. We need to convert this into a structured JSON format for the web app.
 
-Tool: UNICODE JSON Converter
+Tool: UNICODE JSON Converter https://anggaconni.github.io/UNICODEJSONConvert/ 
+
 
 Action:
 
@@ -62,9 +68,11 @@ Click Convert.
 
 Copy the resulting const GLOBAL_SCRIPT_DB = { ... } code.
 
+
 Step 4: Update the App
 
 Open index.html in this repository and replace the existing content of const GLOBAL_SCRIPT_DB with your new JSON data.
+
 
 🐍 Python Automation Script
 
