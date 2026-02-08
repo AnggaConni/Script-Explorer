@@ -251,10 +251,12 @@
 
     <script>
         // --- CONFIGURATION ---
-        // PENTING: Jika ingin menggunakan DATA LOKAL (GLOBAL_SCRIPT_DB) sebagai sumber utama,
-        // kosongkan variabel GAS_API_URL ini.
-        // const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwxV-KnhRMnRB4xmYC3M9zAkQTL8xeYQUQT_IDNtfU1FsFcse-BzoEO9MsAWmY0qxry0Q/exec';
-        const GAS_API_URL = ''; // Di-disable sementara agar data lokal (Unicode 17) tampil
+        
+        // [OPEN SOURCE GUIDE]: 
+        // Untuk menggunakan Google Sheets sebagai backend, isi URL di bawah.
+        // Untuk mode OFFLINE / STATIC (Default), biarkan kosong.
+        // const GAS_API_URL = 'https://script.google.com/macros/s/.../exec';
+        const GAS_API_URL = ''; 
         
         const DB_LAST_UPDATE = new Date('2025-09-12'); 
 
@@ -296,7 +298,15 @@
         
         const FALLBACK_LATIN = [{ code: "Latn", name_en: "Latin (System)", name_id: "Latin (Sistem)", unicode: true, range: "0020-007F", ver: "1.0", font: "Noto+Sans", sample: "Abcde" }];
 
-        // --- GLOBAL DATA (Hasil Convert) ---
+        // --- GLOBAL DATA (Local Database) ---
+        // [OPEN SOURCE GUIDE]:
+        // Data di bawah ini dihasilkan oleh script Python (unicode_automator.py) 
+        // yang mengolah data mentah dari Unicode.org (Blocks.txt).
+        // 
+        // Cara Update Data:
+        // 1. Download Blocks.txt terbaru dari Unicode.org
+        // 2. Jalankan script Python untuk convert ke JSON
+        // 3. Paste hasil JSON di variabel GLOBAL_SCRIPT_DB di bawah ini.
         const GLOBAL_SCRIPT_DB = {
     "ISO": [
         {
