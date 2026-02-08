@@ -80,8 +80,7 @@ You can embed this script in your local environment or Google Colab. This script
 import re
 import json
 
-# --- 1. DATA MENTAH DARI UNICODE (Blocks.txt) ---
-# Data ini mencakup rentang hex dan nama blok Unicode
+# --- 1. DATA MENTAH DARI UNICODE 17 sept 2025 (Blocks.txt) ---
 raw_data = """
 0000..007F; Basic Latin
 0080..00FF; Latin-1 Supplement
@@ -431,69 +430,48 @@ F0000..FFFFF; Supplementary Private Use Area-A
 100000..10FFFF; Supplementary Private Use Area-B
 """
 
-# --- 2. CONFIG: DEFINISI GRUP NEGARA ---
-# List negara pengguna utama Latin (bisa ditambah sesuai kebutuhan)
-LATIN_GLOBAL  = ["ID", "US", "GB", "FR", "DE", "IT", "ES", "BR", "TR", "VN", "PH", "MY", "AU", "NZ", "SG"]
-CYRILLIC_USER = ["RU", "MN", "BG", "UA", "KZ", "KG", "TJ", "RS", "MK"]
-ARABIC_USER   = ["SA", "EG", "IR", "PK", "AF", "IQ", "SY", "JO", "LB", "KW", "OM", "YE", "QA", "AE", "BH", "SD", "LY", "TN", "DZ", "MA"]
+# --- 2. CONFIG: DEFINISI GRUP NEGARA (MODIFIED TO 3 LETTERS) ---
+# Menambahkan UZB ke daftar pengguna Latin dan Cyrillic
+LATIN_GLOBAL  = ["IDN", "USA", "GBR", "FRA", "DEU", "ITA", "ESP", "BRA", "TUR", "VNM", "PHL", "MYS", "AUS", "NZL", "SGP", "UZB"]
+CYRILLIC_USER = ["RUS", "MNG", "BGR", "UKR", "KAZ", "KGZ", "TJK", "SRB", "MKD", "UZB"]
+ARABIC_USER   = ["SAU", "EGY", "IRN", "PAK", "AFG", "IRQ", "SYR", "JOR", "LBN", "KWT", "OMN", "YEM", "QAT", "ARE", "BHR", "SDN", "LBY", "TUN", "DZA", "MAR"]
 
-# --- 3. MAPPING NEGARA (LOGIKA BARU - ANTI BOCOR) ---
-# Kunci di sini HARUS sesuai dengan substring nama blok Unicode
+# --- 3. MAPPING NEGARA (3-LETTER ISO) ---
 iso_mapping = {
-    # --- GLOBAL SCRIPTS ---
     "Latin": LATIN_GLOBAL,
     "Cyrillic": CYRILLIC_USER,
     "Arabic": ARABIC_USER,
-
-    # --- INDONESIA & ASEAN ---
-    "Javanese": ["ID"], "Balinese": ["ID"], "Sundanese": ["ID"],
-    "Batak": ["ID"], "Rejang": ["ID"], "Buginese": ["ID"], "Makasar": ["ID"],
-    "Kawi": ["ID"],
-    "Thai": ["TH"], "Lao": ["LA"], "Khmer": ["KH"], "Myanmar": ["MM"],
-    "Tagalog": ["PH"], "Hanunoo": ["PH"], "Buhid": ["PH"], "Tagbanwa": ["PH"],
-    "Viet": ["VN"], "Cham": ["VN", "KH"],
-    "Kayah Li": ["MM", "TH"],
-    "Tai Tham": ["TH", "LA", "MM"],
-
-    # --- EAST ASIA ---
-    # Gunakan 'CJK' untuk Hanzi/Kanji/Hanja (China, Taiwan, Jepang, Korea, Vietnam, Singapura)
-    # Ini akan mencocokkan 'CJK Unified Ideographs', 'CJK Compatibility', dll.
-    "CJK": ["CN", "TW", "JP", "KR", "VN", "SG"],
-    
-    # Korea: Hangul spesifik (untuk memisahkan dari CJK umum)
-    "Hangul": ["KR", "KP"], 
-    "Jamo": ["KR", "KP"], # Perlu spesifik 'Jamo' karena nama blok 'Hangul Jamo'
-    
-    # Jepang: Kana spesifik
-    "Hiragana": ["JP"], "Katakana": ["JP"], "Kana": ["JP"],
-    
-    # China/Taiwan spesifik
-    "Bopomofo": ["TW"],
-    "Yi": ["CN"], "Lisu": ["CN"], "Nushu": ["CN"], "Tangut": ["CN"], "Mongolian": ["MN", "CN"], "Tibetan": ["CN"],
-
-    # --- SOUTH ASIA ---
-    "Devanagari": ["IN", "NP"],
-    "Bengali": ["BD", "IN"],
-    "Tamil": ["IN", "LK", "SG", "MY"],
-    "Sinhala": ["LK"], "Thaana": ["MV"],
-    "Gurmukhi": ["IN"], "Gujarati": ["IN"], "Oriya": ["IN"],
-    "Telugu": ["IN"], "Kannada": ["IN"], "Malayalam": ["IN"],
-    
-    # Rohingya Mapping (Hanya BD dan MM, tidak kena 'Han')
-    "Hanifi": ["MM", "BD"], 
-
-    # --- OTHERS ---
-    "Hebrew": ["IL"], "Syriac": ["SY", "IQ", "IR", "TR"],
-    "Ethiopic": ["ET", "ER"],
-    "Tifinagh": ["MA", "DZ", "LY"],
-    "Cherokee": ["US"], "Canadian": ["CA"],
-    "Greek": ["GR", "CY"], "Coptic": ["EG"],
-    "Georgian": ["GE"], "Armenian": ["AM"],
-
-    # --- TECH / SYMBOLS (Universal) ---
-    "Symbol": ["XX"], "Mark": ["XX"], "Punctuation": ["XX"],
-    "Surrogates": ["XX"], "Private Use": ["XX"], "Variation": ["XX"],
-    "Braille": ["XX"], "Music": ["XX"], "Math": ["XX"], "Forms": ["XX"]
+    "Javanese": ["IDN"], "Balinese": ["IDN"], "Sundanese": ["IDN"],
+    "Batak": ["IDN"], "Rejang": ["IDN"], "Buginese": ["IDN"], "Makasar": ["IDN"],
+    "Kawi": ["IDN"],
+    "Thai": ["THA"], "Lao": ["LAO"], "Khmer": ["KHM"], "Myanmar": ["MMR"],
+    "Tagalog": ["PHL"], "Hanunoo": ["PHL"], "Buhid": ["PHL"], "Tagbanwa": ["PHL"],
+    "Viet": ["VNM"], "Cham": ["VNM", "KHM"],
+    "Kayah Li": ["MMR", "THA"],
+    "Tai Tham": ["THA", "LAO", "MMR"],
+    "CJK": ["CHN", "TWN", "JPN", "KOR", "VNM", "SGP"],
+    "Hangul": ["KOR", "PRK"],
+    "Jamo": ["KOR", "PRK"],
+    "Hiragana": ["JPN"], "Katakana": ["JPN"], "Kana": ["JPN"],
+    "Bopomofo": ["TWN"],
+    "Yi": ["CHN"], "Lisu": ["CHN"], "Nushu": ["CHN"], "Tangut": ["CHN"],
+    "Mongolian": ["MNG", "CHN"], "Tibetan": ["CHN"],
+    "Devanagari": ["IND", "NPL"],
+    "Bengali": ["BGD", "IND"],
+    "Tamil": ["IND", "LKA", "SGP", "MYS"],
+    "Sinhala": ["LKA"], "Thaana": ["MDV"],
+    "Gurmukhi": ["IND"], "Gujarati": ["IND"], "Oriya": ["IND"],
+    "Telugu": ["IND"], "Kannada": ["IND"], "Malayalam": ["IND"],
+    "Hanifi": ["MMR", "BGD"],
+    "Hebrew": ["ISR"], "Syriac": ["SYR", "IRQ", "IRN", "TUR"],
+    "Ethiopic": ["ETH", "ERI"],
+    "Tifinagh": ["MAR", "DZA", "LBY"],
+    "Cherokee": ["USA"], "Canadian": ["CAN"],
+    "Greek": ["GRC", "CYP"], "Coptic": ["EGY"],
+    "Georgian": ["GEO"], "Armenian": ["ARM"],
+    "Symbol": ["XXX"], "Mark": ["XXX"], "Punctuation": ["XXX"],
+    "Surrogates": ["XXX"], "Private Use": ["XXX"], "Variation": ["XXX"],
+    "Braille": ["XXX"], "Music": ["XXX"], "Math": ["XXX"], "Forms": ["XXX"]
 }
 
 trans_mapping = {
@@ -504,11 +482,9 @@ trans_mapping = {
 }
 
 # --- 4. PROSES GENERATE JSON ---
-
 definitions = {}
 country_registry = {}
 
-# Inisialisasi list untuk setiap negara agar urutan rapi
 all_countries = set()
 for clist in iso_mapping.values():
     all_countries.update(clist)
@@ -516,41 +492,34 @@ for c in sorted(list(all_countries)):
     country_registry[c] = []
 
 for line in raw_data.strip().split('\n'):
-    if not line or line.startswith('#'): continue
+    if not line: continue
     try:
         parts = line.split('; ')
-        if len(parts) < 2: continue
-
         range_raw = parts[0].strip()
         name_en = parts[1].strip()
 
-        # ID Unik
         block_id = name_en.lower().replace(" ", "_").replace("-", "_")
-
-        # Proses Range & Sample
         start_hex, end_hex = range_raw.split('..')
         range_clean = f"{start_hex}-{end_hex}"
         start_int = int(start_hex, 16)
 
+        # Logic Filter untuk blok non-renderable (Surrogates & Private Use Area)
         is_unicode = True
-        sample_char = ""
         font_slug = "Noto+Sans+" + name_en.replace(" ", "+")
 
-        # Filter Area Khusus
-        if (0xD800 <= start_int <= 0xDFFF) or (0xE000 <= start_int <= 0xF8FF) or (0xF0000 <= start_int <= 0x10FFFF):
+        if (0xD800 <= start_int <= 0xDFFF) or (0xE000 <= start_int <= 0xF8FF) or (start_int >= 0xF0000):
             is_unicode = False
             font_slug = None
-            if 0xE000 <= start_int <= 0xF8FF: sample_char = ""
+            sample_char = ""
         else:
-            try:
-                sample_char = chr(start_int)
+            try: sample_char = chr(start_int)
             except:
-                sample_char = "?"
+                sample_char = ""
                 is_unicode = False
 
         if "Latin" in name_en: font_slug = "Noto+Sans"
 
-        # Translate Nama
+        # Script Code Logic
         if "Latin" in name_en: script_code = "Latn"
         elif "Arabic" in name_en: script_code = "Arab"
         elif "Cyrillic" in name_en: script_code = "Cyrl"
@@ -563,7 +532,6 @@ for line in raw_data.strip().split('\n'):
         for en, idn in trans_mapping.items():
             name_id = name_id.replace(en, idn)
 
-        # Simpan Definisi
         definitions[block_id] = {
             "code": script_code,
             "name_en": name_en,
@@ -574,59 +542,29 @@ for line in raw_data.strip().split('\n'):
             "sample": sample_char
         }
 
-        # --- LOGIKA MATCHING (FIXED) ---
+        # Logic Matching
         target_countries = []
-        
-        # 1. Cek CJK dulu secara spesifik agar tidak greedy
-        # Masalah utama adalah nama blok "CJK..." mengandung "Han" atau bisa ambigu
-        # Kita andalkan keyword "CJK" di mapping
-        
-        # 2. Iterasi mapping standar
         for keyword, country_list in iso_mapping.items():
-            # Special case untuk menghindari 'Han' match dengan 'Hanunoo' atau 'Hanifi'
-            # Di mapping baru tidak ada key 'Han' sendirian, sudah aman.
-            
-            # Cek apakah keyword ada di nama blok
             if keyword in name_en:
-                # FILTER TAMBAHAN: Jangan masukkan VN/SG ke blok Hangul atau Filipina
-                # Jika nama blok mengandung 'Hangul' atau 'Hanunoo', jangan masukkan negara CJK umum (VN, SG)
-                # kecuali jika mereka terdaftar eksplisit di keyword tersebut (misal KR di Hangul)
-                
-                # Filter manual untuk kasus corner case jika masih bocor
                 if "Hangul" in name_en or "Jamo" in name_en:
-                    # Pastikan hanya negara yang ada di list 'Hangul'/'Jamo' yang masuk
-                    # Filter country_list agar hanya berisi KR/KP
-                    filtered_list = [c for c in country_list if c in ["KR", "KP"]]
-                    if filtered_list:
-                        target_countries.extend(filtered_list)
+                    filtered_list = [c for c in country_list if c in ["KOR", "PRK"]]
+                    if filtered_list: target_countries.extend(filtered_list)
                 elif "Hanunoo" in name_en:
-                     # Hanya PH
-                     if "PH" in country_list:
-                         target_countries.append("PH")
+                     if "PHL" in country_list: target_countries.append("PHL")
                 elif "Hanifi" in name_en:
-                     # Hanya MM, BD
-                     filtered_list = [c for c in country_list if c in ["MM", "BD"]]
+                     filtered_list = [c for c in country_list if c in ["MMR", "BGD"]]
                      target_countries.extend(filtered_list)
                 else:
                     target_countries.extend(country_list)
-        
-        target_countries = sorted(list(set(target_countries)))
-        
-        # Fallback ke XX jika tidak ada yang cocok
-        if not target_countries: 
-            target_countries = ["XX"]
 
-        # Assign ke Registry
+        target_countries = sorted(list(set(target_countries)))
+        if not target_countries: target_countries = ["XXX"]
+
         for iso in target_countries:
-            if iso not in country_registry:
-                country_registry[iso] = []
+            if iso not in country_registry: country_registry[iso] = []
             country_registry[iso].append(block_id)
 
-    except Exception as e:
-        pass
-
-# Bersihkan negara yang kosong (opsional)
-country_registry = {k: v for k, v in country_registry.items() if v}
+    except: pass
 
 # --- 5. OUTPUT ---
 final_db = {
