@@ -35,9 +35,10 @@ Step 1: Get the Raw Data
 
 Download the latest Blocks.txt file from the official Unicode FTP server. This file contains the ranges for every registered writing system.
 
-Source: Unicode 17.0.0 Blocks.txt https://www.unicode.org/Public/17.0.0/ucd/Blocks.txt 
+Source: Unicode 17.0.0 Blocks.txt https://www.unicode.org/Public/17.0.0/ucd/Blocks.txt (version 17 - sept 2025)
 
 Action: Copy the entire content of the text file.
+(UNICODE will updated on every sept each year)
 
 
 Step 2: Process with Python (via Google Colab)
