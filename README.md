@@ -213,7 +213,7 @@ for line in raw_data.strip().split('\n'):
 This project is licensed under the MIT License - see the LICENSE file for details.
 
 
-Initiated by Angga Conni Saputra.
+Initiated by
 **Angga Conni Saputra**
 *Governance Reform & Digital System Consultant*
 (https://www.linkedin.com/in/anggaconni/)
