@@ -6,20 +6,17 @@
     <meta name="referrer" content="no-referrer">
     <title>Global Script Explorer | By Angga Conni Saputra</title>
     
-    <!-- Leaflet CSS & JS (Moved to HEAD for stability) -->
+    <!-- Leaflet CSS & JS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
     
-    <!-- Google Fonts -->
+    <!-- Google Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&family=Noto+Sans:wght@400;700&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
-
-    <!-- Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
     <style>
-        /* --- VARIABLES --- */
         :root {
             --bg-paper: #F4F1EC;
             --land: #E6DFD3;
@@ -27,284 +24,64 @@
             --ink-primary: #2F2A24;
             --highlight: #8B5E3C;
             --gold: #D4AF37;
-            --blue-active: #2563EB;
-            --warning-bg: #FEF3C7;
-            --warning-text: #92400E;
-            --danger-bg: #FEE2E2;
-            --danger-text: #991B1B;
-            --success-green: #15803d;
-            
             --font-display: 'Cinzel', serif;
-            --font-serif: 'Crimson Pro', serif;
-            --font-mono: 'JetBrains Mono', monospace;
             --font-ui: 'Inter', sans-serif;
         }
-
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body, html { margin: 0; padding: 0; height: 100%; width: 100%; background-color: var(--bg-paper); color: var(--ink-primary); font-family: var(--font-ui); overflow: hidden; }
 
-        /* --- LANDING PAGE --- */
-        #landing-page {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background-color: #1a1816;
-            color: #fff;
-            transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
-        }
+        /* Landing Page */
+        #landing-page { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; background-color: #1a1816; color: #fff; transition: opacity 0.8s ease; }
+        #landing-page.hidden { opacity: 0; pointer-events: none; }
+        .landing-title { font-family: var(--font-display); font-size: 3rem; margin-bottom: 1rem; text-align: center; }
+        .enter-btn { background: var(--gold); border: none; padding: 12px 30px; font-weight: bold; cursor: pointer; color: #1a1816; border-radius: 4px; }
 
-        #landing-page.hidden {
-            opacity: 0;
-            pointer-events: none;
-            transform: scale(1.02);
-        }
-
-        .landing-bg {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('https://images.unsplash.com/photo-1596495577886-d920f1fb7238?q=80&w=2074&auto=format&fit=crop'); 
-            background-size: cover;
-            background-position: center;
-            z-index: 0;
-        }
-
-        .landing-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, rgba(30, 25, 20, 0.7) 0%, rgba(15, 12, 10, 0.95) 100%);
-            z-index: 1;
-        }
-
-        .landing-content {
-            text-align: center;
-            padding: 40px;
-            z-index: 2;
-            position: relative;
-            max-width: 800px;
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(5px);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-        }
-
-        .landing-title {
-            font-family: var(--font-display);
-            font-size: 4rem;
-            margin: 0 0 1rem 0;
-            text-shadow: 0 4px 15px rgba(0,0,0,0.8);
-            letter-spacing: 4px;
-            color: #F4F1EC;
-            line-height: 1.1;
-        }
-
-        .landing-subtitle {
-            font-family: var(--font-serif);
-            font-size: 1.2rem;
-            font-style: italic;
-            letter-spacing: 1px;
-            color: var(--gold);
-            margin-bottom: 2.5rem;
-            opacity: 0.9;
-        }
-
-        .enter-btn {
-            background: linear-gradient(135deg, var(--gold) 0%, #b8923e 100%);
-            color: #1a1816;
-            border: none;
-            padding: 16px 48px;
-            font-family: var(--font-ui);
-            font-weight: 700;
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(184, 146, 62, 0.3);
-            border-radius: 2px;
-        }
-
-        .enter-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(184, 146, 62, 0.5);
-            background: #fff;
-        }
-
-        .landing-footer {
-            position: absolute;
-            bottom: 30px;
-            font-family: var(--font-serif);
-            font-style: italic;
-            font-size: 0.9rem;
-            color: rgba(255,255,255,0.5);
-            z-index: 2;
-            letter-spacing: 1px;
-        }
-
-        @media (max-width: 600px) {
-            .landing-title { font-size: 2.5rem; letter-spacing: 2px; }
-            .landing-subtitle { font-size: 1rem; }
-            .landing-content { width: 90%; padding: 30px 20px; }
-        }
-
-        /* --- MAP & UI --- */
+        /* Map & UI */
         #map { height: 100%; width: 100%; z-index: 1; background: var(--water); }
-        .leaflet-tile { filter: sepia(0.2) grayscale(0.1) brightness(1.05); }
-        path.leaflet-interactive:hover { fill-opacity: 0.8 !important; fill: var(--highlight) !important; stroke: var(--ink-primary) !important; stroke-width: 2px !important; }
-
-        .header-float {
-            position: absolute; top: 20px; left: 20px; z-index: 1000;
-            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
-            padding: 12px 18px; border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            display: flex; flex-direction: column; gap: 8px;
-            border: 1px solid rgba(0,0,0,0.05); width: 300px;
-        }
-        .brand-row { display: flex; align-items: center; justify-content: space-between; }
-        .brand-left { display: flex; align-items: center; gap: 10px; }
+        .header-float { position: absolute; top: 20px; left: 20px; z-index: 1000; background: rgba(255,255,255,0.9); padding: 15px; border-radius: 8px; width: 300px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        .status-lamp { width: 10px; height: 10px; border-radius: 50%; background-color: #ccc; display: inline-block; margin-right: 5px; }
+        .status-lamp.ready { background-color: #15803d; box-shadow: 0 0 5px #15803d; }
+        .status-lamp.error { background-color: #991b1b; }
         
-        .status-lamp {
-            width: 10px; height: 10px; border-radius: 50%;
-            background-color: var(--success-green);
-            box-shadow: 0 0 0 2px rgba(21, 128, 61, 0.2);
-        }
+        /* Panel */
+        .info-panel { position: absolute; top: 20px; right: 20px; bottom: 20px; width: 450px; background: white; z-index: 1001; transform: translateX(120%); transition: transform 0.4s ease; border-radius: 12px; box-shadow: -5px 0 30px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
+        .info-panel.open { transform: translateX(0); }
+        .panel-header { padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+        .panel-body { flex: 1; overflow-y: auto; padding: 20px; background: #fafafa; }
+        .close-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; }
 
-        .brand h1 { margin: 0; font-size: 1.1rem; font-weight: 700; font-family: var(--font-display); letter-spacing: 0.5px; color: var(--ink-primary); }
-        .brand p { margin: 0; font-size: 0.65rem; color: #666; text-transform: uppercase; letter-spacing: 1px; }
-        .creator-tag { font-size: 0.65rem; color: #666; border-top: 1px solid #eee; padding-top: 6px; margin-top: 2px; }
-        .data-source { font-size: 0.65rem; color: #888; font-family: var(--font-mono); }
+        /* Script Card */
+        .script-card { background: white; border: 1px solid #e5e5e5; border-radius: 8px; margin-bottom: 15px; padding: 20px; transition: 0.2s; }
+        .script-card:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .script-name { font-weight: 700; font-size: 1.1rem; display: block; margin-bottom: 5px; }
+        .script-sample { font-size: 3rem; text-align: center; margin: 15px 0; color: #333; min-height: 60px; line-height: 1; }
+        .meta-row { display: flex; gap: 10px; margin-top: 15px; }
+        .btn { flex: 1; padding: 8px; text-align: center; border-radius: 4px; text-decoration: none; font-size: 0.8rem; font-weight: 600; cursor: pointer; border: 1px solid #ddd; }
+        .btn-primary { background: var(--ink-primary); color: white; border: none; }
         
-        .lang-toggle { display: flex; background: #f3f4f6; border-radius: 6px; padding: 2px; cursor: pointer; }
-        .lang-btn { padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; color: #9ca3af; transition: 0.2s; }
-        .lang-btn.active { background: white; color: var(--ink-primary); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-
-        /* --- SIDE PANEL --- */
-        .info-panel {
-            position: absolute; z-index: 1001; background: white;
-            box-shadow: -5px 0 30px rgba(0,0,0,0.1); display: flex; flex-direction: column;
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        @media (min-width: 769px) {
-            .info-panel { top: 20px; right: 20px; bottom: 20px; width: 450px; transform: translateX(120%); border-radius: 12px; border: 1px solid #eee; }
-            .info-panel.open { transform: translateX(0); }
-        }
+        /* Responsive */
         @media (max-width: 768px) {
-            .info-panel { bottom: 0; left: 0; right: 0; max-height: 85vh; height: auto; transform: translateY(100%); border-top-left-radius: 20px; border-top-right-radius: 20px; }
+            .info-panel { width: 100%; top: auto; bottom: 0; height: 70vh; transform: translateY(100%); border-radius: 20px 20px 0 0; }
             .info-panel.open { transform: translateY(0); }
-            .header-float { left: 10px; right: 10px; top: 10px; width: auto; }
+            .header-float { width: auto; right: 20px; }
         }
-        .panel-header { padding: 24px; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: flex-start; background: #fff; border-radius: 12px 12px 0 0; }
-        .country-meta h2 { margin: 0; font-size: 2rem; font-family: var(--font-display); color: var(--ink-primary); }
-        .country-meta span { font-family: var(--font-mono); font-size: 0.9rem; color: #999; }
-        .close-btn { background: #f9fafb; border: 1px solid #e5e7eb; cursor: pointer; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.2s; color: #666; }
-        .close-btn:hover { background: #fee2e2; color: #991b1b; border-color: #fee2e2; }
-        .panel-body { padding: 24px; overflow-y: auto; flex: 1; background: #fdfdfc; }
-
-        /* --- SCRIPT CARD --- */
-        .script-card { background: white; border: 1px solid #e5e5e5; border-radius: 8px; margin-bottom: 24px; padding: 24px; position: relative; transition: box-shadow 0.2s; }
-        .script-card:hover { box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-color: #d4d4d4; }
-        
-        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px; }
-        .script-name { font-size: 1.25rem; font-weight: 600; font-family: var(--font-serif); color: #111; flex: 1; }
-        
-        .card-tools { display: flex; gap: 8px; align-items: center; }
-        
-        .badge { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; padding: 4px 8px; border-radius: 4px; letter-spacing: 0.5px; white-space: nowrap; }
-        .badge-reg { background: #f0fdf4; color: #166534; border: 1px solid #dcfce7; }
-        .badge-miss { background: #fef2f2; color: #991b1b; border: 1px solid #fee2e2; }
-        
-        /* DCMI Button */
-        .btn-dcmi { 
-            background: white; 
-            color: #4b5563; 
-            border: 1px solid #d1d5db; 
-            border-radius: 4px;
-            display: flex; 
-            align-items: center; 
-            gap: 6px;
-            padding: 4px 10px; 
-            font-size: 0.75rem; 
-            font-weight: 600;
-            font-family: var(--font-ui);
-            cursor: pointer;
-            transition: all 0.2s;
-            white-space: nowrap;
-        }
-        .btn-dcmi:hover { background: #f3f4f6; color: #111; border-color: #9ca3af; }
-        
-        .script-sample { font-size: 3rem; margin: 20px 0; color: #111; line-height: 1.2; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; text-align: center; min-height: 3.6rem; }
-        
-        .meta-info { font-size: 0.8rem; color: #666; font-family: var(--font-mono); border-top: 1px dashed #e5e5e5; padding-top: 12px; margin-top: 12px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 5px; }
-        
-        .action-row { display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
-        .btn { padding: 12px 20px; border-radius: 6px; font-size: 0.9rem; font-weight: 600; cursor: pointer; text-decoration: none; border: none; flex: 1; text-align: center; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; min-width: 120px; }
-        .btn-primary { background: var(--ink-primary); color: #F4F1EC; }
-        .btn-primary:hover { background: #000; }
-        .btn-secondary { background: white; color: var(--highlight); border: 1px solid var(--highlight); }
-        .btn-secondary:hover { background: #fefce8; }
-        .btn-disabled { background: #f3f4f6; color: #9ca3af; cursor: not-allowed; border: 1px solid #e5e7eb; }
-        
-        .font-warning { display: flex; align-items: center; gap: 8px; background: #fffbeb; color: #b45309; font-size: 0.8rem; padding: 10px; border-radius: 6px; margin-top: 12px; border: 1px solid #fcd34d; }
-
-        /* --- MODAL --- */
-        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(2px); z-index: 2000; display: none; align-items: center; justify-content: center; }
-        .modal-overlay.active { display: flex; }
-        .modal-content { background: white; width: 90%; max-width: 800px; height: 85vh; border-radius: 12px; display: flex; flex-direction: column; position: relative; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
-        .modal-header { padding: 20px 30px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; background: white; }
-        .modal-title { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; margin: 0; color: var(--ink-primary); }
-        .char-grid-container { flex: 1; overflow-y: auto; padding: 30px; background: #fafafa; position: relative; }
-        .char-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); gap: 12px; }
-        .char-cell { aspect-ratio: 1; background: white; border: 1px solid #e5e5e5; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 2rem; cursor: pointer; transition: all 0.2s; color: #333; }
-        .char-cell:hover { transform: translateY(-4px); border-color: var(--highlight); box-shadow: 0 10px 20px rgba(0,0,0,0.1); z-index: 2; color: var(--highlight); }
-        .arrow-side { position: absolute; top: 50%; transform: translateY(-50%); width: 48px; height: 48px; background: white; border-radius: 50%; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid #eee; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10; color: var(--ink-primary); font-size: 1.5rem; transition: 0.2s; }
-        .arrow-side:hover { background: var(--highlight); color: white; border-color: var(--highlight); }
-        .arrow-left { left: 20px; }
-        .arrow-right { right: 20px; }
-        .modal-footer { padding: 16px 30px; border-top: 1px solid #eee; background: white; display: flex; justify-content: space-between; align-items: center; }
-        @media (max-width: 600px) {
-            .arrow-side { display: none; }
-            .char-grid { grid-template-columns: repeat(auto-fill, minmax(48px, 1fr)); gap: 8px; }
-            .char-cell { font-size: 1.5rem; }
-        }
-        .zoom-modal { z-index: 3000; }
-        .zoom-content { max-width: 360px; text-align: center; padding: 30px; border-radius: 16px; background: white; border: 1px solid #eee; }
     </style>
 </head>
 <body>
 
-    <!-- LANDING PAGE -->
     <div id="landing-page">
-        <div class="landing-bg"></div>
-        <div class="landing-overlay"></div>
-        <div class="landing-content">
-            <div class="landing-title">Global Script Explorer</div>
-            <div class="landing-subtitle">Discover the Writing Systems of the World</div>
-            <button class="enter-btn" onclick="enterApp()">Mulai Penjelajahan</button>
-        </div>
-        <div class="landing-footer">Angga Conni Saputra</div>
+        <div class="landing-title">Global Script Explorer</div>
+        <button class="enter-btn" onclick="enterApp()">Mulai Penjelajahan</button>
     </div>
 
-    <!-- MAIN APP INTERFACE -->
     <div class="header-float">
-        <div class="brand-row">
-            <div class="brand-left">
-                <div id="connStatus" class="status-lamp" title="Ready"></div>
-                <div class="brand">
-                    <h1 data-i18n="app_title">World Script Explorer</h1>
-                    <p data-i18n="app_subtitle">UNICODE DATA VIEWER</p>
-                </div>
-            </div>
-            <div class="lang-toggle" onclick="toggleLang()">
-                <div class="lang-btn" id="btn-id">ID</div>
-                <div class="lang-btn active" id="btn-en">EN</div>
-            </div>
+        <div style="display:flex; align-items:center; margin-bottom:5px;">
+            <div id="connStatus" class="status-lamp"></div>
+            <strong>Status Data</strong>
         </div>
-        <div id="statusArea" class="data-source">Using Local Data (Unicode 17.0)</div>
-        <div class="creator-tag">
-            Initiated by <strong>Angga Conni Saputra</strong>
+        <div id="statusArea" style="font-size:0.8rem; color:#666;">Menunggu Load...</div>
+        <div style="font-size:0.7rem; margin-top:10px; border-top:1px solid #eee; padding-top:5px;">
+            Klik negara untuk melihat aksara.
         </div>
     </div>
 
@@ -312,163 +89,116 @@
 
     <div class="info-panel" id="infoPanel">
         <div class="panel-header">
-            <div class="country-meta">
-                <h2 id="countryName">Country</h2>
-                <span id="countryCode">ISO</span>
+            <div>
+                <h2 id="countryName" style="margin:0;">Country</h2>
+                <span id="countryCode" style="color:#666; font-family:monospace;">ISO</span>
             </div>
-            <button class="close-btn" onclick="closePanel()"><i class="ph ph-x"></i></button>
+            <button class="close-btn" onclick="closePanel()">&times;</button>
         </div>
         <div class="panel-body" id="scriptList"></div>
     </div>
 
-    <!-- Modal Grid (Pagination Logic) -->
-    <div class="modal-overlay" id="charModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div>
-                    <h3 class="modal-title" id="modalTitle">Title</h3>
-                    <span style="font-size:0.8rem; color:#666; font-family:monospace;" id="modalRange">Range</span>
-                </div>
-                <button class="close-btn" onclick="closeModal()"><i class="ph ph-x"></i></button>
-            </div>
-            
-            <div class="char-grid-container">
-                <button class="arrow-side arrow-left" id="btnPrevSide" onclick="changePage(-1)"><i class="ph ph-caret-left"></i></button>
-                <button class="arrow-side arrow-right" id="btnNextSide" onclick="changePage(1)"><i class="ph ph-caret-right"></i></button>
-                <div class="char-grid" id="charGrid"></div>
-            </div>
-
-            <div class="modal-footer">
-                <button class="close-btn" id="btnPrev" onclick="changePage(-1)"><i class="ph ph-caret-left"></i></button>
-                <span id="pageInfo" style="font-size:0.85rem; font-family:var(--font-mono); color:#666;">1-300</span>
-                <button class="close-btn" id="btnNext" onclick="changePage(1)"><i class="ph ph-caret-right"></i></button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Zoom Modal -->
-    <div class="modal-overlay zoom-modal" id="zoomModal">
-        <div class="modal-content zoom-content">
-            <div style="display:flex; justify-content:flex-end;">
-                <button class="close-btn" onclick="closeZoom()"><i class="ph ph-x"></i></button>
-            </div>
-            <div id="zoomDisplay" style="font-size:8rem; line-height:1.2; margin:20px 0; color:var(--ink-primary);"></div>
-            <div id="zoomCode" style="font-family:monospace; background:#f4f4f4; padding:6px 12px; border-radius:4px; color:#555; font-weight:700;"></div>
-        </div>
-    </div>
-
     <script>
-        // --- PERFORMANCE AUDIT: Variables for Safety ---
+        let GLOBAL_SCRIPT_DB = {};
         let loadedFonts = new Set();
-        let GLOBAL_SCRIPT_DB = {}; 
-
-        // --- LOAD DATA FROM aksara.json ---
-        async function loadData() {
-            const debugArea = document.getElementById('statusArea');
-            debugArea.innerText = "Loading data...";
-            try {
-                const response = await fetch('aksara.json');
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                GLOBAL_SCRIPT_DB = await response.json();
-                console.log("Database Loaded Successfully from aksara.json");
-                debugArea.innerText = "Ready: Local Data (aksara.json)";
-            } catch (e) {
-                console.error("Database Fetch Error:", e);
-                debugArea.innerHTML = "<span style='color:red'>Data Error. Check aksara.json</span>";
-            }
-        }
         
-        // Start loading data immediately
-        loadData();
-        
-        // --- LANDING PAGE LOGIC ---
-        function enterApp() {
-            const landing = document.getElementById('landing-page');
-            landing.classList.add('hidden');
-            setTimeout(() => {
-                landing.style.display = 'none';
-            }, 800);
-        }
-
-        // --- EXISTING LOGIC ---
-        const i18n = {
-            en: { app_title: "World Script Explorer", app_subtitle: "UNICODE DATA VIEWER", reg: "REGISTERED", miss: "PROPOSED", btn_dl: "Download Font", btn_view: "View Characters", font_missing: "Font not yet available in registry", paging: "{start}-{end} of {total}", stat: "Ready: Local Data" },
-            id: { app_title: "Penjelajah Aksara Dunia", app_subtitle: "DATA UNICODE VIEWER", reg: "TERDAFTAR", miss: "BELUM ADA", btn_dl: "Unduh Font", btn_view: "Lihat Karakter", font_missing: "Font belum tersedia di registry", paging: "{start}-{end} dari {total}", stat: "Siap: Data Lokal" }
+        // --- 1. FIXED ISO MAPPING (PENTING!) ---
+        // Peta GeoJSON sering menggunakan kode 3 huruf yang tidak standar konversinya.
+        // Kita gunakan peta manual untuk negara-negara besar agar akurat.
+        const ISO_MAP = {
+            'IDN': 'ID', 'CHN': 'CN', 'USA': 'US', 'IND': 'IN', 'JPN': 'JP', 
+            'LKA': 'LK', 'MNG': 'MN', 'KOR': 'KR', 'PRK': 'KP', 'RUS': 'RU',
+            'SAU': 'SA', 'EGY': 'EG', 'GRC': 'GR', 'ETH': 'ET', 'THA': 'TH',
+            'LAO': 'LA', 'KHM': 'KH', 'MMR': 'MM', 'BGD': 'BD', 'NPL': 'NP',
+            'BTN': 'BT', 'PAK': 'PK', 'AFG': 'AF', 'IRN': 'IR', 'IRQ': 'IQ',
+            'SYR': 'SY', 'ISR': 'IL', 'JOR': 'JO', 'LBN': 'LB', 'TUR': 'TR',
+            'ARM': 'AM', 'GEO': 'GE', 'AZE': 'AZ', 'VNM': 'VN', 'PHL': 'PH',
+            'MYS': 'MY', 'SGP': 'SG', 'BRN': 'BN', 'GBR': 'GB', 'DEU': 'DE',
+            'FRA': 'FR', 'ITA': 'IT', 'ESP': 'ES', 'PRT': 'PT', 'NLD': 'NL',
+            'SWE': 'SE', 'NOR': 'NO', 'FIN': 'FI', 'DNK': 'DK', 'ISL': 'IS',
+            'CAN': 'CA', 'MEX': 'MX', 'BRA': 'BR', 'ARG': 'AR', 'CHL': 'CL',
+            'COL': 'CO', 'PER': 'PE', 'VEN': 'VE', 'ZAF': 'ZA', 'NGA': 'NG',
+            'KEN': 'KE', 'TZA': 'TZ', 'UGA': 'UG', 'MAR': 'MA', 'DZA': 'DZ',
+            'TUN': 'TN', 'LBY': 'LY', 'SDN': 'SD', 'AUS': 'AU', 'NZL': 'NZ'
         };
 
-        let currentLang = 'en';
-        let modalState = { rangeStart: 0, rangeEnd: 0, fontName: '', page: 0, pageSize: 300 };
-        
-        const FALLBACK_LATIN = [{ code: "Latn", name_en: "Latin (System)", name_id: "Latin (Sistem)", unicode: true, range: "0020-007F", ver: "1.0", font: "Noto+Sans", sample: "Abcde" }];
-
-        // --- MAP SETUP ---
-        document.addEventListener('DOMContentLoaded', () => {
-            // Check if L is defined, if not, wait or show error
-            if (typeof L === 'undefined') {
-                 console.error("Leaflet not loaded");
-                 document.getElementById('statusArea').innerHTML = "<span style='color:red'>Error loading map library. Please refresh.</span>";
-                 return;
-            }
-
-            try {
-                const map = L.map('map', { zoomControl: false, minZoom: 2, maxZoom: 8 }).setView([20, 78], 3); 
-                L.control.zoom({ position: 'bottomright' }).addTo(map);
-
-                fetch('https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json')
-                    .then(res => {
-                        if (!res.ok) throw new Error("Network response was not ok");
-                        return res.json();
-                    })
-                    .then(data => {
-                        L.geoJSON(data, {
-                            style: { fillColor: '#E6DFD3', weight: 1, opacity: 1, color: '#B0A99F', fillOpacity: 1 },
-                            onEachFeature: (f, l) => {
-                                l.on('click', (e) => {
-                                    const iso = convertIso3to2(f.id);
-                                    openCountry(iso, f.properties.name);
-                                    L.DomEvent.stopPropagation(e);
-                                });
-                            }
-                        }).addTo(map);
-                    })
-                    .catch(error => {
-                        console.error("Map Data Error:", error);
-                        document.getElementById('statusArea').innerHTML = "<span style='color:red'>Map Error: Check Connection</span>";
-                    });
-            } catch (e) {
-                console.error("Map Init Error:", e);
-            }
-        });
-
         function convertIso3to2(iso3) {
-            const m = { 'IDN': 'ID', 'CHN': 'CN', 'USA': 'US', 'IND': 'IN', 'JPN': 'JP', 'LKA': 'LK', 'MNG': 'MN' };
-            return m[iso3] || iso3.substring(0, 2).toUpperCase();
+            // Cek di map manual dulu, kalau tidak ada, coba ambil 2 huruf pertama (fallback)
+            return ISO_MAP[iso3] || iso3.substring(0, 2).toUpperCase();
         }
 
-        // --- CORE FUNCTIONALITY ---
-        function getScriptData(iso) {
-            const debugArea = document.getElementById('statusArea');
+        // --- 2. LOAD DATA DENGAN ERROR HANDLING ---
+        async function loadData() {
+            const statusEl = document.getElementById('statusArea');
+            const lampEl = document.getElementById('connStatus');
             
-            // Check if DB is loaded
-            if (!GLOBAL_SCRIPT_DB.countries) {
-                 debugArea.innerHTML = `<span style="color:orange">Data loading... Try again.</span>`;
-                 return [];
-            }
-
-            if (GLOBAL_SCRIPT_DB.countries && GLOBAL_SCRIPT_DB.countries[iso]) {
-                const scriptIds = GLOBAL_SCRIPT_DB.countries[iso];
-                // Map IDs to actual definition objects, handling missing keys safely
-                const data = scriptIds.map(id => GLOBAL_SCRIPT_DB.definitions ? GLOBAL_SCRIPT_DB.definitions[id] : null).filter(Boolean);
+            try {
+                statusEl.innerText = "Mengunduh aksara.json...";
                 
-                debugArea.innerHTML = `<span style="color:green">Loaded: ${iso} (${data.length} scripts)</span>`;
-                return data.length > 0 ? data : FALLBACK_LATIN;
-            } else {
-                debugArea.innerHTML = `<span style="color:orange">Data incomplete for: ${iso}</span>`;
-                return FALLBACK_LATIN; 
+                // Tambahkan timestamp agar tidak kena cache browser saat update
+                const response = await fetch('aksara.json?v=' + new Date().getTime());
+                
+                if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+                
+                GLOBAL_SCRIPT_DB = await response.json();
+                
+                console.log("Database Loaded:", Object.keys(GLOBAL_SCRIPT_DB.countries).length, "countries");
+                statusEl.innerText = "Data Siap (Lokal)";
+                lampEl.classList.add('ready');
+            } catch (e) {
+                console.error("Gagal load JSON:", e);
+                statusEl.innerHTML = "<span style='color:red'>Gagal baca aksara.json!<br>Cek Console.</span>";
+                lampEl.classList.add('error');
             }
         }
+
+        // --- 3. FUNGSI UNTUK MEMPERBAIKI SAMPLE (Solusi \u0000) ---
+        function getSafeSample(script) {
+            // Jika sample ada dan BUKAN karakter kontrol (kode > 32)
+            if (script.sample && script.sample.codePointAt(0) > 32) {
+                return script.sample;
+            }
+            
+            // Jika sample kosong atau invisible (\u0000), hitung dari range
+            if (script.range) {
+                try {
+                    const parts = script.range.split('-');
+                    if (parts.length === 2) {
+                        const start = parseInt(parts[0], 16);
+                        // Ambil karakter ke-5 dari awal range supaya biasanya bukan simbol aneh
+                        return String.fromCodePoint(start + 4); 
+                    }
+                } catch (e) {
+                    return "?";
+                }
+            }
+            return "?";
+        }
+
+        // --- INIT MAP ---
+        document.addEventListener('DOMContentLoaded', () => {
+            loadData(); // Jalankan load data segera
+
+            const map = L.map('map', { zoomControl: false, minZoom: 2 }).setView([20, 0], 2);
+            L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+            fetch('https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json')
+                .then(res => res.json())
+                .then(data => {
+                    L.geoJSON(data, {
+                        style: { fillColor: '#E6DFD3', weight: 1, color: '#B0A99F', fillOpacity: 1 },
+                        onEachFeature: (f, l) => {
+                            l.on('click', (e) => {
+                                L.DomEvent.stopPropagation(e);
+                                const iso3 = f.id;
+                                const iso2 = convertIso3to2(iso3);
+                                console.log(`Clicked: ${f.properties.name} (${iso3} -> ${iso2})`);
+                                openCountry(iso2, f.properties.name);
+                            });
+                        }
+                    }).addTo(map);
+                });
+        });
 
         // --- UI LOGIC ---
         function openCountry(iso, name) {
@@ -476,178 +206,68 @@
             document.getElementById('countryCode').innerText = iso;
             document.getElementById('infoPanel').classList.add('open');
             
-            const scripts = getScriptData(iso);
-            renderScripts(scripts, name);
+            renderScripts(iso);
         }
 
-        function renderScripts(scripts, countryName) {
+        function renderScripts(iso) {
             const list = document.getElementById('scriptList');
             list.innerHTML = '';
-            
-            if (!scripts || scripts.length === 0) {
-                list.innerHTML = '<div style="padding:20px; text-align:center;">No script data available.</div>';
+
+            // Cek apakah data DB sudah siap
+            if (!GLOBAL_SCRIPT_DB.countries) {
+                list.innerHTML = '<div style="padding:20px; text-align:center; color:orange;">Data sedang dimuat...<br>Silakan tunggu & coba klik lagi.</div>';
                 return;
             }
-            
-            // Optimization: Document Fragment prevents multiple reflows
-            const fragment = document.createDocumentFragment();
 
-            scripts.forEach(script => {
-                // PERFORMANCE FIX: Use Set check instead of DOM query
+            const scriptIds = GLOBAL_SCRIPT_DB.countries[iso];
+            
+            if (!scriptIds || scriptIds.length === 0) {
+                list.innerHTML = `<div style="padding:20px; text-align:center;">Tidak ada data aksara spesifik untuk kode <strong>${iso}</strong>.</div>`;
+                return;
+            }
+
+            scriptIds.forEach(id => {
+                const script = GLOBAL_SCRIPT_DB.definitions[id];
+                if (!script) return;
+
+                // Load Font Dinamis
                 if (script.font && script.font !== 'null' && !loadedFonts.has(script.font)) {
-                    const l = document.createElement('link');
-                    // Handle special font names like Noto+Serif+SC which are valid Google Fonts
-                    l.href = `https://fonts.googleapis.com/css2?family=${script.font}&display=swap`;
-                    l.rel = 'stylesheet';
-                    document.head.appendChild(l);
+                    const link = document.createElement('link');
+                    link.href = `https://fonts.googleapis.com/css2?family=${script.font}&display=swap`;
+                    link.rel = 'stylesheet';
+                    document.head.appendChild(link);
                     loadedFonts.add(script.font);
                 }
-                
-                const hasFont = script.font && script.font !== 'null';
-                const isReg = script.unicode === true || script.unicode === "TRUE"; 
-                const fontUrl = hasFont ? `https://fonts.google.com/specimen/${script.font.replace(/\+/g, '+')}` : '#';
-                // Handle space replacement for font-family usage in CSS
-                const fontFamily = hasFont ? script.font.replace(/\+/g, ' ') : 'sans-serif';
+
+                const fontFamily = script.font ? script.font.replace(/\+/g, ' ') : 'sans-serif';
+                // Gunakan fungsi safe sample di sini
+                const displaySample = getSafeSample(script);
+                const isUnicode = script.unicode === true || script.unicode === "TRUE";
 
                 const div = document.createElement('div');
                 div.className = 'script-card';
                 div.innerHTML = `
-                    <div class="card-header">
-                        <span class="script-name">${currentLang === 'id' ? script.name_id : script.name_en}</span>
-                        <div class="card-tools">
-                            <button class="btn-dcmi" title="Export Metadata (DCMI XML)" onclick="exportDCMI('${script.name_en}', '${script.code}', '${countryName}')">
-                                <i class="ph ph-export"></i> DCMI
-                            </button>
-                            <span class="badge ${isReg ? 'badge-reg' : 'badge-miss'}">${isReg ? i18n[currentLang].reg : i18n[currentLang].miss}</span>
-                        </div>
+                    <span class="script-name">${script.name_id || script.name_en}</span>
+                    <div style="font-size:0.8rem; color:#666;">Range: ${script.range}</div>
+                    
+                    <div class="script-sample" style="font-family:'${fontFamily}';">
+                        ${displaySample}
                     </div>
-                    <div class="script-sample" style="font-family:'${fontFamily}';">${script.sample || ''}</div>
-                    <div class="meta-info">
-                        <span>Code: <strong>${script.code}</strong></span>
-                        <span>Range: <code>${script.range || 'N/A'}</code></span>
-                    </div>
-                    ${!hasFont && isReg ? `<div class="font-warning"><i class="ph ph-warning"></i> ${i18n[currentLang].font_missing}</div>` : ''}
-                    <div class="action-row">
-                        <a href="${fontUrl}" target="_blank" class="btn ${hasFont?'btn-primary':'btn-disabled'}" ${!hasFont?'onclick="return false;"':''}>
-                            <i class="ph ph-download-simple"></i> ${i18n[currentLang].btn_dl}
-                        </a>
-                        <button class="btn ${isReg?'btn-secondary':'btn-disabled'}" onclick="openGrid('${script.name_en}', '${script.range}', '${fontFamily}')" ${!isReg?'disabled':''}>
-                            <i class="ph ph-grid-four"></i> ${i18n[currentLang].btn_view}
-                        </button>
+                    
+                    <div class="meta-row">
+                        <a href="https://fonts.google.com/specimen/${script.font || ''}" target="_blank" class="btn btn-primary">Unduh Font</a>
+                        <button class="btn" onclick="alert('Fitur Grid akan hadir segera!')">Lihat Grid</button>
                     </div>
                 `;
-                fragment.appendChild(div);
+                list.appendChild(div);
             });
-            
-            list.appendChild(fragment);
         }
 
-        function exportDCMI(scriptName, scriptCode, countryName) {
-            const date = new Date().toISOString().split('T')[0];
-            const xmlContent = `<?xml version="1.0" encoding="UTF-8"?>
-<metadata xmlns="http://example.org/myapp/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://example.org/myapp/ http://example.org/myapp/schema.xsd" xmlns:dc="http://purl.org/dc/elements/1.1/">
-  <dc:title>${scriptName}</dc:title>
-  <dc:creator>Angga Conni Saputra</dc:creator>
-  <dc:subject>Unicode Script</dc:subject>
-  <dc:subject>${scriptCode}</dc:subject>
-  <dc:description>Writing system used in ${countryName}</dc:description>
-  <dc:publisher>Global Script Explorer</dc:publisher>
-  <dc:date>${date}</dc:date>
-  <dc:type>Dataset</dc:type>
-  <dc:format>text/xml</dc:format>
-  <dc:language>en</dc:language>
-</metadata>`;
-
-            const blob = new Blob([xmlContent], { type: 'text/xml' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `DCMI_${scriptCode}_${date}.xml`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            setTimeout(() => URL.revokeObjectURL(url), 100);
+        function enterApp() {
+            document.getElementById('landing-page').classList.add('hidden');
+            setTimeout(() => document.getElementById('landing-page').style.display = 'none', 800);
         }
-
-        // --- GRID LOGIC ---
-        function openGrid(name, range, font) {
-            document.getElementById('charModal').classList.add('active');
-            document.getElementById('modalTitle').innerText = name;
-            document.getElementById('modalRange').innerText = range;
-            
-            try {
-                const p = range.split('-');
-                if(p.length===2) {
-                    modalState.rangeStart = parseInt(p[0], 16);
-                    modalState.rangeEnd = parseInt(p[1], 16);
-                    modalState.fontName = font;
-                    modalState.page = 0;
-                    renderPage();
-                }
-            } catch(e){ console.error(e); }
-        }
-
-        function renderPage() {
-            const grid = document.getElementById('charGrid');
-            grid.innerHTML = '';
-            grid.style.fontFamily = modalState.fontName;
-
-            const total = modalState.rangeEnd - modalState.rangeStart + 1;
-            const offset = modalState.page * modalState.pageSize;
-            const start = modalState.rangeStart + offset;
-            const end = Math.min(modalState.rangeEnd, start + modalState.pageSize - 1);
-
-            if (start > modalState.rangeEnd) return; 
-
-            // Optimization: Fragment again
-            const fragment = document.createDocumentFragment();
-
-            for(let i=start; i<=end; i++) {
-                const cell = document.createElement('div');
-                cell.className = 'char-cell';
-                if (i >= 0xD800 && i <= 0xDFFF) {
-                    cell.innerText = "";
-                    cell.style.color = "#ccc";
-                } else {
-                    try { cell.innerText = String.fromCodePoint(i); } catch(e) { cell.innerText = "?"; }
-                }
-                cell.onclick = () => {
-                    document.getElementById('zoomModal').classList.add('active');
-                    const d = document.getElementById('zoomDisplay');
-                    d.innerText = cell.innerText;
-                    d.style.fontFamily = modalState.fontName;
-                    document.getElementById('zoomCode').innerText = `U+${i.toString(16).toUpperCase().padStart(4, '0')}`;
-                };
-                fragment.appendChild(cell);
-            }
-            
-            grid.appendChild(fragment);
-
-            const info = i18n[currentLang].paging.replace('{start}', offset + 1).replace('{end}', offset + (end - start + 1)).replace('{total}', total);
-            document.getElementById('pageInfo').innerText = info;
-            
-            const prevDisabled = modalState.page === 0;
-            const nextDisabled = end >= modalState.rangeEnd;
-            
-            ['btnPrev', 'btnPrevSide'].forEach(id => document.getElementById(id).disabled = prevDisabled);
-            ['btnNext', 'btnNextSide'].forEach(id => document.getElementById(id).disabled = nextDisabled);
-            
-            document.getElementById('btnPrevSide').style.opacity = prevDisabled ? 0 : 1;
-            document.getElementById('btnNextSide').style.opacity = nextDisabled ? 0 : 1;
-        }
-
-        function changePage(d) { modalState.page += d; if (modalState.page < 0) modalState.page = 0; renderPage(); }
         function closePanel() { document.getElementById('infoPanel').classList.remove('open'); }
-        function closeModal() { document.getElementById('charModal').classList.remove('active'); }
-        function closeZoom() { document.getElementById('zoomModal').classList.remove('active'); }
-        
-        function toggleLang() {
-            currentLang = currentLang === 'en' ? 'id' : 'en';
-            document.getElementById('btn-id').classList.toggle('active');
-            document.getElementById('btn-en').classList.toggle('active');
-            document.querySelector('[data-i18n="app_title"]').innerText = i18n[currentLang].app_title;
-            document.querySelector('[data-i18n="app_subtitle"]').innerText = i18n[currentLang].app_subtitle;
-        }
     </script>
 </body>
 </html>
