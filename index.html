@@ -12,14 +12,13 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Fonts: Cinzel (Title), Crimson Pro (Serif), JetBrains Mono (Code), Inter (UI), Noto fonts for specific scripts -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
 
     <!-- Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
     <style>
-        /* --- VARIABLES --- */
+        /* [ALL THE CSS REMAINS THE SAME - keeping it unchanged for brevity] */
         :root {
             --bg-paper: #F4F1EC;
             --land: #E6DFD3;
@@ -44,7 +43,6 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body, html { margin: 0; padding: 0; height: 100%; width: 100%; background-color: var(--bg-paper); color: var(--ink-primary); font-family: var(--font-ui); overflow: hidden; }
 
-        /* --- LANDING PAGE (IMPROVED) --- */
         #landing-page {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -53,7 +51,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background-color: #1a1816; /* Darker fallback */
+            background-color: #1a1816;
             color: #fff;
             transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
         }
@@ -64,18 +62,15 @@
             transform: scale(1.02);
         }
 
-        /* Background Image with Gradient Overlay */
         .landing-bg {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            /* Gambar resolusi tinggi yang estetik */
             background-image: url('https://images.unsplash.com/photo-1596495577886-d920f1fb7238?q=80&w=2074&auto=format&fit=crop'); 
             background-size: cover;
             background-position: center;
             z-index: 0;
         }
 
-        /* Gradient Overlay agar teks terbaca jelas namun gambar tetap terlihat */
         .landing-overlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -89,7 +84,7 @@
             z-index: 2;
             position: relative;
             max-width: 800px;
-            border: 1px solid rgba(212, 175, 55, 0.3); /* Subtle gold border */
+            border: 1px solid rgba(212, 175, 55, 0.3);
             background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(5px);
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
@@ -148,20 +143,16 @@
             letter-spacing: 1px;
         }
 
-        /* Mobile adjustments for Landing */
         @media (max-width: 600px) {
             .landing-title { font-size: 2.5rem; letter-spacing: 2px; }
             .landing-subtitle { font-size: 1rem; }
             .landing-content { width: 90%; padding: 30px 20px; }
         }
 
-
-        /* --- MAP --- */
         #map { height: 100%; width: 100%; z-index: 1; background: var(--water); }
         .leaflet-tile { filter: sepia(0.2) grayscale(0.1) brightness(1.05); }
         path.leaflet-interactive:hover { fill-opacity: 0.8 !important; fill: var(--highlight) !important; stroke: var(--ink-primary) !important; stroke-width: 2px !important; }
 
-        /* --- UI FLOATING HEADER --- */
         .header-float {
             position: absolute; top: 20px; left: 20px; z-index: 1000;
             background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
@@ -188,7 +179,6 @@
         .lang-btn { padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; color: #9ca3af; transition: 0.2s; }
         .lang-btn.active { background: white; color: var(--ink-primary); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
 
-        /* --- SIDE PANEL --- */
         .info-panel {
             position: absolute; z-index: 1001; background: white;
             box-shadow: -5px 0 30px rgba(0,0,0,0.1); display: flex; flex-direction: column;
@@ -212,7 +202,6 @@
         
         .panel-body { padding: 24px; overflow-y: auto; flex: 1; background: #fdfdfc; }
 
-        /* --- SCRIPT CARD --- */
         .script-card { background: white; border: 1px solid #e5e5e5; border-radius: 8px; margin-bottom: 24px; padding: 24px; position: relative; transition: box-shadow 0.2s; }
         .script-card:hover { box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-color: #d4d4d4; }
         
@@ -225,7 +214,6 @@
         .badge-reg { background: #f0fdf4; color: #166534; border: 1px solid #dcfce7; }
         .badge-miss { background: #fef2f2; color: #991b1b; border: 1px solid #fee2e2; }
         
-        /* New DCMI Button Style */
         .btn-dcmi { 
             background: white; 
             color: #4b5563; 
@@ -258,7 +246,6 @@
         
         .font-warning { display: flex; align-items: center; gap: 8px; background: #fffbeb; color: #b45309; font-size: 0.8rem; padding: 10px; border-radius: 6px; margin-top: 12px; border: 1px solid #fcd34d; }
 
-        /* --- MODAL --- */
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(2px); z-index: 2000; display: none; align-items: center; justify-content: center; }
         .modal-overlay.active { display: flex; }
         .modal-content { background: white; width: 90%; max-width: 800px; height: 85vh; border-radius: 12px; display: flex; flex-direction: column; position: relative; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
@@ -283,7 +270,6 @@
             .char-cell { font-size: 1.5rem; }
         }
         
-        /* Zoom Modal */
         .zoom-modal { z-index: 3000; }
         .zoom-content { max-width: 360px; text-align: center; padding: 30px; border-radius: 16px; background: white; border: 1px solid #eee; }
     </style>
@@ -336,7 +322,7 @@
         <div class="panel-body" id="scriptList"></div>
     </div>
 
-    <!-- Modal Grid (Pagination Logic) -->
+    <!-- Modal Grid -->
     <div class="modal-overlay" id="charModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -375,38 +361,1073 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
     <script>
-        // --- LANDING PAGE LOGIC ---
-        function enterApp() {
-            const landing = document.getElementById('landing-page');
-            landing.classList.add('hidden');
-            setTimeout(() => {
-                landing.style.display = 'none';
-            }, 800);
-        }
-
-        // --- EXISTING LOGIC ---
-        const i18n = {
-            en: { app_title: "World Script Explorer", app_subtitle: "UNICODE DATA VIEWER", reg: "REGISTERED", miss: "PROPOSED", btn_dl: "Download Font", btn_view: "View Characters", font_missing: "Font not yet available in registry", paging: "{start}-{end} of {total}", stat: "Ready: Local Data" },
-            id: { app_title: "Penjelajah Aksara Dunia", app_subtitle: "DATA UNICODE VIEWER", reg: "TERDAFTAR", miss: "BELUM ADA", btn_dl: "Unduh Font", btn_view: "Lihat Karakter", font_missing: "Font belum tersedia di registry", paging: "{start}-{end} dari {total}", stat: "Siap: Data Lokal" }
-        };
-
-        let currentLang = 'en';
-        let modalState = { rangeStart: 0, rangeEnd: 0, fontName: '', page: 0, pageSize: 300 };
+        // =============================================================================
+        // UNICODE SCRIPT DATABASE - UPDATE THIS SECTION
+        // =============================================================================
         
-        const FALLBACK_LATIN = [{ code: "Latn", name_en: "Latin (System)", name_id: "Latin (Sistem)", unicode: true, range: "0020-007F", ver: "1.0", font: "Noto+Sans", sample: "Abcde" }];
-
-        const GLOBAL_SCRIPT_DB = {
-    "definitions": {
-        // ... (Data sebelumnya tetap ada) ...
-        // UPDATE: FIXING CHINESE & TANGUT FONTS
-        "cjk_unified_ideographs": {
-            "code": "Hani",
-            "name_en": "CJK Unified Ideographs",
-            "name_id": "Aksara CJK Ideograf Bersatu",
-            "range": "4E00-9FFF",
+        // Paste your script definitions JSON here (from the attached document)
+        const SCRIPT_DEFINITIONS = {
+        "basic_latin": {
+            "code": "Latn",
+            "name_en": "Basic Latin",
+            "name_id": "Dasar Latin",
+            "range": "0000-007F",
             "unicode": true,
-            "font": "Noto+Serif+SC", 
-            "sample": "\u4e00"
+            "font": "Noto+Sans",
+            "sample": "\u0000"
+        },
+        "latin_1_supplement": {
+            "code": "Latn",
+            "name_en": "Latin-1 Supplement",
+            "name_id": "Latin-1 Suplemen",
+            "range": "0080-00FF",
+            "unicode": true,
+            "font": "Noto+Sans",
+            "sample": "\u0080"
+        },
+        "latin_extended_a": {
+            "code": "Latn",
+            "name_en": "Latin Extended-A",
+            "name_id": "Latin Perluasan-A",
+            "range": "0100-017F",
+            "unicode": true,
+            "font": "Noto+Sans",
+            "sample": "\u0100"
+        },
+        "latin_extended_b": {
+            "code": "Latn",
+            "name_en": "Latin Extended-B",
+            "name_id": "Latin Perluasan-B",
+            "range": "0180-024F",
+            "unicode": true,
+            "font": "Noto+Sans",
+            "sample": "\u0180"
+        },
+        "ipa_extensions": {
+            "code": "Ipa",
+            "name_en": "IPA Extensions",
+            "name_id": "Aksara IPA Ekstensis",
+            "range": "0250-02AF",
+            "unicode": true,
+            "font": "Noto+Sans+IPA+Extensions",
+            "sample": "\u0250"
+        },
+        "spacing_modifier_letters": {
+            "code": "Spac",
+            "name_en": "Spacing Modifier Letters",
+            "name_id": "Aksara Spacing Modifier Letters",
+            "range": "02B0-02FF",
+            "unicode": true,
+            "font": "Noto+Sans+Spacing+Modifier+Letters",
+            "sample": "\u02b0"
+        },
+        "combining_diacritical_marks": {
+            "code": "Comb",
+            "name_en": "Combining Diacritical Marks",
+            "name_id": "Aksara Combining Diacritical Marks",
+            "range": "0300-036F",
+            "unicode": true,
+            "font": "Noto+Sans+Combining+Diacritical+Marks",
+            "sample": "\u0300"
+        },
+        "greek_and_coptic": {
+            "code": "Gree",
+            "name_en": "Greek and Coptic",
+            "name_id": "Aksara Greek and Coptic",
+            "range": "0370-03FF",
+            "unicode": true,
+            "font": "Noto+Sans+Greek+and+Coptic",
+            "sample": "\u0370"
+        },
+        "cyrillic": {
+            "code": "Cyrl",
+            "name_en": "Cyrillic",
+            "name_id": "Cyrillic",
+            "range": "0400-04FF",
+            "unicode": true,
+            "font": "Noto+Sans+Cyrillic",
+            "sample": "\u0400"
+        },
+        "cyrillic_supplement": {
+            "code": "Cyrl",
+            "name_en": "Cyrillic Supplement",
+            "name_id": "Cyrillic Suplemen",
+            "range": "0500-052F",
+            "unicode": true,
+            "font": "Noto+Sans+Cyrillic+Supplement",
+            "sample": "\u0500"
+        },
+        "armenian": {
+            "code": "Arme",
+            "name_en": "Armenian",
+            "name_id": "Aksara Armenian",
+            "range": "0530-058F",
+            "unicode": true,
+            "font": "Noto+Sans+Armenian",
+            "sample": "\u0530"
+        },
+        "hebrew": {
+            "code": "Hebr",
+            "name_en": "Hebrew",
+            "name_id": "Aksara Hebrew",
+            "range": "0590-05FF",
+            "unicode": true,
+            "font": "Noto+Sans+Hebrew",
+            "sample": "\u0590"
+        },
+        "arabic": {
+            "code": "Arab",
+            "name_en": "Arabic",
+            "name_id": "Arabic",
+            "range": "0600-06FF",
+            "unicode": true,
+            "font": "Noto+Sans+Arabic",
+            "sample": "\u0600"
+        },
+        "syriac": {
+            "code": "Syri",
+            "name_en": "Syriac",
+            "name_id": "Aksara Syriac",
+            "range": "0700-074F",
+            "unicode": true,
+            "font": "Noto+Sans+Syriac",
+            "sample": "\u0700"
+        },
+        "arabic_supplement": {
+            "code": "Arab",
+            "name_en": "Arabic Supplement",
+            "name_id": "Arabic Suplemen",
+            "range": "0750-077F",
+            "unicode": true,
+            "font": "Noto+Sans+Arabic+Supplement",
+            "sample": "\u0750"
+        },
+        "thaana": {
+            "code": "Thaa",
+            "name_en": "Thaana",
+            "name_id": "Aksara Thaana",
+            "range": "0780-07BF",
+            "unicode": true,
+            "font": "Noto+Sans+Thaana",
+            "sample": "\u0780"
+        },
+        "nko": {
+            "code": "Nko",
+            "name_en": "NKo",
+            "name_id": "Aksara NKo",
+            "range": "07C0-07FF",
+            "unicode": true,
+            "font": "Noto+Sans+NKo",
+            "sample": "\u07c0"
+        },
+        "samaritan": {
+            "code": "Sama",
+            "name_en": "Samaritan",
+            "name_id": "Aksara Samaritan",
+            "range": "0800-083F",
+            "unicode": true,
+            "font": "Noto+Sans+Samaritan",
+            "sample": "\u0800"
+        },
+        "mandaic": {
+            "code": "Mand",
+            "name_en": "Mandaic",
+            "name_id": "Aksara Mandaic",
+            "range": "0840-085F",
+            "unicode": true,
+            "font": "Noto+Sans+Mandaic",
+            "sample": "\u0840"
+        },
+        "syriac_supplement": {
+            "code": "Syri",
+            "name_en": "Syriac Supplement",
+            "name_id": "Aksara Syriac Suplemen",
+            "range": "0860-086F",
+            "unicode": true,
+            "font": "Noto+Sans+Syriac+Supplement",
+            "sample": "\u0860"
+        },
+        "arabic_extended_b": {
+            "code": "Arab",
+            "name_en": "Arabic Extended-B",
+            "name_id": "Arabic Perluasan-B",
+            "range": "0870-089F",
+            "unicode": true,
+            "font": "Noto+Sans+Arabic+Extended-B",
+            "sample": "\u0870"
+        },
+        "arabic_extended_a": {
+            "code": "Arab",
+            "name_en": "Arabic Extended-A",
+            "name_id": "Arabic Perluasan-A",
+            "range": "08A0-08FF",
+            "unicode": true,
+            "font": "Noto+Sans+Arabic+Extended-A",
+            "sample": "\u08a0"
+        },
+        "devanagari": {
+            "code": "Deva",
+            "name_en": "Devanagari",
+            "name_id": "Aksara Devanagari",
+            "range": "0900-097F",
+            "unicode": true,
+            "font": "Noto+Sans+Devanagari",
+            "sample": "\u0900"
+        },
+        "bengali": {
+            "code": "Beng",
+            "name_en": "Bengali",
+            "name_id": "Aksara Bengali",
+            "range": "0980-09FF",
+            "unicode": true,
+            "font": "Noto+Sans+Bengali",
+            "sample": "\u0980"
+        },
+        "gurmukhi": {
+            "code": "Gurm",
+            "name_en": "Gurmukhi",
+            "name_id": "Aksara Gurmukhi",
+            "range": "0A00-0A7F",
+            "unicode": true,
+            "font": "Noto+Sans+Gurmukhi",
+            "sample": "\u0a00"
+        },
+        "gujarati": {
+            "code": "Guja",
+            "name_en": "Gujarati",
+            "name_id": "Aksara Gujarati",
+            "range": "0A80-0AFF",
+            "unicode": true,
+            "font": "Noto+Sans+Gujarati",
+            "sample": "\u0a80"
+        },
+        "oriya": {
+            "code": "Oriy",
+            "name_en": "Oriya",
+            "name_id": "Aksara Oriya",
+            "range": "0B00-0B7F",
+            "unicode": true,
+            "font": "Noto+Sans+Oriya",
+            "sample": "\u0b00"
+        },
+        "tamil": {
+            "code": "Tami",
+            "name_en": "Tamil",
+            "name_id": "Aksara Tamil",
+            "range": "0B80-0BFF",
+            "unicode": true,
+            "font": "Noto+Sans+Tamil",
+            "sample": "\u0b80"
+        },
+        "telugu": {
+            "code": "Telu",
+            "name_en": "Telugu",
+            "name_id": "Aksara Telugu",
+            "range": "0C00-0C7F",
+            "unicode": true,
+            "font": "Noto+Sans+Telugu",
+            "sample": "\u0c00"
+        },
+        "kannada": {
+            "code": "Kann",
+            "name_en": "Kannada",
+            "name_id": "Aksara Kannada",
+            "range": "0C80-0CFF",
+            "unicode": true,
+            "font": "Noto+Sans+Kannada",
+            "sample": "\u0c80"
+        },
+        "malayalam": {
+            "code": "Mala",
+            "name_en": "Malayalam",
+            "name_id": "Aksara Malayalam",
+            "range": "0D00-0D7F",
+            "unicode": true,
+            "font": "Noto+Sans+Malayalam",
+            "sample": "\u0d00"
+        },
+        "sinhala": {
+            "code": "Sinh",
+            "name_en": "Sinhala",
+            "name_id": "Aksara Sinhala",
+            "range": "0D80-0DFF",
+            "unicode": true,
+            "font": "Noto+Sans+Sinhala",
+            "sample": "\u0d80"
+        },
+        "thai": {
+            "code": "Thai",
+            "name_en": "Thai",
+            "name_id": "Aksara Thai",
+            "range": "0E00-0E7F",
+            "unicode": true,
+            "font": "Noto+Sans+Thai",
+            "sample": "\u0e00"
+        },
+        "lao": {
+            "code": "Lao",
+            "name_en": "Lao",
+            "name_id": "Aksara Lao",
+            "range": "0E80-0EFF",
+            "unicode": true,
+            "font": "Noto+Sans+Lao",
+            "sample": "\u0e80"
+        },
+        "tibetan": {
+            "code": "Tibe",
+            "name_en": "Tibetan",
+            "name_id": "Aksara Tibetan",
+            "range": "0F00-0FFF",
+            "unicode": true,
+            "font": "Noto+Sans+Tibetan",
+            "sample": "\u0f00"
+        },
+        "myanmar": {
+            "code": "Myan",
+            "name_en": "Myanmar",
+            "name_id": "Aksara Myanmar",
+            "range": "1000-109F",
+            "unicode": true,
+            "font": "Noto+Sans+Myanmar",
+            "sample": "\u1000"
+        },
+        "georgian": {
+            "code": "Geor",
+            "name_en": "Georgian",
+            "name_id": "Aksara Georgian",
+            "range": "10A0-10FF",
+            "unicode": true,
+            "font": "Noto+Sans+Georgian",
+            "sample": "\u10a0"
+        },
+        "hangul_jamo": {
+            "code": "Hani",
+            "name_en": "Hangul Jamo",
+            "name_id": "Aksara Hangul Jamo",
+            "range": "1100-11FF",
+            "unicode": true,
+            "font": "Noto+Sans+Hangul+Jamo",
+            "sample": "\u1100"
+        },
+        "ethiopic": {
+            "code": "Ethi",
+            "name_en": "Ethiopic",
+            "name_id": "Aksara Ethiopic",
+            "range": "1200-137F",
+            "unicode": true,
+            "font": "Noto+Sans+Ethiopic",
+            "sample": "\u1200"
+        },
+        "ethiopic_supplement": {
+            "code": "Ethi",
+            "name_en": "Ethiopic Supplement",
+            "name_id": "Aksara Ethiopic Suplemen",
+            "range": "1380-139F",
+            "unicode": true,
+            "font": "Noto+Sans+Ethiopic+Supplement",
+            "sample": "\u1380"
+        },
+        "cherokee": {
+            "code": "Cher",
+            "name_en": "Cherokee",
+            "name_id": "Aksara Cherokee",
+            "range": "13A0-13FF",
+            "unicode": true,
+            "font": "Noto+Sans+Cherokee",
+            "sample": "\u13a0"
+        },
+        "unified_canadian_aboriginal_syllabics": {
+            "code": "Unif",
+            "name_en": "Unified Canadian Aboriginal Syllabics",
+            "name_id": "Aksara Unified Canadian Aboriginal Syllabics",
+            "range": "1400-167F",
+            "unicode": true,
+            "font": "Noto+Sans+Unified+Canadian+Aboriginal+Syllabics",
+            "sample": "\u1400"
+        },
+        "ogham": {
+            "code": "Ogha",
+            "name_en": "Ogham",
+            "name_id": "Aksara Ogham",
+            "range": "1680-169F",
+            "unicode": true,
+            "font": "Noto+Sans+Ogham",
+            "sample": "\u1680"
+        },
+        "runic": {
+            "code": "Runi",
+            "name_en": "Runic",
+            "name_id": "Aksara Runic",
+            "range": "16A0-16FF",
+            "unicode": true,
+            "font": "Noto+Sans+Runic",
+            "sample": "\u16a0"
+        },
+        "tagalog": {
+            "code": "Taga",
+            "name_en": "Tagalog",
+            "name_id": "Aksara Tagalog",
+            "range": "1700-171F",
+            "unicode": true,
+            "font": "Noto+Sans+Tagalog",
+            "sample": "\u1700"
+        },
+        "hanunoo": {
+            "code": "Hani",
+            "name_en": "Hanunoo",
+            "name_id": "Aksara Hanunoo",
+            "range": "1720-173F",
+            "unicode": true,
+            "font": "Noto+Sans+Hanunoo",
+            "sample": "\u1720"
+        },
+        "buhid": {
+            "code": "Buhi",
+            "name_en": "Buhid",
+            "name_id": "Aksara Buhid",
+            "range": "1740-175F",
+            "unicode": true,
+            "font": "Noto+Sans+Buhid",
+            "sample": "\u1740"
+        },
+        "tagbanwa": {
+            "code": "Tagb",
+            "name_en": "Tagbanwa",
+            "name_id": "Aksara Tagbanwa",
+            "range": "1760-177F",
+            "unicode": true,
+            "font": "Noto+Sans+Tagbanwa",
+            "sample": "\u1760"
+        },
+        "khmer": {
+            "code": "Khme",
+            "name_en": "Khmer",
+            "name_id": "Aksara Khmer",
+            "range": "1780-17FF",
+            "unicode": true,
+            "font": "Noto+Sans+Khmer",
+            "sample": "\u1780"
+        },
+        "mongolian": {
+            "code": "Mong",
+            "name_en": "Mongolian",
+            "name_id": "Aksara Mongolian",
+            "range": "1800-18AF",
+            "unicode": true,
+            "font": "Noto+Sans+Mongolian",
+            "sample": "\u1800"
+        },
+        "unified_canadian_aboriginal_syllabics_extended": {
+            "code": "Unif",
+            "name_en": "Unified Canadian Aboriginal Syllabics Extended",
+            "name_id": "Aksara Unified Canadian Aboriginal Syllabics Perluasan",
+            "range": "18B0-18FF",
+            "unicode": true,
+            "font": "Noto+Sans+Unified+Canadian+Aboriginal+Syllabics+Extended",
+            "sample": "\u18b0"
+        },
+        "limbu": {
+            "code": "Limb",
+            "name_en": "Limbu",
+            "name_id": "Aksara Limbu",
+            "range": "1900-194F",
+            "unicode": true,
+            "font": "Noto+Sans+Limbu",
+            "sample": "\u1900"
+        },
+        "tai_le": {
+            "code": "Tai",
+            "name_en": "Tai Le",
+            "name_id": "Aksara Tai Le",
+            "range": "1950-197F",
+            "unicode": true,
+            "font": "Noto+Sans+Tai+Le",
+            "sample": "\u1950"
+        },
+        "new_tai_lue": {
+            "code": "New",
+            "name_en": "New Tai Lue",
+            "name_id": "Aksara New Tai Lue",
+            "range": "1980-19DF",
+            "unicode": true,
+            "font": "Noto+Sans+New+Tai+Lue",
+            "sample": "\u1980"
+        },
+        "khmer_symbols": {
+            "code": "Khme",
+            "name_en": "Khmer Symbols",
+            "name_id": "Khmer Simbol",
+            "range": "19E0-19FF",
+            "unicode": true,
+            "font": "Noto+Sans+Khmer+Symbols",
+            "sample": "\u19e0"
+        },
+        "buginese": {
+            "code": "Bugi",
+            "name_en": "Buginese",
+            "name_id": "Aksara Buginese",
+            "range": "1A00-1A1F",
+            "unicode": true,
+            "font": "Noto+Sans+Buginese",
+            "sample": "\u1a00"
+        },
+        "tai_tham": {
+            "code": "Tai",
+            "name_en": "Tai Tham",
+            "name_id": "Aksara Tai Tham",
+            "range": "1A20-1AAF",
+            "unicode": true,
+            "font": "Noto+Sans+Tai+Tham",
+            "sample": "\u1a20"
+        },
+        "combining_diacritical_marks_extended": {
+            "code": "Comb",
+            "name_en": "Combining Diacritical Marks Extended",
+            "name_id": "Aksara Combining Diacritical Marks Perluasan",
+            "range": "1AB0-1AFF",
+            "unicode": true,
+            "font": "Noto+Sans+Combining+Diacritical+Marks+Extended",
+            "sample": "\u1ab0"
+        },
+        "balinese": {
+            "code": "Bali",
+            "name_en": "Balinese",
+            "name_id": "Aksara Balinese",
+            "range": "1B00-1B7F",
+            "unicode": true,
+            "font": "Noto+Sans+Balinese",
+            "sample": "\u1b00"
+        },
+        "sundanese": {
+            "code": "Sund",
+            "name_en": "Sundanese",
+            "name_id": "Aksara Sundanese",
+            "range": "1B80-1BBF",
+            "unicode": true,
+            "font": "Noto+Sans+Sundanese",
+            "sample": "\u1b80"
+        },
+        "batak": {
+            "code": "Bata",
+            "name_en": "Batak",
+            "name_id": "Aksara Batak",
+            "range": "1BC0-1BFF",
+            "unicode": true,
+            "font": "Noto+Sans+Batak",
+            "sample": "\u1bc0"
+        },
+        "lepcha": {
+            "code": "Lepc",
+            "name_en": "Lepcha",
+            "name_id": "Aksara Lepcha",
+            "range": "1C00-1C4F",
+            "unicode": true,
+            "font": "Noto+Sans+Lepcha",
+            "sample": "\u1c00"
+        },
+        "ol_chiki": {
+            "code": "OlC",
+            "name_en": "Ol Chiki",
+            "name_id": "Aksara Ol Chiki",
+            "range": "1C50-1C7F",
+            "unicode": true,
+            "font": "Noto+Sans+Ol+Chiki",
+            "sample": "\u1c50"
+        },
+        "cyrillic_extended_c": {
+            "code": "Cyrl",
+            "name_en": "Cyrillic Extended-C",
+            "name_id": "Cyrillic Perluasan-C",
+            "range": "1C80-1C8F",
+            "unicode": true,
+            "font": "Noto+Sans+Cyrillic+Extended-C",
+            "sample": "\u1c80"
+        },
+        "georgian_extended": {
+            "code": "Geor",
+            "name_en": "Georgian Extended",
+            "name_id": "Aksara Georgian Perluasan",
+            "range": "1C90-1CBF",
+            "unicode": true,
+            "font": "Noto+Sans+Georgian+Extended",
+            "sample": "\u1c90"
+        },
+        "sundanese_supplement": {
+            "code": "Sund",
+            "name_en": "Sundanese Supplement",
+            "name_id": "Aksara Sundanese Suplemen",
+            "range": "1CC0-1CCF",
+            "unicode": true,
+            "font": "Noto+Sans+Sundanese+Supplement",
+            "sample": "\u1cc0"
+        },
+        "vedic_extensions": {
+            "code": "Vedi",
+            "name_en": "Vedic Extensions",
+            "name_id": "Aksara Vedic Ekstensis",
+            "range": "1CD0-1CFF",
+            "unicode": true,
+            "font": "Noto+Sans+Vedic+Extensions",
+            "sample": "\u1cd0"
+        },
+        "phonetic_extensions": {
+            "code": "Phon",
+            "name_en": "Phonetic Extensions",
+            "name_id": "Aksara Phonetic Ekstensis",
+            "range": "1D00-1D7F",
+            "unicode": true,
+            "font": "Noto+Sans+Phonetic+Extensions",
+            "sample": "\u1d00"
+        },
+        "phonetic_extensions_supplement": {
+            "code": "Phon",
+            "name_en": "Phonetic Extensions Supplement",
+            "name_id": "Aksara Phonetic Ekstensis Suplemen",
+            "range": "1D80-1DBF",
+            "unicode": true,
+            "font": "Noto+Sans+Phonetic+Extensions+Supplement",
+            "sample": "\u1d80"
+        },
+        "combining_diacritical_marks_supplement": {
+            "code": "Comb",
+            "name_en": "Combining Diacritical Marks Supplement",
+            "name_id": "Aksara Combining Diacritical Marks Suplemen",
+            "range": "1DC0-1DFF",
+            "unicode": true,
+            "font": "Noto+Sans+Combining+Diacritical+Marks+Supplement",
+            "sample": "\u1dc0"
+        },
+        "latin_extended_additional": {
+            "code": "Latn",
+            "name_en": "Latin Extended Additional",
+            "name_id": "Latin Perluasan Additional",
+            "range": "1E00-1EFF",
+            "unicode": true,
+            "font": "Noto+Sans",
+            "sample": "\u1e00"
+        },
+        "greek_extended": {
+            "code": "Gree",
+            "name_en": "Greek Extended",
+            "name_id": "Aksara Greek Perluasan",
+            "range": "1F00-1FFF",
+            "unicode": true,
+            "font": "Noto+Sans+Greek+Extended",
+            "sample": "\u1f00"
+        },
+        "general_punctuation": {
+            "code": "Gene",
+            "name_en": "General Punctuation",
+            "name_id": "Aksara General Punctuation",
+            "range": "2000-206F",
+            "unicode": true,
+            "font": "Noto+Sans+General+Punctuation",
+            "sample": "\u2000"
+        },
+        "superscripts_and_subscripts": {
+            "code": "Supe",
+            "name_en": "Superscripts and Subscripts",
+            "name_id": "Aksara Superscripts and Subscripts",
+            "range": "2070-209F",
+            "unicode": true,
+            "font": "Noto+Sans+Superscripts+and+Subscripts",
+            "sample": "\u2070"
+        },
+        "currency_symbols": {
+            "code": "Curr",
+            "name_en": "Currency Symbols",
+            "name_id": "Currency Simbol",
+            "range": "20A0-20CF",
+            "unicode": true,
+            "font": "Noto+Sans+Currency+Symbols",
+            "sample": "\u20a0"
+        },
+        "combining_diacritical_marks_for_symbols": {
+            "code": "Comb",
+            "name_en": "Combining Diacritical Marks for Symbols",
+            "name_id": "Combining Diacritical Marks for Simbol",
+            "range": "20D0-20FF",
+            "unicode": true,
+            "font": "Noto+Sans+Combining+Diacritical+Marks+for+Symbols",
+            "sample": "\u20d0"
+        },
+        "letterlike_symbols": {
+            "code": "Lett",
+            "name_en": "Letterlike Symbols",
+            "name_id": "Letterlike Simbol",
+            "range": "2100-214F",
+            "unicode": true,
+            "font": "Noto+Sans+Letterlike+Symbols",
+            "sample": "\u2100"
+        },
+        "number_forms": {
+            "code": "Numb",
+            "name_en": "Number Forms",
+            "name_id": "Aksara Number Bentuk",
+            "range": "2150-218F",
+            "unicode": true,
+            "font": "Noto+Sans+Number+Forms",
+            "sample": "\u2150"
+        },
+        "arrows": {
+            "code": "Arro",
+            "name_en": "Arrows",
+            "name_id": "Aksara Arrows",
+            "range": "2190-21FF",
+            "unicode": true,
+            "font": "Noto+Sans+Arrows",
+            "sample": "\u2190"
+        },
+        "mathematical_operators": {
+            "code": "Math",
+            "name_en": "Mathematical Operators",
+            "name_id": "Aksara Mathematical Operator",
+            "range": "2200-22FF",
+            "unicode": true,
+            "font": "Noto+Sans+Mathematical+Operators",
+            "sample": "\u2200"
+        },
+        "miscellaneous_technical": {
+            "code": "Misc",
+            "name_en": "Miscellaneous Technical",
+            "name_id": "Aksara Miscellaneous Technical",
+            "range": "2300-23FF",
+            "unicode": true,
+            "font": "Noto+Sans+Miscellaneous+Technical",
+            "sample": "\u2300"
+        },
+        "control_pictures": {
+            "code": "Cont",
+            "name_en": "Control Pictures",
+            "name_id": "Aksara Control Pictures",
+            "range": "2400-243F",
+            "unicode": true,
+            "font": "Noto+Sans+Control+Pictures",
+            "sample": "\u2400"
+        },
+        "optical_character_recognition": {
+            "code": "Opti",
+            "name_en": "Optical Character Recognition",
+            "name_id": "Aksara Optical Character Recognition",
+            "range": "2440-245F",
+            "unicode": true,
+            "font": "Noto+Sans+Optical+Character+Recognition",
+            "sample": "\u2440"
+        },
+        "enclosed_alphanumerics": {
+            "code": "Encl",
+            "name_en": "Enclosed Alphanumerics",
+            "name_id": "Aksara Enclosed Alphanumerics",
+            "range": "2460-24FF",
+            "unicode": true,
+            "font": "Noto+Sans+Enclosed+Alphanumerics",
+            "sample": "\u2460"
+        },
+        "box_drawing": {
+            "code": "Box",
+            "name_en": "Box Drawing",
+            "name_id": "Aksara Box Drawing",
+            "range": "2500-257F",
+            "unicode": true,
+            "font": "Noto+Sans+Box+Drawing",
+            "sample": "\u2500"
+        },
+        "block_elements": {
+            "code": "Bloc",
+            "name_en": "Block Elements",
+            "name_id": "Aksara Block Elements",
+            "range": "2580-259F",
+            "unicode": true,
+            "font": "Noto+Sans+Block+Elements",
+            "sample": "\u2580"
+        },
+        "geometric_shapes": {
+            "code": "Geom",
+            "name_en": "Geometric Shapes",
+            "name_id": "Aksara Geometric Shapes",
+            "range": "25A0-25FF",
+            "unicode": true,
+            "font": "Noto+Sans+Geometric+Shapes",
+            "sample": "\u25a0"
+        },
+        "miscellaneous_symbols": {
+            "code": "Misc",
+            "name_en": "Miscellaneous Symbols",
+            "name_id": "Miscellaneous Simbol",
+            "range": "2600-26FF",
+            "unicode": true,
+            "font": "Noto+Sans+Miscellaneous+Symbols",
+            "sample": "\u2600"
+        },
+        "dingbats": {
+            "code": "Ding",
+            "name_en": "Dingbats",
+            "name_id": "Aksara Dingbats",
+            "range": "2700-27BF",
+            "unicode": true,
+            "font": "Noto+Sans+Dingbats",
+            "sample": "\u2700"
+        },
+        "miscellaneous_mathematical_symbols_a": {
+            "code": "Misc",
+            "name_en": "Miscellaneous Mathematical Symbols-A",
+            "name_id": "Miscellaneous Mathematical Simbol-A",
+            "range": "27C0-27EF",
+            "unicode": true,
+            "font": "Noto+Sans+Miscellaneous+Mathematical+Symbols-A",
+            "sample": "\u27c0"
+        },
+        "supplemental_arrows_a": {
+            "code": "Supp",
+            "name_en": "Supplemental Arrows-A",
+            "name_id": "Aksara Suplemenal Arrows-A",
+            "range": "27F0-27FF",
+            "unicode": true,
+            "font": "Noto+Sans+Supplemental+Arrows-A",
+            "sample": "\u27f0"
+        },
+        "braille_patterns": {
+            "code": "Brai",
+            "name_en": "Braille Patterns",
+            "name_id": "Aksara Braille Patterns",
+            "range": "2800-28FF",
+            "unicode": true,
+            "font": "Noto+Sans+Braille+Patterns",
+            "sample": "\u2800"
+        },
+        "supplemental_arrows_b": {
+            "code": "Supp",
+            "name_en": "Supplemental Arrows-B",
+            "name_id": "Aksara Suplemenal Arrows-B",
+            "range": "2900-297F",
+            "unicode": true,
+            "font": "Noto+Sans+Supplemental+Arrows-B",
+            "sample": "\u2900"
+        },
+        "miscellaneous_mathematical_symbols_b": {
+            "code": "Misc",
+            "name_en": "Miscellaneous Mathematical Symbols-B",
+            "name_id": "Miscellaneous Mathematical Simbol-B",
+            "range": "2980-29FF",
+            "unicode": true,
+            "font": "Noto+Sans+Miscellaneous+Mathematical+Symbols-B",
+            "sample": "\u2980"
+        },
+        "supplemental_mathematical_operators": {
+            "code": "Supp",
+            "name_en": "Supplemental Mathematical Operators",
+            "name_id": "Aksara Suplemenal Mathematical Operator",
+            "range": "2A00-2AFF",
+            "unicode": true,
+            "font": "Noto+Sans+Supplemental+Mathematical+Operators",
+            "sample": "\u2a00"
+        },
+        "miscellaneous_symbols_and_arrows": {
+            "code": "Misc",
+            "name_en": "Miscellaneous Symbols and Arrows",
+            "name_id": "Miscellaneous Simbol and Arrows",
+            "range": "2B00-2BFF",
+            "unicode": true,
+            "font": "Noto+Sans+Miscellaneous+Symbols+and+Arrows",
+            "sample": "\u2b00"
+        },
+        "glagolitic": {
+            "code": "Glag",
+            "name_en": "Glagolitic",
+            "name_id": "Aksara Glagolitic",
+            "range": "2C00-2C5F",
+            "unicode": true,
+            "font": "Noto+Sans+Glagolitic",
+            "sample": "\u2c00"
+        },
+        "latin_extended_c": {
+            "code": "Latn",
+            "name_en": "Latin Extended-C",
+            "name_id": "Latin Perluasan-C",
+            "range": "2C60-2C7F",
+            "unicode": true,
+            "font": "Noto+Sans",
+            "sample": "\u2c60"
+        },
+        "coptic": {
+            "code": "Copt",
+            "name_en": "Coptic",
+            "name_id": "Aksara Coptic",
+            "range": "2C80-2CFF",
+            "unicode": true,
+            "font": "Noto+Sans+Coptic",
+            "sample": "\u2c80"
+        },
+        "georgian_supplement": {
+            "code": "Geor",
+            "name_en": "Georgian Supplement",
+            "name_id": "Aksara Georgian Suplemen",
+            "range": "2D00-2D2F",
+            "unicode": true,
+            "font": "Noto+Sans+Georgian+Supplement",
+            "sample": "\u2d00"
+        },
+        "tifinagh": {
+            "code": "Tifi",
+            "name_en": "Tifinagh",
+            "name_id": "Aksara Tifinagh",
+            "range": "2D30-2D7F",
+            "unicode": true,
+            "font": "Noto+Sans+Tifinagh",
+            "sample": "\u2d30"
+        },
+        "ethiopic_extended": {
+            "code": "Ethi",
+            "name_en": "Ethiopic Extended",
+            "name_id": "Aksara Ethiopic Perluasan",
+            "range": "2D80-2DDF",
+            "unicode": true,
+            "font": "Noto+Sans+Ethiopic+Extended",
+            "sample": "\u2d80"
+        },
+        "cyrillic_extended_a": {
+            "code": "Cyrl",
+            "name_en": "Cyrillic Extended-A",
+            "name_id": "Cyrillic Perluasan-A",
+            "range": "2DE0-2DFF",
+            "unicode": true,
+            "font": "Noto+Sans+Cyrillic+Extended-A",
+            "sample": "\u2de0"
+        },
+        "supplemental_punctuation": {
+            "code": "Supp",
+            "name_en": "Supplemental Punctuation",
+            "name_id": "Aksara Suplemenal Punctuation",
+            "range": "2E00-2E7F",
+            "unicode": true,
+            "font": "Noto+Sans+Supplemental+Punctuation",
+            "sample": "\u2e00"
+        },
+        "cjk_radicals_supplement": {
+            "code": "Cjk",
+            "name_en": "CJK Radicals Supplement",
+            "name_id": "Aksara CJK Radicals Suplemen",
+            "range": "2E80-2EFF",
+            "unicode": true,
+            "font": "Noto+Sans+CJK+Radicals+Supplement",
+            "sample": "\u2e80"
+        },
+        "kangxi_radicals": {
+            "code": "Kang",
+            "name_en": "Kangxi Radicals",
+            "name_id": "Aksara Kangxi Radicals",
+            "range": "2F00-2FDF",
+            "unicode": true,
+            "font": "Noto+Sans+Kangxi+Radicals",
+            "sample": "\u2f00"
+        },
+        "ideographic_description_characters": {
+            "code": "Hani",
+            "name_en": "Ideographic Description Characters",
+            "name_id": "Aksara Ideographic Description Characters",
+            "range": "2FF0-2FFF",
+            "unicode": true,
+            "font": "Noto+Sans+Ideographic+Description+Characters",
+            "sample": "\u2ff0"
+        },
+        "cjk_symbols_and_punctuation": {
+            "code": "Cjk",
+            "name_en": "CJK Symbols and Punctuation",
+            "name_id": "CJK Simbol and Punctuation",
+            "range": "3000-303F",
+            "unicode": true,
+            "font": "Noto+Sans+CJK+Symbols+and+Punctuation",
+            "sample": "\u3000"
+        },
+        "hiragana": {
+            "code": "Hira",
+            "name_en": "Hiragana",
+            "name_id": "Aksara Hiragana",
+            "range": "3040-309F",
+            "unicode": true,
+            "font": "Noto+Sans+Hiragana",
+            "sample": "\u3040"
+        },
+        "katakana": {
+            "code": "Kata",
+            "name_en": "Katakana",
+            "name_id": "Aksara Katakana",
+            "range": "30A0-30FF",
+            "unicode": true,
+            "font": "Noto+Sans+Katakana",
+            "sample": "\u30a0"
+        },
+        "bopomofo": {
+            "code": "Bopo",
+            "name_en": "Bopomofo",
+            "name_id": "Aksara Bopomofo",
+            "range": "3100-312F",
+            "unicode": true,
+            "font": "Noto+Sans+Bopomofo",
+            "sample": "\u3100"
+        },
+        "hangul_compatibility_jamo": {
+            "code": "Hani",
+            "name_en": "Hangul Compatibility Jamo",
+            "name_id": "Aksara Hangul Compatibility Jamo",
+            "range": "3130-318F",
+            "unicode": true,
+            "font": "Noto+Sans+Hangul+Compatibility+Jamo",
+            "sample": "\u3130"
+        },
+        "kanbun": {
+            "code": "Kanb",
+            "name_en": "Kanbun",
+            "name_id": "Aksara Kanbun",
+            "range": "3190-319F",
+            "unicode": true,
+            "font": "Noto+Sans+Kanbun",
+            "sample": "\u3190"
+        },
+        "bopomofo_extended": {
+            "code": "Bopo",
+            "name_en": "Bopomofo Extended",
+            "name_id": "Aksara Bopomofo Perluasan",
+            "range": "31A0-31BF",
+            "unicode": true,
+            "font": "Noto+Sans+Bopomofo+Extended",
+            "sample": "\u31a0"
+        },
+        "cjk_strokes": {
+            "code": "Cjk",
+            "name_en": "CJK Strokes",
+            "name_id": "Aksara CJK Strokes",
+            "range": "31C0-31EF",
+            "unicode": true,
+            "font": "Noto+Sans+CJK+Strokes",
+            "sample": "\u31c0"
+        },
+        "katakana_phonetic_extensions": {
+            "code": "Kata",
+            "name_en": "Katakana Phonetic Extensions",
+            "name_id": "Aksara Katakana Phonetic Ekstensis",
+            "range": "31F0-31FF",
+            "unicode": true,
+            "font": "Noto+Sans+Katakana+Phonetic+Extensions",
+            "sample": "\u31f0"
+        },
+        "enclosed_cjk_letters_and_months": {
+            "code": "Encl",
+            "name_en": "Enclosed CJK Letters and Months",
+            "name_id": "Aksara Enclosed CJK Letters and Months",
+            "range": "3200-32FF",
+            "unicode": true,
+            "font": "Noto+Sans+Enclosed+CJK+Letters+and+Months",
+            "sample": "\u3200"
+        },
+        "cjk_compatibility": {
+            "code": "Cjk",
+            "name_en": "CJK Compatibility",
+            "name_id": "Aksara CJK Compatibility",
+            "range": "3300-33FF",
+            "unicode": true,
+            "font": "Noto+Sans+CJK+Compatibility",
+            "sample": "\u3300"
         },
         "cjk_unified_ideographs_extension_a": {
             "code": "Hani",
@@ -414,8 +1435,1430 @@
             "name_id": "Aksara CJK Ideograf Bersatu Ekstensi A",
             "range": "3400-4DBF",
             "unicode": true,
-            "font": "Noto+Serif+SC",
+            "font": "Noto+Sans+CJK+Unified+Ideographs+Extension+A",
             "sample": "\u3400"
+        },
+        "yijing_hexagram_symbols": {
+            "code": "Yiji",
+            "name_en": "Yijing Hexagram Symbols",
+            "name_id": "Yijing Hexagram Simbol",
+            "range": "4DC0-4DFF",
+            "unicode": true,
+            "font": "Noto+Sans+Yijing+Hexagram+Symbols",
+            "sample": "\u4dc0"
+        },
+        "cjk_unified_ideographs": {
+            "code": "Hani",
+            "name_en": "CJK Unified Ideographs",
+            "name_id": "Aksara CJK Ideograf Bersatu",
+            "range": "4E00-9FFF",
+            "unicode": true,
+            "font": "Noto+Sans+CJK+Unified+Ideographs",
+            "sample": "\u4e00"
+        },
+        "yi_syllables": {
+            "code": "YiS",
+            "name_en": "Yi Syllables",
+            "name_id": "Aksara Yi Syllables",
+            "range": "A000-A48F",
+            "unicode": true,
+            "font": "Noto+Sans+Yi+Syllables",
+            "sample": "\ua000"
+        },
+        "yi_radicals": {
+            "code": "YiR",
+            "name_en": "Yi Radicals",
+            "name_id": "Aksara Yi Radicals",
+            "range": "A490-A4CF",
+            "unicode": true,
+            "font": "Noto+Sans+Yi+Radicals",
+            "sample": "\ua490"
+        },
+        "lisu": {
+            "code": "Lisu",
+            "name_en": "Lisu",
+            "name_id": "Aksara Lisu",
+            "range": "A4D0-A4FF",
+            "unicode": true,
+            "font": "Noto+Sans+Lisu",
+            "sample": "\ua4d0"
+        },
+        "vai": {
+            "code": "Vai",
+            "name_en": "Vai",
+            "name_id": "Aksara Vai",
+            "range": "A500-A63F",
+            "unicode": true,
+            "font": "Noto+Sans+Vai",
+            "sample": "\ua500"
+        },
+        "cyrillic_extended_b": {
+            "code": "Cyrl",
+            "name_en": "Cyrillic Extended-B",
+            "name_id": "Cyrillic Perluasan-B",
+            "range": "A640-A69F",
+            "unicode": true,
+            "font": "Noto+Sans+Cyrillic+Extended-B",
+            "sample": "\ua640"
+        },
+        "bamum": {
+            "code": "Bamu",
+            "name_en": "Bamum",
+            "name_id": "Aksara Bamum",
+            "range": "A6A0-A6FF",
+            "unicode": true,
+            "font": "Noto+Sans+Bamum",
+            "sample": "\ua6a0"
+        },
+        "modifier_tone_letters": {
+            "code": "Modi",
+            "name_en": "Modifier Tone Letters",
+            "name_id": "Aksara Modifier Tone Letters",
+            "range": "A700-A71F",
+            "unicode": true,
+            "font": "Noto+Sans+Modifier+Tone+Letters",
+            "sample": "\ua700"
+        },
+        "latin_extended_d": {
+            "code": "Latn",
+            "name_en": "Latin Extended-D",
+            "name_id": "Latin Perluasan-D",
+            "range": "A720-A7FF",
+            "unicode": true,
+            "font": "Noto+Sans",
+            "sample": "\ua720"
+        },
+        "syloti_nagri": {
+            "code": "Sylo",
+            "name_en": "Syloti Nagri",
+            "name_id": "Aksara Syloti Nagri",
+            "range": "A800-A82F",
+            "unicode": true,
+            "font": "Noto+Sans+Syloti+Nagri",
+            "sample": "\ua800"
+        },
+        "common_indic_number_forms": {
+            "code": "Comm",
+            "name_en": "Common Indic Number Forms",
+            "name_id": "Aksara Common Indic Number Bentuk",
+            "range": "A830-A83F",
+            "unicode": true,
+            "font": "Noto+Sans+Common+Indic+Number+Forms",
+            "sample": "\ua830"
+        },
+        "phags_pa": {
+            "code": "Phag",
+            "name_en": "Phags-pa",
+            "name_id": "Aksara Phags-pa",
+            "range": "A840-A87F",
+            "unicode": true,
+            "font": "Noto+Sans+Phags-pa",
+            "sample": "\ua840"
+        },
+        "saurashtra": {
+            "code": "Saur",
+            "name_en": "Saurashtra",
+            "name_id": "Aksara Saurashtra",
+            "range": "A880-A8DF",
+            "unicode": true,
+            "font": "Noto+Sans+Saurashtra",
+            "sample": "\ua880"
+        },
+        "devanagari_extended": {
+            "code": "Deva",
+            "name_en": "Devanagari Extended",
+            "name_id": "Aksara Devanagari Perluasan",
+            "range": "A8E0-A8FF",
+            "unicode": true,
+            "font": "Noto+Sans+Devanagari+Extended",
+            "sample": "\ua8e0"
+        },
+        "kayah_li": {
+            "code": "Kaya",
+            "name_en": "Kayah Li",
+            "name_id": "Aksara Kayah Li",
+            "range": "A900-A92F",
+            "unicode": true,
+            "font": "Noto+Sans+Kayah+Li",
+            "sample": "\ua900"
+        },
+        "rejang": {
+            "code": "Reja",
+            "name_en": "Rejang",
+            "name_id": "Aksara Rejang",
+            "range": "A930-A95F",
+            "unicode": true,
+            "font": "Noto+Sans+Rejang",
+            "sample": "\ua930"
+        },
+        "hangul_jamo_extended_a": {
+            "code": "Hani",
+            "name_en": "Hangul Jamo Extended-A",
+            "name_id": "Aksara Hangul Jamo Perluasan-A",
+            "range": "A960-A97F",
+            "unicode": true,
+            "font": "Noto+Sans+Hangul+Jamo+Extended-A",
+            "sample": "\ua960"
+        },
+        "javanese": {
+            "code": "Java",
+            "name_en": "Javanese",
+            "name_id": "Aksara Javanese",
+            "range": "A980-A9DF",
+            "unicode": true,
+            "font": "Noto+Sans+Javanese",
+            "sample": "\ua980"
+        },
+        "myanmar_extended_b": {
+            "code": "Myan",
+            "name_en": "Myanmar Extended-B",
+            "name_id": "Aksara Myanmar Perluasan-B",
+            "range": "A9E0-A9FF",
+            "unicode": true,
+            "font": "Noto+Sans+Myanmar+Extended-B",
+            "sample": "\ua9e0"
+        },
+        "cham": {
+            "code": "Cham",
+            "name_en": "Cham",
+            "name_id": "Aksara Cham",
+            "range": "AA00-AA5F",
+            "unicode": true,
+            "font": "Noto+Sans+Cham",
+            "sample": "\uaa00"
+        },
+        "myanmar_extended_a": {
+            "code": "Myan",
+            "name_en": "Myanmar Extended-A",
+            "name_id": "Aksara Myanmar Perluasan-A",
+            "range": "AA60-AA7F",
+            "unicode": true,
+            "font": "Noto+Sans+Myanmar+Extended-A",
+            "sample": "\uaa60"
+        },
+        "tai_viet": {
+            "code": "Tai",
+            "name_en": "Tai Viet",
+            "name_id": "Aksara Tai Viet",
+            "range": "AA80-AADF",
+            "unicode": true,
+            "font": "Noto+Sans+Tai+Viet",
+            "sample": "\uaa80"
+        },
+        "meetei_mayek_extensions": {
+            "code": "Meet",
+            "name_en": "Meetei Mayek Extensions",
+            "name_id": "Aksara Meetei Mayek Ekstensis",
+            "range": "AAE0-AAFF",
+            "unicode": true,
+            "font": "Noto+Sans+Meetei+Mayek+Extensions",
+            "sample": "\uaae0"
+        },
+        "ethiopic_extended_a": {
+            "code": "Ethi",
+            "name_en": "Ethiopic Extended-A",
+            "name_id": "Aksara Ethiopic Perluasan-A",
+            "range": "AB00-AB2F",
+            "unicode": true,
+            "font": "Noto+Sans+Ethiopic+Extended-A",
+            "sample": "\uab00"
+        },
+        "latin_extended_e": {
+            "code": "Latn",
+            "name_en": "Latin Extended-E",
+            "name_id": "Latin Perluasan-E",
+            "range": "AB30-AB6F",
+            "unicode": true,
+            "font": "Noto+Sans",
+            "sample": "\uab30"
+        },
+        "cherokee_supplement": {
+            "code": "Cher",
+            "name_en": "Cherokee Supplement",
+            "name_id": "Aksara Cherokee Suplemen",
+            "range": "AB70-ABBF",
+            "unicode": true,
+            "font": "Noto+Sans+Cherokee+Supplement",
+            "sample": "\uab70"
+        },
+        "meetei_mayek": {
+            "code": "Meet",
+            "name_en": "Meetei Mayek",
+            "name_id": "Aksara Meetei Mayek",
+            "range": "ABC0-ABFF",
+            "unicode": true,
+            "font": "Noto+Sans+Meetei+Mayek",
+            "sample": "\uabc0"
+        },
+        "hangul_syllables": {
+            "code": "Hani",
+            "name_en": "Hangul Syllables",
+            "name_id": "Aksara Hangul Syllables",
+            "range": "AC00-D7AF",
+            "unicode": true,
+            "font": "Noto+Sans+Hangul+Syllables",
+            "sample": "\uac00"
+        },
+        "hangul_jamo_extended_b": {
+            "code": "Hani",
+            "name_en": "Hangul Jamo Extended-B",
+            "name_id": "Aksara Hangul Jamo Perluasan-B",
+            "range": "D7B0-D7FF",
+            "unicode": true,
+            "font": "Noto+Sans+Hangul+Jamo+Extended-B",
+            "sample": "\ud7b0"
+        },
+        "high_surrogates": {
+            "code": "High",
+            "name_en": "High Surrogates",
+            "name_id": "High Surrogates (Teknis)",
+            "range": "D800-DB7F",
+            "unicode": false,
+            "font": null,
+            "sample": ""
+        },
+        "high_private_use_surrogates": {
+            "code": "High",
+            "name_en": "High Private Use Surrogates",
+            "name_id": "High Private Use Surrogates (Teknis)",
+            "range": "DB80-DBFF",
+            "unicode": false,
+            "font": null,
+            "sample": ""
+        },
+        "low_surrogates": {
+            "code": "Low",
+            "name_en": "Low Surrogates",
+            "name_id": "Low Surrogates (Teknis)",
+            "range": "DC00-DFFF",
+            "unicode": false,
+            "font": null,
+            "sample": ""
+        },
+        "private_use_area": {
+            "code": "Priv",
+            "name_en": "Private Use Area",
+            "name_id": "Area Penggunaan Pribadi",
+            "range": "E000-F8FF",
+            "unicode": false,
+            "font": null,
+            "sample": ""
+        },
+        "cjk_compatibility_ideographs": {
+            "code": "Hani",
+            "name_en": "CJK Compatibility Ideographs",
+            "name_id": "Aksara CJK Compatibility Ideographs",
+            "range": "F900-FAFF",
+            "unicode": true,
+            "font": "Noto+Sans+CJK+Compatibility+Ideographs",
+            "sample": "\uf900"
+        },
+        "alphabetic_presentation_forms": {
+            "code": "Alph",
+            "name_en": "Alphabetic Presentation Forms",
+            "name_id": "Aksara Alphabetic Presentation Bentuk",
+            "range": "FB00-FB4F",
+            "unicode": true,
+            "font": "Noto+Sans+Alphabetic+Presentation+Forms",
+            "sample": "\ufb00"
+        },
+        "arabic_presentation_forms_a": {
+            "code": "Arab",
+            "name_en": "Arabic Presentation Forms-A",
+            "name_id": "Arabic Presentation Bentuk-A",
+            "range": "FB50-FDFF",
+            "unicode": true,
+            "font": "Noto+Sans+Arabic+Presentation+Forms-A",
+            "sample": "\ufb50"
+        },
+        "variation_selectors": {
+            "code": "Vari",
+            "name_en": "Variation Selectors",
+            "name_id": "Aksara Variation Selectors",
+            "range": "FE00-FE0F",
+            "unicode": true,
+            "font": "Noto+Sans+Variation+Selectors",
+            "sample": "\ufe00"
+        },
+        "vertical_forms": {
+            "code": "Vert",
+            "name_en": "Vertical Forms",
+            "name_id": "Aksara Vertical Bentuk",
+            "range": "FE10-FE1F",
+            "unicode": true,
+            "font": "Noto+Sans+Vertical+Forms",
+            "sample": "\ufe10"
+        },
+        "combining_half_marks": {
+            "code": "Comb",
+            "name_en": "Combining Half Marks",
+            "name_id": "Aksara Combining Half Marks",
+            "range": "FE20-FE2F",
+            "unicode": true,
+            "font": "Noto+Sans+Combining+Half+Marks",
+            "sample": "\ufe20"
+        },
+        "cjk_compatibility_forms": {
+            "code": "Cjk",
+            "name_en": "CJK Compatibility Forms",
+            "name_id": "Aksara CJK Compatibility Bentuk",
+            "range": "FE30-FE4F",
+            "unicode": true,
+            "font": "Noto+Sans+CJK+Compatibility+Forms",
+            "sample": "\ufe30"
+        },
+        "small_form_variants": {
+            "code": "Smal",
+            "name_en": "Small Form Variants",
+            "name_id": "Aksara Small Form Variants",
+            "range": "FE50-FE6F",
+            "unicode": true,
+            "font": "Noto+Sans+Small+Form+Variants",
+            "sample": "\ufe50"
+        },
+        "arabic_presentation_forms_b": {
+            "code": "Arab",
+            "name_en": "Arabic Presentation Forms-B",
+            "name_id": "Arabic Presentation Bentuk-B",
+            "range": "FE70-FEFF",
+            "unicode": true,
+            "font": "Noto+Sans+Arabic+Presentation+Forms-B",
+            "sample": "\ufe70"
+        },
+        "halfwidth_and_fullwidth_forms": {
+            "code": "Half",
+            "name_en": "Halfwidth and Fullwidth Forms",
+            "name_id": "Aksara Halfwidth and Fullwidth Bentuk",
+            "range": "FF00-FFEF",
+            "unicode": true,
+            "font": "Noto+Sans+Halfwidth+and+Fullwidth+Forms",
+            "sample": "\uff00"
+        },
+        "specials": {
+            "code": "Spec",
+            "name_en": "Specials",
+            "name_id": "Aksara Specials",
+            "range": "FFF0-FFFF",
+            "unicode": true,
+            "font": "Noto+Sans+Specials",
+            "sample": "\ufff0"
+        },
+        "linear_b_syllabary": {
+            "code": "Line",
+            "name_en": "Linear B Syllabary",
+            "name_id": "Aksara Linear B Syllabary",
+            "range": "10000-1007F",
+            "unicode": true,
+            "font": "Noto+Sans+Linear+B+Syllabary",
+            "sample": "\ud800\udc00"
+        },
+        "linear_b_ideograms": {
+            "code": "Line",
+            "name_en": "Linear B Ideograms",
+            "name_id": "Aksara Linear B Ideograms",
+            "range": "10080-100FF",
+            "unicode": true,
+            "font": "Noto+Sans+Linear+B+Ideograms",
+            "sample": "\ud800\udc80"
+        },
+        "aegean_numbers": {
+            "code": "Aege",
+            "name_en": "Aegean Numbers",
+            "name_id": "Aksara Aegean Numbers",
+            "range": "10100-1013F",
+            "unicode": true,
+            "font": "Noto+Sans+Aegean+Numbers",
+            "sample": "\ud800\udd00"
+        },
+        "ancient_greek_numbers": {
+            "code": "Anci",
+            "name_en": "Ancient Greek Numbers",
+            "name_id": "Aksara Ancient Greek Numbers",
+            "range": "10140-1018F",
+            "unicode": true,
+            "font": "Noto+Sans+Ancient+Greek+Numbers",
+            "sample": "\ud800\udd40"
+        },
+        "ancient_symbols": {
+            "code": "Anci",
+            "name_en": "Ancient Symbols",
+            "name_id": "Ancient Simbol",
+            "range": "10190-101CF",
+            "unicode": true,
+            "font": "Noto+Sans+Ancient+Symbols",
+            "sample": "\ud800\udd90"
+        },
+        "phaistos_disc": {
+            "code": "Phai",
+            "name_en": "Phaistos Disc",
+            "name_id": "Aksara Phaistos Disc",
+            "range": "101D0-101FF",
+            "unicode": true,
+            "font": "Noto+Sans+Phaistos+Disc",
+            "sample": "\ud800\uddd0"
+        },
+        "lycian": {
+            "code": "Lyci",
+            "name_en": "Lycian",
+            "name_id": "Aksara Lycian",
+            "range": "10280-1029F",
+            "unicode": true,
+            "font": "Noto+Sans+Lycian",
+            "sample": "\ud800\ude80"
+        },
+        "carian": {
+            "code": "Cari",
+            "name_en": "Carian",
+            "name_id": "Aksara Carian",
+            "range": "102A0-102DF",
+            "unicode": true,
+            "font": "Noto+Sans+Carian",
+            "sample": "\ud800\udea0"
+        },
+        "coptic_epact_numbers": {
+            "code": "Copt",
+            "name_en": "Coptic Epact Numbers",
+            "name_id": "Aksara Coptic Epact Numbers",
+            "range": "102E0-102FF",
+            "unicode": true,
+            "font": "Noto+Sans+Coptic+Epact+Numbers",
+            "sample": "\ud800\udee0"
+        },
+        "old_italic": {
+            "code": "Old",
+            "name_en": "Old Italic",
+            "name_id": "Aksara Old Italic",
+            "range": "10300-1032F",
+            "unicode": true,
+            "font": "Noto+Sans+Old+Italic",
+            "sample": "\ud800\udf00"
+        },
+        "gothic": {
+            "code": "Goth",
+            "name_en": "Gothic",
+            "name_id": "Aksara Gothic",
+            "range": "10330-1034F",
+            "unicode": true,
+            "font": "Noto+Sans+Gothic",
+            "sample": "\ud800\udf30"
+        },
+        "old_permic": {
+            "code": "Old",
+            "name_en": "Old Permic",
+            "name_id": "Aksara Old Permic",
+            "range": "10350-1037F",
+            "unicode": true,
+            "font": "Noto+Sans+Old+Permic",
+            "sample": "\ud800\udf50"
+        },
+        "ugaritic": {
+            "code": "Ugar",
+            "name_en": "Ugaritic",
+            "name_id": "Aksara Ugaritic",
+            "range": "10380-1039F",
+            "unicode": true,
+            "font": "Noto+Sans+Ugaritic",
+            "sample": "\ud800\udf80"
+        },
+        "old_persian": {
+            "code": "Old",
+            "name_en": "Old Persian",
+            "name_id": "Aksara Old Persian",
+            "range": "103A0-103DF",
+            "unicode": true,
+            "font": "Noto+Sans+Old+Persian",
+            "sample": "\ud800\udfa0"
+        },
+        "deseret": {
+            "code": "Dese",
+            "name_en": "Deseret",
+            "name_id": "Aksara Deseret",
+            "range": "10400-1044F",
+            "unicode": true,
+            "font": "Noto+Sans+Deseret",
+            "sample": "\ud801\udc00"
+        },
+        "shavian": {
+            "code": "Shav",
+            "name_en": "Shavian",
+            "name_id": "Aksara Shavian",
+            "range": "10450-1047F",
+            "unicode": true,
+            "font": "Noto+Sans+Shavian",
+            "sample": "\ud801\udc50"
+        },
+        "osmanya": {
+            "code": "Osma",
+            "name_en": "Osmanya",
+            "name_id": "Aksara Osmanya",
+            "range": "10480-104AF",
+            "unicode": true,
+            "font": "Noto+Sans+Osmanya",
+            "sample": "\ud801\udc80"
+        },
+        "osage": {
+            "code": "Osag",
+            "name_en": "Osage",
+            "name_id": "Aksara Osage",
+            "range": "104B0-104FF",
+            "unicode": true,
+            "font": "Noto+Sans+Osage",
+            "sample": "\ud801\udcb0"
+        },
+        "elbasan": {
+            "code": "Elba",
+            "name_en": "Elbasan",
+            "name_id": "Aksara Elbasan",
+            "range": "10500-1052F",
+            "unicode": true,
+            "font": "Noto+Sans+Elbasan",
+            "sample": "\ud801\udd00"
+        },
+        "caucasian_albanian": {
+            "code": "Cauc",
+            "name_en": "Caucasian Albanian",
+            "name_id": "Aksara Caucasian Albanian",
+            "range": "10530-1056F",
+            "unicode": true,
+            "font": "Noto+Sans+Caucasian+Albanian",
+            "sample": "\ud801\udd30"
+        },
+        "vithkuqi": {
+            "code": "Vith",
+            "name_en": "Vithkuqi",
+            "name_id": "Aksara Vithkuqi",
+            "range": "10570-105BF",
+            "unicode": true,
+            "font": "Noto+Sans+Vithkuqi",
+            "sample": "\ud801\udd70"
+        },
+        "todhri": {
+            "code": "Todh",
+            "name_en": "Todhri",
+            "name_id": "Aksara Todhri",
+            "range": "105C0-105FF",
+            "unicode": true,
+            "font": "Noto+Sans+Todhri",
+            "sample": "\ud801\uddc0"
+        },
+        "linear_a": {
+            "code": "Line",
+            "name_en": "Linear A",
+            "name_id": "Aksara Linear A",
+            "range": "10600-1077F",
+            "unicode": true,
+            "font": "Noto+Sans+Linear+A",
+            "sample": "\ud801\ude00"
+        },
+        "latin_extended_f": {
+            "code": "Latn",
+            "name_en": "Latin Extended-F",
+            "name_id": "Latin Perluasan-F",
+            "range": "10780-107BF",
+            "unicode": true,
+            "font": "Noto+Sans",
+            "sample": "\ud801\udf80"
+        },
+        "cypriot_syllabary": {
+            "code": "Cypr",
+            "name_en": "Cypriot Syllabary",
+            "name_id": "Aksara Cypriot Syllabary",
+            "range": "10800-1083F",
+            "unicode": true,
+            "font": "Noto+Sans+Cypriot+Syllabary",
+            "sample": "\ud802\udc00"
+        },
+        "imperial_aramaic": {
+            "code": "Impe",
+            "name_en": "Imperial Aramaic",
+            "name_id": "Aksara Imperial Aramaic",
+            "range": "10840-1085F",
+            "unicode": true,
+            "font": "Noto+Sans+Imperial+Aramaic",
+            "sample": "\ud802\udc40"
+        },
+        "palmyrene": {
+            "code": "Palm",
+            "name_en": "Palmyrene",
+            "name_id": "Aksara Palmyrene",
+            "range": "10860-1087F",
+            "unicode": true,
+            "font": "Noto+Sans+Palmyrene",
+            "sample": "\ud802\udc60"
+        },
+        "nabataean": {
+            "code": "Naba",
+            "name_en": "Nabataean",
+            "name_id": "Aksara Nabataean",
+            "range": "10880-108AF",
+            "unicode": true,
+            "font": "Noto+Sans+Nabataean",
+            "sample": "\ud802\udc80"
+        },
+        "hatran": {
+            "code": "Hatr",
+            "name_en": "Hatran",
+            "name_id": "Aksara Hatran",
+            "range": "108E0-108FF",
+            "unicode": true,
+            "font": "Noto+Sans+Hatran",
+            "sample": "\ud802\udce0"
+        },
+        "phoenician": {
+            "code": "Phoe",
+            "name_en": "Phoenician",
+            "name_id": "Aksara Phoenician",
+            "range": "10900-1091F",
+            "unicode": true,
+            "font": "Noto+Sans+Phoenician",
+            "sample": "\ud802\udd00"
+        },
+        "lydian": {
+            "code": "Lydi",
+            "name_en": "Lydian",
+            "name_id": "Aksara Lydian",
+            "range": "10920-1093F",
+            "unicode": true,
+            "font": "Noto+Sans+Lydian",
+            "sample": "\ud802\udd20"
+        },
+        "sidetic": {
+            "code": "Side",
+            "name_en": "Sidetic",
+            "name_id": "Aksara Sidetic",
+            "range": "10940-1095F",
+            "unicode": true,
+            "font": "Noto+Sans+Sidetic",
+            "sample": "\ud802\udd40"
+        },
+        "meroitic_hieroglyphs": {
+            "code": "Mero",
+            "name_en": "Meroitic Hieroglyphs",
+            "name_id": "Aksara Meroitic Hieroglyphs",
+            "range": "10980-1099F",
+            "unicode": true,
+            "font": "Noto+Sans+Meroitic+Hieroglyphs",
+            "sample": "\ud802\udd80"
+        },
+        "meroitic_cursive": {
+            "code": "Mero",
+            "name_en": "Meroitic Cursive",
+            "name_id": "Aksara Meroitic Cursive",
+            "range": "109A0-109FF",
+            "unicode": true,
+            "font": "Noto+Sans+Meroitic+Cursive",
+            "sample": "\ud802\udda0"
+        },
+        "kharoshthi": {
+            "code": "Khar",
+            "name_en": "Kharoshthi",
+            "name_id": "Aksara Kharoshthi",
+            "range": "10A00-10A5F",
+            "unicode": true,
+            "font": "Noto+Sans+Kharoshthi",
+            "sample": "\ud802\ude00"
+        },
+        "old_south_arabian": {
+            "code": "Old",
+            "name_en": "Old South Arabian",
+            "name_id": "Aksara Old South Arabian",
+            "range": "10A60-10A7F",
+            "unicode": true,
+            "font": "Noto+Sans+Old+South+Arabian",
+            "sample": "\ud802\ude60"
+        },
+        "old_north_arabian": {
+            "code": "Old",
+            "name_en": "Old North Arabian",
+            "name_id": "Aksara Old North Arabian",
+            "range": "10A80-10A9F",
+            "unicode": true,
+            "font": "Noto+Sans+Old+North+Arabian",
+            "sample": "\ud802\ude80"
+        },
+        "manichaean": {
+            "code": "Mani",
+            "name_en": "Manichaean",
+            "name_id": "Aksara Manichaean",
+            "range": "10AC0-10AFF",
+            "unicode": true,
+            "font": "Noto+Sans+Manichaean",
+            "sample": "\ud802\udec0"
+        },
+        "avestan": {
+            "code": "Aves",
+            "name_en": "Avestan",
+            "name_id": "Aksara Avestan",
+            "range": "10B00-10B3F",
+            "unicode": true,
+            "font": "Noto+Sans+Avestan",
+            "sample": "\ud802\udf00"
+        },
+        "inscriptional_parthian": {
+            "code": "Insc",
+            "name_en": "Inscriptional Parthian",
+            "name_id": "Aksara Inscriptional Parthian",
+            "range": "10B40-10B5F",
+            "unicode": true,
+            "font": "Noto+Sans+Inscriptional+Parthian",
+            "sample": "\ud802\udf40"
+        },
+        "inscriptional_pahlavi": {
+            "code": "Insc",
+            "name_en": "Inscriptional Pahlavi",
+            "name_id": "Aksara Inscriptional Pahlavi",
+            "range": "10B60-10B7F",
+            "unicode": true,
+            "font": "Noto+Sans+Inscriptional+Pahlavi",
+            "sample": "\ud802\udf60"
+        },
+        "psalter_pahlavi": {
+            "code": "Psal",
+            "name_en": "Psalter Pahlavi",
+            "name_id": "Aksara Psalter Pahlavi",
+            "range": "10B80-10BAF",
+            "unicode": true,
+            "font": "Noto+Sans+Psalter+Pahlavi",
+            "sample": "\ud802\udf80"
+        },
+        "old_turkic": {
+            "code": "Old",
+            "name_en": "Old Turkic",
+            "name_id": "Aksara Old Turkic",
+            "range": "10C00-10C4F",
+            "unicode": true,
+            "font": "Noto+Sans+Old+Turkic",
+            "sample": "\ud803\udc00"
+        },
+        "old_hungarian": {
+            "code": "Old",
+            "name_en": "Old Hungarian",
+            "name_id": "Aksara Old Hungarian",
+            "range": "10C80-10CFF",
+            "unicode": true,
+            "font": "Noto+Sans+Old+Hungarian",
+            "sample": "\ud803\udc80"
+        },
+        "hanifi_rohingya": {
+            "code": "Hani",
+            "name_en": "Hanifi Rohingya",
+            "name_id": "Aksara Hanifi Rohingya",
+            "range": "10D00-10D3F",
+            "unicode": true,
+            "font": "Noto+Sans+Hanifi+Rohingya",
+            "sample": "\ud803\udd00"
+        },
+        "garay": {
+            "code": "Gara",
+            "name_en": "Garay",
+            "name_id": "Aksara Garay",
+            "range": "10D40-10D8F",
+            "unicode": true,
+            "font": "Noto+Sans+Garay",
+            "sample": "\ud803\udd40"
+        },
+        "rumi_numeral_symbols": {
+            "code": "Rumi",
+            "name_en": "Rumi Numeral Symbols",
+            "name_id": "Rumi Numeral Simbol",
+            "range": "10E60-10E7F",
+            "unicode": true,
+            "font": "Noto+Sans+Rumi+Numeral+Symbols",
+            "sample": "\ud803\ude60"
+        },
+        "yezidi": {
+            "code": "Yezi",
+            "name_en": "Yezidi",
+            "name_id": "Aksara Yezidi",
+            "range": "10E80-10EBF",
+            "unicode": true,
+            "font": "Noto+Sans+Yezidi",
+            "sample": "\ud803\ude80"
+        },
+        "arabic_extended_c": {
+            "code": "Arab",
+            "name_en": "Arabic Extended-C",
+            "name_id": "Arabic Perluasan-C",
+            "range": "10EC0-10EFF",
+            "unicode": true,
+            "font": "Noto+Sans+Arabic+Extended-C",
+            "sample": "\ud803\udec0"
+        },
+        "old_sogdian": {
+            "code": "Old",
+            "name_en": "Old Sogdian",
+            "name_id": "Aksara Old Sogdian",
+            "range": "10F00-10F2F",
+            "unicode": true,
+            "font": "Noto+Sans+Old+Sogdian",
+            "sample": "\ud803\udf00"
+        },
+        "sogdian": {
+            "code": "Sogd",
+            "name_en": "Sogdian",
+            "name_id": "Aksara Sogdian",
+            "range": "10F30-10F6F",
+            "unicode": true,
+            "font": "Noto+Sans+Sogdian",
+            "sample": "\ud803\udf30"
+        },
+        "old_uyghur": {
+            "code": "Old",
+            "name_en": "Old Uyghur",
+            "name_id": "Aksara Old Uyghur",
+            "range": "10F70-10FAF",
+            "unicode": true,
+            "font": "Noto+Sans+Old+Uyghur",
+            "sample": "\ud803\udf70"
+        },
+        "chorasmian": {
+            "code": "Chor",
+            "name_en": "Chorasmian",
+            "name_id": "Aksara Chorasmian",
+            "range": "10FB0-10FDF",
+            "unicode": true,
+            "font": "Noto+Sans+Chorasmian",
+            "sample": "\ud803\udfb0"
+        },
+        "elymaic": {
+            "code": "Elym",
+            "name_en": "Elymaic",
+            "name_id": "Aksara Elymaic",
+            "range": "10FE0-10FFF",
+            "unicode": true,
+            "font": "Noto+Sans+Elymaic",
+            "sample": "\ud803\udfe0"
+        },
+        "brahmi": {
+            "code": "Brah",
+            "name_en": "Brahmi",
+            "name_id": "Aksara Brahmi",
+            "range": "11000-1107F",
+            "unicode": true,
+            "font": "Noto+Sans+Brahmi",
+            "sample": "\ud804\udc00"
+        },
+        "kaithi": {
+            "code": "Kait",
+            "name_en": "Kaithi",
+            "name_id": "Aksara Kaithi",
+            "range": "11080-110CF",
+            "unicode": true,
+            "font": "Noto+Sans+Kaithi",
+            "sample": "\ud804\udc80"
+        },
+        "sora_sompeng": {
+            "code": "Sora",
+            "name_en": "Sora Sompeng",
+            "name_id": "Aksara Sora Sompeng",
+            "range": "110D0-110FF",
+            "unicode": true,
+            "font": "Noto+Sans+Sora+Sompeng",
+            "sample": "\ud804\udcd0"
+        },
+        "chakma": {
+            "code": "Chak",
+            "name_en": "Chakma",
+            "name_id": "Aksara Chakma",
+            "range": "11100-1114F",
+            "unicode": true,
+            "font": "Noto+Sans+Chakma",
+            "sample": "\ud804\udd00"
+        },
+        "mahajani": {
+            "code": "Maha",
+            "name_en": "Mahajani",
+            "name_id": "Aksara Mahajani",
+            "range": "11150-1117F",
+            "unicode": true,
+            "font": "Noto+Sans+Mahajani",
+            "sample": "\ud804\udd50"
+        },
+        "sharada": {
+            "code": "Shar",
+            "name_en": "Sharada",
+            "name_id": "Aksara Sharada",
+            "range": "11180-111DF",
+            "unicode": true,
+            "font": "Noto+Sans+Sharada",
+            "sample": "\ud804\udd80"
+        },
+        "sinhala_archaic_numbers": {
+            "code": "Sinh",
+            "name_en": "Sinhala Archaic Numbers",
+            "name_id": "Aksara Sinhala Archaic Numbers",
+            "range": "111E0-111FF",
+            "unicode": true,
+            "font": "Noto+Sans+Sinhala+Archaic+Numbers",
+            "sample": "\ud804\udde0"
+        },
+        "khojki": {
+            "code": "Khoj",
+            "name_en": "Khojki",
+            "name_id": "Aksara Khojki",
+            "range": "11200-1124F",
+            "unicode": true,
+            "font": "Noto+Sans+Khojki",
+            "sample": "\ud804\ude00"
+        },
+        "multani": {
+            "code": "Mult",
+            "name_en": "Multani",
+            "name_id": "Aksara Multani",
+            "range": "11280-112AF",
+            "unicode": true,
+            "font": "Noto+Sans+Multani",
+            "sample": "\ud804\ude80"
+        },
+        "khudawadi": {
+            "code": "Khud",
+            "name_en": "Khudawadi",
+            "name_id": "Aksara Khudawadi",
+            "range": "112B0-112FF",
+            "unicode": true,
+            "font": "Noto+Sans+Khudawadi",
+            "sample": "\ud804\udeb0"
+        },
+        "grantha": {
+            "code": "Gran",
+            "name_en": "Grantha",
+            "name_id": "Aksara Grantha",
+            "range": "11300-1137F",
+            "unicode": true,
+            "font": "Noto+Sans+Grantha",
+            "sample": "\ud804\udf00"
+        },
+        "tulu_tigalari": {
+            "code": "Tulu",
+            "name_en": "Tulu-Tigalari",
+            "name_id": "Aksara Tulu-Tigalari",
+            "range": "11380-113FF",
+            "unicode": true,
+            "font": "Noto+Sans+Tulu-Tigalari",
+            "sample": "\ud804\udf80"
+        },
+        "newa": {
+            "code": "Newa",
+            "name_en": "Newa",
+            "name_id": "Aksara Newa",
+            "range": "11400-1147F",
+            "unicode": true,
+            "font": "Noto+Sans+Newa",
+            "sample": "\ud805\udc00"
+        },
+        "tirhuta": {
+            "code": "Tirh",
+            "name_en": "Tirhuta",
+            "name_id": "Aksara Tirhuta",
+            "range": "11480-114DF",
+            "unicode": true,
+            "font": "Noto+Sans+Tirhuta",
+            "sample": "\ud805\udc80"
+        },
+        "siddham": {
+            "code": "Sidd",
+            "name_en": "Siddham",
+            "name_id": "Aksara Siddham",
+            "range": "11580-115FF",
+            "unicode": true,
+            "font": "Noto+Sans+Siddham",
+            "sample": "\ud805\udd80"
+        },
+        "modi": {
+            "code": "Modi",
+            "name_en": "Modi",
+            "name_id": "Aksara Modi",
+            "range": "11600-1165F",
+            "unicode": true,
+            "font": "Noto+Sans+Modi",
+            "sample": "\ud805\ude00"
+        },
+        "mongolian_supplement": {
+            "code": "Mong",
+            "name_en": "Mongolian Supplement",
+            "name_id": "Aksara Mongolian Suplemen",
+            "range": "11660-1167F",
+            "unicode": true,
+            "font": "Noto+Sans+Mongolian+Supplement",
+            "sample": "\ud805\ude60"
+        },
+        "takri": {
+            "code": "Takr",
+            "name_en": "Takri",
+            "name_id": "Aksara Takri",
+            "range": "11680-116CF",
+            "unicode": true,
+            "font": "Noto+Sans+Takri",
+            "sample": "\ud805\ude80"
+        },
+        "myanmar_extended_c": {
+            "code": "Myan",
+            "name_en": "Myanmar Extended-C",
+            "name_id": "Aksara Myanmar Perluasan-C",
+            "range": "116D0-116FF",
+            "unicode": true,
+            "font": "Noto+Sans+Myanmar+Extended-C",
+            "sample": "\ud805\uded0"
+        },
+        "ahom": {
+            "code": "Ahom",
+            "name_en": "Ahom",
+            "name_id": "Aksara Ahom",
+            "range": "11700-1174F",
+            "unicode": true,
+            "font": "Noto+Sans+Ahom",
+            "sample": "\ud805\udf00"
+        },
+        "dogra": {
+            "code": "Dogr",
+            "name_en": "Dogra",
+            "name_id": "Aksara Dogra",
+            "range": "11800-1184F",
+            "unicode": true,
+            "font": "Noto+Sans+Dogra",
+            "sample": "\ud806\udc00"
+        },
+        "warang_citi": {
+            "code": "Wara",
+            "name_en": "Warang Citi",
+            "name_id": "Aksara Warang Citi",
+            "range": "118A0-118FF",
+            "unicode": true,
+            "font": "Noto+Sans+Warang+Citi",
+            "sample": "\ud806\udca0"
+        },
+        "dives_akuru": {
+            "code": "Dive",
+            "name_en": "Dives Akuru",
+            "name_id": "Aksara Dives Akuru",
+            "range": "11900-1195F",
+            "unicode": true,
+            "font": "Noto+Sans+Dives+Akuru",
+            "sample": "\ud806\udd00"
+        },
+        "nandinagari": {
+            "code": "Nand",
+            "name_en": "Nandinagari",
+            "name_id": "Aksara Nandinagari",
+            "range": "119A0-119FF",
+            "unicode": true,
+            "font": "Noto+Sans+Nandinagari",
+            "sample": "\ud806\udda0"
+        },
+        "zanabazar_square": {
+            "code": "Zana",
+            "name_en": "Zanabazar Square",
+            "name_id": "Aksara Zanabazar Square",
+            "range": "11A00-11A4F",
+            "unicode": true,
+            "font": "Noto+Sans+Zanabazar+Square",
+            "sample": "\ud806\ude00"
+        },
+        "soyombo": {
+            "code": "Soyo",
+            "name_en": "Soyombo",
+            "name_id": "Aksara Soyombo",
+            "range": "11A50-11AAF",
+            "unicode": true,
+            "font": "Noto+Sans+Soyombo",
+            "sample": "\ud806\ude50"
+        },
+        "unified_canadian_aboriginal_syllabics_extended_a": {
+            "code": "Unif",
+            "name_en": "Unified Canadian Aboriginal Syllabics Extended-A",
+            "name_id": "Aksara Unified Canadian Aboriginal Syllabics Perluasan-A",
+            "range": "11AB0-11ABF",
+            "unicode": true,
+            "font": "Noto+Sans+Unified+Canadian+Aboriginal+Syllabics+Extended-A",
+            "sample": "\ud806\udeb0"
+        },
+        "pau_cin_hau": {
+            "code": "Pau",
+            "name_en": "Pau Cin Hau",
+            "name_id": "Aksara Pau Cin Hau",
+            "range": "11AC0-11AFF",
+            "unicode": true,
+            "font": "Noto+Sans+Pau+Cin+Hau",
+            "sample": "\ud806\udec0"
+        },
+        "devanagari_extended_a": {
+            "code": "Deva",
+            "name_en": "Devanagari Extended-A",
+            "name_id": "Aksara Devanagari Perluasan-A",
+            "range": "11B00-11B5F",
+            "unicode": true,
+            "font": "Noto+Sans+Devanagari+Extended-A",
+            "sample": "\ud806\udf00"
+        },
+        "sharada_supplement": {
+            "code": "Shar",
+            "name_en": "Sharada Supplement",
+            "name_id": "Aksara Sharada Suplemen",
+            "range": "11B60-11B7F",
+            "unicode": true,
+            "font": "Noto+Sans+Sharada+Supplement",
+            "sample": "\ud806\udf60"
+        },
+        "sunuwar": {
+            "code": "Sunu",
+            "name_en": "Sunuwar",
+            "name_id": "Aksara Sunuwar",
+            "range": "11BC0-11BFF",
+            "unicode": true,
+            "font": "Noto+Sans+Sunuwar",
+            "sample": "\ud806\udfc0"
+        },
+        "bhaiksuki": {
+            "code": "Bhai",
+            "name_en": "Bhaiksuki",
+            "name_id": "Aksara Bhaiksuki",
+            "range": "11C00-11C6F",
+            "unicode": true,
+            "font": "Noto+Sans+Bhaiksuki",
+            "sample": "\ud807\udc00"
+        },
+        "marchen": {
+            "code": "Marc",
+            "name_en": "Marchen",
+            "name_id": "Aksara Marchen",
+            "range": "11C70-11CBF",
+            "unicode": true,
+            "font": "Noto+Sans+Marchen",
+            "sample": "\ud807\udc70"
+        },
+        "masaram_gondi": {
+            "code": "Masa",
+            "name_en": "Masaram Gondi",
+            "name_id": "Aksara Masaram Gondi",
+            "range": "11D00-11D5F",
+            "unicode": true,
+            "font": "Noto+Sans+Masaram+Gondi",
+            "sample": "\ud807\udd00"
+        },
+        "gunjala_gondi": {
+            "code": "Gunj",
+            "name_en": "Gunjala Gondi",
+            "name_id": "Aksara Gunjala Gondi",
+            "range": "11D60-11DAF",
+            "unicode": true,
+            "font": "Noto+Sans+Gunjala+Gondi",
+            "sample": "\ud807\udd60"
+        },
+        "tolong_siki": {
+            "code": "Tolo",
+            "name_en": "Tolong Siki",
+            "name_id": "Aksara Tolong Siki",
+            "range": "11DB0-11DEF",
+            "unicode": true,
+            "font": "Noto+Sans+Tolong+Siki",
+            "sample": "\ud807\uddb0"
+        },
+        "makasar": {
+            "code": "Maka",
+            "name_en": "Makasar",
+            "name_id": "Aksara Makasar",
+            "range": "11EE0-11EFF",
+            "unicode": true,
+            "font": "Noto+Sans+Makasar",
+            "sample": "\ud807\udee0"
+        },
+        "kawi": {
+            "code": "Kawi",
+            "name_en": "Kawi",
+            "name_id": "Aksara Kawi",
+            "range": "11F00-11F5F",
+            "unicode": true,
+            "font": "Noto+Sans+Kawi",
+            "sample": "\ud807\udf00"
+        },
+        "lisu_supplement": {
+            "code": "Lisu",
+            "name_en": "Lisu Supplement",
+            "name_id": "Aksara Lisu Suplemen",
+            "range": "11FB0-11FBF",
+            "unicode": true,
+            "font": "Noto+Sans+Lisu+Supplement",
+            "sample": "\ud807\udfb0"
+        },
+        "tamil_supplement": {
+            "code": "Tami",
+            "name_en": "Tamil Supplement",
+            "name_id": "Aksara Tamil Suplemen",
+            "range": "11FC0-11FFF",
+            "unicode": true,
+            "font": "Noto+Sans+Tamil+Supplement",
+            "sample": "\ud807\udfc0"
+        },
+        "cuneiform": {
+            "code": "Cune",
+            "name_en": "Cuneiform",
+            "name_id": "Aksara Cuneiform",
+            "range": "12000-123FF",
+            "unicode": true,
+            "font": "Noto+Sans+Cuneiform",
+            "sample": "\ud808\udc00"
+        },
+        "cuneiform_numbers_and_punctuation": {
+            "code": "Cune",
+            "name_en": "Cuneiform Numbers and Punctuation",
+            "name_id": "Aksara Cuneiform Numbers and Punctuation",
+            "range": "12400-1247F",
+            "unicode": true,
+            "font": "Noto+Sans+Cuneiform+Numbers+and+Punctuation",
+            "sample": "\ud809\udc00"
+        },
+        "early_dynastic_cuneiform": {
+            "code": "Earl",
+            "name_en": "Early Dynastic Cuneiform",
+            "name_id": "Aksara Early Dynastic Cuneiform",
+            "range": "12480-1254F",
+            "unicode": true,
+            "font": "Noto+Sans+Early+Dynastic+Cuneiform",
+            "sample": "\ud809\udc80"
+        },
+        "cypro_minoan": {
+            "code": "Cypr",
+            "name_en": "Cypro-Minoan",
+            "name_id": "Aksara Cypro-Minoan",
+            "range": "12F90-12FFF",
+            "unicode": true,
+            "font": "Noto+Sans+Cypro-Minoan",
+            "sample": "\ud80b\udf90"
+        },
+        "egyptian_hieroglyphs": {
+            "code": "Egyp",
+            "name_en": "Egyptian Hieroglyphs",
+            "name_id": "Aksara Egyptian Hieroglyphs",
+            "range": "13000-1342F",
+            "unicode": true,
+            "font": "Noto+Sans+Egyptian+Hieroglyphs",
+            "sample": "\ud80c\udc00"
+        },
+        "egyptian_hieroglyph_format_controls": {
+            "code": "Egyp",
+            "name_en": "Egyptian Hieroglyph Format Controls",
+            "name_id": "Aksara Egyptian Hieroglyph Format Controls",
+            "range": "13430-1345F",
+            "unicode": true,
+            "font": "Noto+Sans+Egyptian+Hieroglyph+Format+Controls",
+            "sample": "\ud80d\udc30"
+        },
+        "egyptian_hieroglyphs_extended_a": {
+            "code": "Egyp",
+            "name_en": "Egyptian Hieroglyphs Extended-A",
+            "name_id": "Aksara Egyptian Hieroglyphs Perluasan-A",
+            "range": "13460-143FF",
+            "unicode": true,
+            "font": "Noto+Sans+Egyptian+Hieroglyphs+Extended-A",
+            "sample": "\ud80d\udc60"
+        },
+        "anatolian_hieroglyphs": {
+            "code": "Anat",
+            "name_en": "Anatolian Hieroglyphs",
+            "name_id": "Aksara Anatolian Hieroglyphs",
+            "range": "14400-1467F",
+            "unicode": true,
+            "font": "Noto+Sans+Anatolian+Hieroglyphs",
+            "sample": "\ud811\udc00"
+        },
+        "gurung_khema": {
+            "code": "Guru",
+            "name_en": "Gurung Khema",
+            "name_id": "Aksara Gurung Khema",
+            "range": "16100-1613F",
+            "unicode": true,
+            "font": "Noto+Sans+Gurung+Khema",
+            "sample": "\ud818\udd00"
+        },
+        "bamum_supplement": {
+            "code": "Bamu",
+            "name_en": "Bamum Supplement",
+            "name_id": "Aksara Bamum Suplemen",
+            "range": "16800-16A3F",
+            "unicode": true,
+            "font": "Noto+Sans+Bamum+Supplement",
+            "sample": "\ud81a\udc00"
+        },
+        "mro": {
+            "code": "Mro",
+            "name_en": "Mro",
+            "name_id": "Aksara Mro",
+            "range": "16A40-16A6F",
+            "unicode": true,
+            "font": "Noto+Sans+Mro",
+            "sample": "\ud81a\ude40"
+        },
+        "tangsa": {
+            "code": "Tang",
+            "name_en": "Tangsa",
+            "name_id": "Aksara Tangsa",
+            "range": "16A70-16ACF",
+            "unicode": true,
+            "font": "Noto+Sans+Tangsa",
+            "sample": "\ud81a\ude70"
+        },
+        "bassa_vah": {
+            "code": "Bass",
+            "name_en": "Bassa Vah",
+            "name_id": "Aksara Bassa Vah",
+            "range": "16AD0-16AFF",
+            "unicode": true,
+            "font": "Noto+Sans+Bassa+Vah",
+            "sample": "\ud81a\uded0"
+        },
+        "pahawh_hmong": {
+            "code": "Paha",
+            "name_en": "Pahawh Hmong",
+            "name_id": "Aksara Pahawh Hmong",
+            "range": "16B00-16B8F",
+            "unicode": true,
+            "font": "Noto+Sans+Pahawh+Hmong",
+            "sample": "\ud81a\udf00"
+        },
+        "kirat_rai": {
+            "code": "Kira",
+            "name_en": "Kirat Rai",
+            "name_id": "Aksara Kirat Rai",
+            "range": "16D40-16D7F",
+            "unicode": true,
+            "font": "Noto+Sans+Kirat+Rai",
+            "sample": "\ud81b\udd40"
+        },
+        "medefaidrin": {
+            "code": "Mede",
+            "name_en": "Medefaidrin",
+            "name_id": "Aksara Medefaidrin",
+            "range": "16E40-16E9F",
+            "unicode": true,
+            "font": "Noto+Sans+Medefaidrin",
+            "sample": "\ud81b\ude40"
+        },
+        "beria_erfe": {
+            "code": "Beri",
+            "name_en": "Beria Erfe",
+            "name_id": "Aksara Beria Erfe",
+            "range": "16EA0-16EDF",
+            "unicode": true,
+            "font": "Noto+Sans+Beria+Erfe",
+            "sample": "\ud81b\udea0"
+        },
+        "miao": {
+            "code": "Miao",
+            "name_en": "Miao",
+            "name_id": "Aksara Miao",
+            "range": "16F00-16F9F",
+            "unicode": true,
+            "font": "Noto+Sans+Miao",
+            "sample": "\ud81b\udf00"
+        },
+        "ideographic_symbols_and_punctuation": {
+            "code": "Hani",
+            "name_en": "Ideographic Symbols and Punctuation",
+            "name_id": "Ideographic Simbol and Punctuation",
+            "range": "16FE0-16FFF",
+            "unicode": true,
+            "font": "Noto+Sans+Ideographic+Symbols+and+Punctuation",
+            "sample": "\ud81b\udfe0"
         },
         "tangut": {
             "code": "Tang",
@@ -432,35 +2875,1746 @@
             "name_id": "Aksara Tangut Components",
             "range": "18800-18AFF",
             "unicode": true,
-            "font": "Noto+Sans+Tangut",
+            "font": "Noto+Sans+Tangut+Components",
             "sample": "\ud822\udc00"
         },
-        // ... Other definitions assumed present (simplified for brevity in this response but full in file) ...
-        "basic_latin": { "code": "Latn", "name_en": "Basic Latin", "name_id": "Dasar Latin", "range": "0000-007F", "unicode": true, "font": "Noto+Sans", "sample": "A" },
-        "latin_1_supplement": { "code": "Latn", "name_en": "Latin-1 Supplement", "name_id": "Latin-1 Suplemen", "range": "0080-00FF", "unicode": true, "font": "Noto+Sans", "sample": "À" },
-        "tibetan": { "code": "Tibe", "name_en": "Tibetan", "name_id": "Aksara Tibetan", "range": "0F00-0FFF", "unicode": true, "font": "Noto+Sans+Tibetan", "sample": "\u0f00" },
-        "mongolian": { "code": "Mong", "name_en": "Mongolian", "name_id": "Aksara Mongolian", "range": "1800-18AF", "unicode": true, "font": "Noto+Sans+Mongolian", "sample": "\u1800" }
+        "khitan_small_script": {
+            "code": "Khit",
+            "name_en": "Khitan Small Script",
+            "name_id": "Aksara Khitan Small Aksara",
+            "range": "18B00-18CFF",
+            "unicode": true,
+            "font": "Noto+Sans+Khitan+Small+Script",
+            "sample": "\ud822\udf00"
+        },
+        "tangut_supplement": {
+            "code": "Tang",
+            "name_en": "Tangut Supplement",
+            "name_id": "Aksara Tangut Suplemen",
+            "range": "18D00-18D7F",
+            "unicode": true,
+            "font": "Noto+Sans+Tangut+Supplement",
+            "sample": "\ud823\udd00"
+        },
+        "tangut_components_supplement": {
+            "code": "Tang",
+            "name_en": "Tangut Components Supplement",
+            "name_id": "Aksara Tangut Components Suplemen",
+            "range": "18D80-18DFF",
+            "unicode": true,
+            "font": "Noto+Sans+Tangut+Components+Supplement",
+            "sample": "\ud823\udd80"
+        },
+        "kana_extended_b": {
+            "code": "Kana",
+            "name_en": "Kana Extended-B",
+            "name_id": "Aksara Kana Perluasan-B",
+            "range": "1AFF0-1AFFF",
+            "unicode": true,
+            "font": "Noto+Sans+Kana+Extended-B",
+            "sample": "\ud82b\udff0"
+        },
+        "kana_supplement": {
+            "code": "Kana",
+            "name_en": "Kana Supplement",
+            "name_id": "Aksara Kana Suplemen",
+            "range": "1B000-1B0FF",
+            "unicode": true,
+            "font": "Noto+Sans+Kana+Supplement",
+            "sample": "\ud82c\udc00"
+        },
+        "kana_extended_a": {
+            "code": "Kana",
+            "name_en": "Kana Extended-A",
+            "name_id": "Aksara Kana Perluasan-A",
+            "range": "1B100-1B12F",
+            "unicode": true,
+            "font": "Noto+Sans+Kana+Extended-A",
+            "sample": "\ud82c\udd00"
+        },
+        "small_kana_extension": {
+            "code": "Smal",
+            "name_en": "Small Kana Extension",
+            "name_id": "Aksara Small Kana Ekstensi",
+            "range": "1B130-1B16F",
+            "unicode": true,
+            "font": "Noto+Sans+Small+Kana+Extension",
+            "sample": "\ud82c\udd30"
+        },
+        "nushu": {
+            "code": "Nush",
+            "name_en": "Nushu",
+            "name_id": "Aksara Nushu",
+            "range": "1B170-1B2FF",
+            "unicode": true,
+            "font": "Noto+Sans+Nushu",
+            "sample": "\ud82c\udd70"
+        },
+        "duployan": {
+            "code": "Dupl",
+            "name_en": "Duployan",
+            "name_id": "Aksara Duployan",
+            "range": "1BC00-1BC9F",
+            "unicode": true,
+            "font": "Noto+Sans+Duployan",
+            "sample": "\ud82f\udc00"
+        },
+        "shorthand_format_controls": {
+            "code": "Shor",
+            "name_en": "Shorthand Format Controls",
+            "name_id": "Aksara Shorthand Format Controls",
+            "range": "1BCA0-1BCAF",
+            "unicode": true,
+            "font": "Noto+Sans+Shorthand+Format+Controls",
+            "sample": "\ud82f\udca0"
+        },
+        "symbols_for_legacy_computing_supplement": {
+            "code": "Symb",
+            "name_en": "Symbols for Legacy Computing Supplement",
+            "name_id": "Simbol for Legacy Computing Suplemen",
+            "range": "1CC00-1CEBF",
+            "unicode": true,
+            "font": "Noto+Sans+Symbols+for+Legacy+Computing+Supplement",
+            "sample": "\ud833\udc00"
+        },
+        "miscellaneous_symbols_supplement": {
+            "code": "Misc",
+            "name_en": "Miscellaneous Symbols Supplement",
+            "name_id": "Miscellaneous Simbol Suplemen",
+            "range": "1CEC0-1CEFF",
+            "unicode": true,
+            "font": "Noto+Sans+Miscellaneous+Symbols+Supplement",
+            "sample": "\ud833\udec0"
+        },
+        "znamenny_musical_notation": {
+            "code": "Znam",
+            "name_en": "Znamenny Musical Notation",
+            "name_id": "Aksara Znamenny Musical Notation",
+            "range": "1CF00-1CFCF",
+            "unicode": true,
+            "font": "Noto+Sans+Znamenny+Musical+Notation",
+            "sample": "\ud833\udf00"
+        },
+        "byzantine_musical_symbols": {
+            "code": "Byza",
+            "name_en": "Byzantine Musical Symbols",
+            "name_id": "Byzantine Musical Simbol",
+            "range": "1D000-1D0FF",
+            "unicode": true,
+            "font": "Noto+Sans+Byzantine+Musical+Symbols",
+            "sample": "\ud834\udc00"
+        },
+        "musical_symbols": {
+            "code": "Musi",
+            "name_en": "Musical Symbols",
+            "name_id": "Musical Simbol",
+            "range": "1D100-1D1FF",
+            "unicode": true,
+            "font": "Noto+Sans+Musical+Symbols",
+            "sample": "\ud834\udd00"
+        },
+        "ancient_greek_musical_notation": {
+            "code": "Anci",
+            "name_en": "Ancient Greek Musical Notation",
+            "name_id": "Aksara Ancient Greek Musical Notation",
+            "range": "1D200-1D24F",
+            "unicode": true,
+            "font": "Noto+Sans+Ancient+Greek+Musical+Notation",
+            "sample": "\ud834\ude00"
+        },
+        "kaktovik_numerals": {
+            "code": "Kakt",
+            "name_en": "Kaktovik Numerals",
+            "name_id": "Aksara Kaktovik Numerals",
+            "range": "1D2C0-1D2DF",
+            "unicode": true,
+            "font": "Noto+Sans+Kaktovik+Numerals",
+            "sample": "\ud834\udec0"
+        },
+        "mayan_numerals": {
+            "code": "Maya",
+            "name_en": "Mayan Numerals",
+            "name_id": "Aksara Mayan Numerals",
+            "range": "1D2E0-1D2FF",
+            "unicode": true,
+            "font": "Noto+Sans+Mayan+Numerals",
+            "sample": "\ud834\udee0"
+        },
+        "tai_xuan_jing_symbols": {
+            "code": "Tai",
+            "name_en": "Tai Xuan Jing Symbols",
+            "name_id": "Tai Xuan Jing Simbol",
+            "range": "1D300-1D35F",
+            "unicode": true,
+            "font": "Noto+Sans+Tai+Xuan+Jing+Symbols",
+            "sample": "\ud834\udf00"
+        },
+        "counting_rod_numerals": {
+            "code": "Coun",
+            "name_en": "Counting Rod Numerals",
+            "name_id": "Aksara Counting Rod Numerals",
+            "range": "1D360-1D37F",
+            "unicode": true,
+            "font": "Noto+Sans+Counting+Rod+Numerals",
+            "sample": "\ud834\udf60"
+        },
+        "mathematical_alphanumeric_symbols": {
+            "code": "Math",
+            "name_en": "Mathematical Alphanumeric Symbols",
+            "name_id": "Mathematical Alphanumeric Simbol",
+            "range": "1D400-1D7FF",
+            "unicode": true,
+            "font": "Noto+Sans+Mathematical+Alphanumeric+Symbols",
+            "sample": "\ud835\udc00"
+        },
+        "sutton_signwriting": {
+            "code": "Sutt",
+            "name_en": "Sutton SignWriting",
+            "name_id": "Aksara Sutton TandaWriting",
+            "range": "1D800-1DAAF",
+            "unicode": true,
+            "font": "Noto+Sans+Sutton+SignWriting",
+            "sample": "\ud836\udc00"
+        },
+        "latin_extended_g": {
+            "code": "Latn",
+            "name_en": "Latin Extended-G",
+            "name_id": "Latin Perluasan-G",
+            "range": "1DF00-1DFFF",
+            "unicode": true,
+            "font": "Noto+Sans",
+            "sample": "\ud837\udf00"
+        },
+        "glagolitic_supplement": {
+            "code": "Glag",
+            "name_en": "Glagolitic Supplement",
+            "name_id": "Aksara Glagolitic Suplemen",
+            "range": "1E000-1E02F",
+            "unicode": true,
+            "font": "Noto+Sans+Glagolitic+Supplement",
+            "sample": "\ud838\udc00"
+        },
+        "cyrillic_extended_d": {
+            "code": "Cyrl",
+            "name_en": "Cyrillic Extended-D",
+            "name_id": "Cyrillic Perluasan-D",
+            "range": "1E030-1E08F",
+            "unicode": true,
+            "font": "Noto+Sans+Cyrillic+Extended-D",
+            "sample": "\ud838\udc30"
+        },
+        "nyiakeng_puachue_hmong": {
+            "code": "Nyia",
+            "name_en": "Nyiakeng Puachue Hmong",
+            "name_id": "Aksara Nyiakeng Puachue Hmong",
+            "range": "1E100-1E14F",
+            "unicode": true,
+            "font": "Noto+Sans+Nyiakeng+Puachue+Hmong",
+            "sample": "\ud838\udd00"
+        },
+        "toto": {
+            "code": "Toto",
+            "name_en": "Toto",
+            "name_id": "Aksara Toto",
+            "range": "1E290-1E2BF",
+            "unicode": true,
+            "font": "Noto+Sans+Toto",
+            "sample": "\ud838\ude90"
+        },
+        "wancho": {
+            "code": "Wanc",
+            "name_en": "Wancho",
+            "name_id": "Aksara Wancho",
+            "range": "1E2C0-1E2FF",
+            "unicode": true,
+            "font": "Noto+Sans+Wancho",
+            "sample": "\ud838\udec0"
+        },
+        "nag_mundari": {
+            "code": "Nag",
+            "name_en": "Nag Mundari",
+            "name_id": "Aksara Nag Mundari",
+            "range": "1E4D0-1E4FF",
+            "unicode": true,
+            "font": "Noto+Sans+Nag+Mundari",
+            "sample": "\ud839\udcd0"
+        },
+        "ol_onal": {
+            "code": "OlO",
+            "name_en": "Ol Onal",
+            "name_id": "Aksara Ol Onal",
+            "range": "1E5D0-1E5FF",
+            "unicode": true,
+            "font": "Noto+Sans+Ol+Onal",
+            "sample": "\ud839\uddd0"
+        },
+        "tai_yo": {
+            "code": "Tai",
+            "name_en": "Tai Yo",
+            "name_id": "Aksara Tai Yo",
+            "range": "1E6C0-1E6FF",
+            "unicode": true,
+            "font": "Noto+Sans+Tai+Yo",
+            "sample": "\ud839\udec0"
+        },
+        "ethiopic_extended_b": {
+            "code": "Ethi",
+            "name_en": "Ethiopic Extended-B",
+            "name_id": "Aksara Ethiopic Perluasan-B",
+            "range": "1E7E0-1E7FF",
+            "unicode": true,
+            "font": "Noto+Sans+Ethiopic+Extended-B",
+            "sample": "\ud839\udfe0"
+        },
+        "mende_kikakui": {
+            "code": "Mend",
+            "name_en": "Mende Kikakui",
+            "name_id": "Aksara Mende Kikakui",
+            "range": "1E800-1E8DF",
+            "unicode": true,
+            "font": "Noto+Sans+Mende+Kikakui",
+            "sample": "\ud83a\udc00"
+        },
+        "adlam": {
+            "code": "Adla",
+            "name_en": "Adlam",
+            "name_id": "Aksara Adlam",
+            "range": "1E900-1E95F",
+            "unicode": true,
+            "font": "Noto+Sans+Adlam",
+            "sample": "\ud83a\udd00"
+        },
+        "indic_siyaq_numbers": {
+            "code": "Indi",
+            "name_en": "Indic Siyaq Numbers",
+            "name_id": "Aksara Indic Siyaq Numbers",
+            "range": "1EC70-1ECBF",
+            "unicode": true,
+            "font": "Noto+Sans+Indic+Siyaq+Numbers",
+            "sample": "\ud83b\udc70"
+        },
+        "ottoman_siyaq_numbers": {
+            "code": "Otto",
+            "name_en": "Ottoman Siyaq Numbers",
+            "name_id": "Aksara Ottoman Siyaq Numbers",
+            "range": "1ED00-1ED4F",
+            "unicode": true,
+            "font": "Noto+Sans+Ottoman+Siyaq+Numbers",
+            "sample": "\ud83b\udd00"
+        },
+        "arabic_mathematical_alphabetic_symbols": {
+            "code": "Arab",
+            "name_en": "Arabic Mathematical Alphabetic Symbols",
+            "name_id": "Arabic Mathematical Alphabetic Simbol",
+            "range": "1EE00-1EEFF",
+            "unicode": true,
+            "font": "Noto+Sans+Arabic+Mathematical+Alphabetic+Symbols",
+            "sample": "\ud83b\ude00"
+        },
+        "mahjong_tiles": {
+            "code": "Mahj",
+            "name_en": "Mahjong Tiles",
+            "name_id": "Aksara Mahjong Tiles",
+            "range": "1F000-1F02F",
+            "unicode": true,
+            "font": "Noto+Sans+Mahjong+Tiles",
+            "sample": "\ud83c\udc00"
+        },
+        "domino_tiles": {
+            "code": "Domi",
+            "name_en": "Domino Tiles",
+            "name_id": "Aksara Domino Tiles",
+            "range": "1F030-1F09F",
+            "unicode": true,
+            "font": "Noto+Sans+Domino+Tiles",
+            "sample": "\ud83c\udc30"
+        },
+        "playing_cards": {
+            "code": "Play",
+            "name_en": "Playing Cards",
+            "name_id": "Aksara Playing Cards",
+            "range": "1F0A0-1F0FF",
+            "unicode": true,
+            "font": "Noto+Sans+Playing+Cards",
+            "sample": "\ud83c\udca0"
+        },
+        "enclosed_alphanumeric_supplement": {
+            "code": "Encl",
+            "name_en": "Enclosed Alphanumeric Supplement",
+            "name_id": "Aksara Enclosed Alphanumeric Suplemen",
+            "range": "1F100-1F1FF",
+            "unicode": true,
+            "font": "Noto+Sans+Enclosed+Alphanumeric+Supplement",
+            "sample": "\ud83c\udd00"
+        },
+        "enclosed_ideographic_supplement": {
+            "code": "Hani",
+            "name_en": "Enclosed Ideographic Supplement",
+            "name_id": "Aksara Enclosed Ideographic Suplemen",
+            "range": "1F200-1F2FF",
+            "unicode": true,
+            "font": "Noto+Sans+Enclosed+Ideographic+Supplement",
+            "sample": "\ud83c\ude00"
+        },
+        "miscellaneous_symbols_and_pictographs": {
+            "code": "Misc",
+            "name_en": "Miscellaneous Symbols and Pictographs",
+            "name_id": "Miscellaneous Simbol and Pictographs",
+            "range": "1F300-1F5FF",
+            "unicode": true,
+            "font": "Noto+Sans+Miscellaneous+Symbols+and+Pictographs",
+            "sample": "\ud83c\udf00"
+        },
+        "emoticons": {
+            "code": "Emot",
+            "name_en": "Emoticons",
+            "name_id": "Aksara Emoticons",
+            "range": "1F600-1F64F",
+            "unicode": true,
+            "font": "Noto+Sans+Emoticons",
+            "sample": "\ud83d\ude00"
+        },
+        "ornamental_dingbats": {
+            "code": "Orna",
+            "name_en": "Ornamental Dingbats",
+            "name_id": "Aksara Ornamental Dingbats",
+            "range": "1F650-1F67F",
+            "unicode": true,
+            "font": "Noto+Sans+Ornamental+Dingbats",
+            "sample": "\ud83d\ude50"
+        },
+        "transport_and_map_symbols": {
+            "code": "Tran",
+            "name_en": "Transport and Map Symbols",
+            "name_id": "Transport and Map Simbol",
+            "range": "1F680-1F6FF",
+            "unicode": true,
+            "font": "Noto+Sans+Transport+and+Map+Symbols",
+            "sample": "\ud83d\ude80"
+        },
+        "alchemical_symbols": {
+            "code": "Alch",
+            "name_en": "Alchemical Symbols",
+            "name_id": "Alchemical Simbol",
+            "range": "1F700-1F77F",
+            "unicode": true,
+            "font": "Noto+Sans+Alchemical+Symbols",
+            "sample": "\ud83d\udf00"
+        },
+        "geometric_shapes_extended": {
+            "code": "Geom",
+            "name_en": "Geometric Shapes Extended",
+            "name_id": "Aksara Geometric Shapes Perluasan",
+            "range": "1F780-1F7FF",
+            "unicode": true,
+            "font": "Noto+Sans+Geometric+Shapes+Extended",
+            "sample": "\ud83d\udf80"
+        },
+        "supplemental_arrows_c": {
+            "code": "Supp",
+            "name_en": "Supplemental Arrows-C",
+            "name_id": "Aksara Suplemenal Arrows-C",
+            "range": "1F800-1F8FF",
+            "unicode": true,
+            "font": "Noto+Sans+Supplemental+Arrows-C",
+            "sample": "\ud83e\udc00"
+        },
+        "supplemental_symbols_and_pictographs": {
+            "code": "Supp",
+            "name_en": "Supplemental Symbols and Pictographs",
+            "name_id": "Suplemenal Simbol and Pictographs",
+            "range": "1F900-1F9FF",
+            "unicode": true,
+            "font": "Noto+Sans+Supplemental+Symbols+and+Pictographs",
+            "sample": "\ud83e\udd00"
+        },
+        "chess_symbols": {
+            "code": "Ches",
+            "name_en": "Chess Symbols",
+            "name_id": "Chess Simbol",
+            "range": "1FA00-1FA6F",
+            "unicode": true,
+            "font": "Noto+Sans+Chess+Symbols",
+            "sample": "\ud83e\ude00"
+        },
+        "symbols_and_pictographs_extended_a": {
+            "code": "Symb",
+            "name_en": "Symbols and Pictographs Extended-A",
+            "name_id": "Simbol and Pictographs Perluasan-A",
+            "range": "1FA70-1FAFF",
+            "unicode": true,
+            "font": "Noto+Sans+Symbols+and+Pictographs+Extended-A",
+            "sample": "\ud83e\ude70"
+        },
+        "symbols_for_legacy_computing": {
+            "code": "Symb",
+            "name_en": "Symbols for Legacy Computing",
+            "name_id": "Simbol for Legacy Computing",
+            "range": "1FB00-1FBFF",
+            "unicode": true,
+            "font": "Noto+Sans+Symbols+for+Legacy+Computing",
+            "sample": "\ud83e\udf00"
+        },
+        "cjk_unified_ideographs_extension_b": {
+            "code": "Hani",
+            "name_en": "CJK Unified Ideographs Extension B",
+            "name_id": "Aksara CJK Ideograf Bersatu Ekstensi B",
+            "range": "20000-2A6DF",
+            "unicode": true,
+            "font": "Noto+Sans+CJK+Unified+Ideographs+Extension+B",
+            "sample": "\ud840\udc00"
+        },
+        "cjk_unified_ideographs_extension_c": {
+            "code": "Hani",
+            "name_en": "CJK Unified Ideographs Extension C",
+            "name_id": "Aksara CJK Ideograf Bersatu Ekstensi C",
+            "range": "2A700-2B73F",
+            "unicode": true,
+            "font": "Noto+Sans+CJK+Unified+Ideographs+Extension+C",
+            "sample": "\ud869\udf00"
+        },
+        "cjk_unified_ideographs_extension_d": {
+            "code": "Hani",
+            "name_en": "CJK Unified Ideographs Extension D",
+            "name_id": "Aksara CJK Ideograf Bersatu Ekstensi D",
+            "range": "2B740-2B81F",
+            "unicode": true,
+            "font": "Noto+Sans+CJK+Unified+Ideographs+Extension+D",
+            "sample": "\ud86d\udf40"
+        },
+        "cjk_unified_ideographs_extension_e": {
+            "code": "Hani",
+            "name_en": "CJK Unified Ideographs Extension E",
+            "name_id": "Aksara CJK Ideograf Bersatu Ekstensi E",
+            "range": "2B820-2CEAF",
+            "unicode": true,
+            "font": "Noto+Sans+CJK+Unified+Ideographs+Extension+E",
+            "sample": "\ud86e\udc20"
+        },
+        "cjk_unified_ideographs_extension_f": {
+            "code": "Hani",
+            "name_en": "CJK Unified Ideographs Extension F",
+            "name_id": "Aksara CJK Ideograf Bersatu Ekstensi F",
+            "range": "2CEB0-2EBEF",
+            "unicode": true,
+            "font": "Noto+Sans+CJK+Unified+Ideographs+Extension+F",
+            "sample": "\ud873\udeb0"
+        },
+        "cjk_unified_ideographs_extension_i": {
+            "code": "Hani",
+            "name_en": "CJK Unified Ideographs Extension I",
+            "name_id": "Aksara CJK Ideograf Bersatu Ekstensi I",
+            "range": "2EBF0-2EE5F",
+            "unicode": true,
+            "font": "Noto+Sans+CJK+Unified+Ideographs+Extension+I",
+            "sample": "\ud87a\udff0"
+        },
+        "cjk_compatibility_ideographs_supplement": {
+            "code": "Hani",
+            "name_en": "CJK Compatibility Ideographs Supplement",
+            "name_id": "Aksara CJK Compatibility Ideographs Suplemen",
+            "range": "2F800-2FA1F",
+            "unicode": true,
+            "font": "Noto+Sans+CJK+Compatibility+Ideographs+Supplement",
+            "sample": "\ud87e\udc00"
+        },
+        "cjk_unified_ideographs_extension_g": {
+            "code": "Hani",
+            "name_en": "CJK Unified Ideographs Extension G",
+            "name_id": "Aksara CJK Ideograf Bersatu Ekstensi G",
+            "range": "30000-3134F",
+            "unicode": true,
+            "font": "Noto+Sans+CJK+Unified+Ideographs+Extension+G",
+            "sample": "\ud880\udc00"
+        },
+        "cjk_unified_ideographs_extension_h": {
+            "code": "Hani",
+            "name_en": "CJK Unified Ideographs Extension H",
+            "name_id": "Aksara CJK Ideograf Bersatu Ekstensi H",
+            "range": "31350-323AF",
+            "unicode": true,
+            "font": "Noto+Sans+CJK+Unified+Ideographs+Extension+H",
+            "sample": "\ud884\udf50"
+        },
+        "cjk_unified_ideographs_extension_j": {
+            "code": "Hani",
+            "name_en": "CJK Unified Ideographs Extension J",
+            "name_id": "Aksara CJK Ideograf Bersatu Ekstensi J",
+            "range": "323B0-3347F",
+            "unicode": true,
+            "font": "Noto+Sans+CJK+Unified+Ideographs+Extension+J",
+            "sample": "\ud888\udfb0"
+        },
+        "tags": {
+            "code": "Tags",
+            "name_en": "Tags",
+            "name_id": "Aksara Tags",
+            "range": "E0000-E007F",
+            "unicode": true,
+            "font": "Noto+Sans+Tags",
+            "sample": "\udb40\udc00"
+        },
+        "variation_selectors_supplement": {
+            "code": "Vari",
+            "name_en": "Variation Selectors Supplement",
+            "name_id": "Aksara Variation Selectors Suplemen",
+            "range": "E0100-E01EF",
+            "unicode": true,
+            "font": "Noto+Sans+Variation+Selectors+Supplement",
+            "sample": "\udb40\udd00"
+        },
+        "supplementary_private_use_area_a": {
+            "code": "Supp",
+            "name_en": "Supplementary Private Use Area-A",
+            "name_id": "Suplemenary Area Penggunaan Pribadi-A",
+            "range": "F0000-FFFFF",
+            "unicode": false,
+            "font": null,
+            "sample": ""
+        },
+        "supplementary_private_use_area_b": {
+            "code": "Supp",
+            "name_en": "Supplementary Private Use Area-B",
+            "name_id": "Suplemenary Area Penggunaan Pribadi-B",
+            "range": "100000-10FFFF",
+            "unicode": false,
+            "font": null,
+            "sample": ""
+        }
     },
     "countries": {
-        // China needs to point to correct IDs
-        "CN": ["tibetan","mongolian","cjk_unified_ideographs","cjk_unified_ideographs_extension_a","tangut","tangut_components"],
-        "ID": ["basic_latin","latin_1_supplement"],
-        "US": ["basic_latin","latin_1_supplement"],
-        // ... (Full list maintained in logic below) ...
+        "AFG": [
+            "arabic",
+            "arabic_supplement",
+            "arabic_extended_b",
+            "arabic_extended_a",
+            "arabic_presentation_forms_a",
+            "arabic_presentation_forms_b",
+            "arabic_extended_c",
+            "arabic_mathematical_alphabetic_symbols"
+        ],
+        "ARE": [
+            "arabic",
+            "arabic_supplement",
+            "arabic_extended_b",
+            "arabic_extended_a",
+            "arabic_presentation_forms_a",
+            "arabic_presentation_forms_b",
+            "arabic_extended_c",
+            "arabic_mathematical_alphabetic_symbols"
+        ],
+        "ARM": [
+            "armenian"
+        ],
+        "AUS": [
+            "basic_latin",
+            "latin_1_supplement",
+            "latin_extended_a",
+            "latin_extended_b",
+            "latin_extended_additional",
+            "latin_extended_c",
+            "latin_extended_d",
+            "latin_extended_e",
+            "latin_extended_f",
+            "latin_extended_g"
+        ],
+        "BGD": [
+            "bengali",
+            "hanifi_rohingya"
+        ],
+        "BGR": [
+            "cyrillic",
+            "cyrillic_supplement",
+            "cyrillic_extended_c",
+            "cyrillic_extended_a",
+            "cyrillic_extended_b",
+            "cyrillic_extended_d"
+        ],
+        "BHR": [
+            "arabic",
+            "arabic_supplement",
+            "arabic_extended_b",
+            "arabic_extended_a",
+            "arabic_presentation_forms_a",
+            "arabic_presentation_forms_b",
+            "arabic_extended_c",
+            "arabic_mathematical_alphabetic_symbols"
+        ],
+        "BRA": [
+            "basic_latin",
+            "latin_1_supplement",
+            "latin_extended_a",
+            "latin_extended_b",
+            "latin_extended_additional",
+            "latin_extended_c",
+            "latin_extended_d",
+            "latin_extended_e",
+            "latin_extended_f",
+            "latin_extended_g"
+        ],
+        "CAN": [
+            "unified_canadian_aboriginal_syllabics",
+            "unified_canadian_aboriginal_syllabics_extended",
+            "unified_canadian_aboriginal_syllabics_extended_a"
+        ],
+        "CHN": [
+            "tibetan",
+            "mongolian",
+            "cjk_radicals_supplement",
+            "cjk_symbols_and_punctuation",
+            "cjk_strokes",
+            "enclosed_cjk_letters_and_months",
+            "cjk_compatibility",
+            "cjk_unified_ideographs_extension_a",
+            "yijing_hexagram_symbols",
+            "cjk_unified_ideographs",
+            "yi_syllables",
+            "yi_radicals",
+            "lisu",
+            "cjk_compatibility_ideographs",
+            "cjk_compatibility_forms",
+            "mongolian_supplement",
+            "lisu_supplement",
+            "tangut",
+            "tangut_components",
+            "tangut_supplement",
+            "tangut_components_supplement",
+            "nushu",
+            "cjk_unified_ideographs_extension_b",
+            "cjk_unified_ideographs_extension_c",
+            "cjk_unified_ideographs_extension_d",
+            "cjk_unified_ideographs_extension_e",
+            "cjk_unified_ideographs_extension_f",
+            "cjk_unified_ideographs_extension_i",
+            "cjk_compatibility_ideographs_supplement",
+            "cjk_unified_ideographs_extension_g",
+            "cjk_unified_ideographs_extension_h",
+            "cjk_unified_ideographs_extension_j"
+        ],
+        "CYP": [
+            "greek_and_coptic",
+            "greek_extended",
+            "ancient_greek_numbers",
+            "ancient_greek_musical_notation"
+        ],
+        "DEU": [
+            "basic_latin",
+            "latin_1_supplement",
+            "latin_extended_a",
+            "latin_extended_b",
+            "latin_extended_additional",
+            "latin_extended_c",
+            "latin_extended_d",
+            "latin_extended_e",
+            "latin_extended_f",
+            "latin_extended_g"
+        ],
+        "DZA": [
+            "arabic",
+            "arabic_supplement",
+            "arabic_extended_b",
+            "arabic_extended_a",
+            "tifinagh",
+            "arabic_presentation_forms_a",
+            "arabic_presentation_forms_b",
+            "arabic_extended_c",
+            "arabic_mathematical_alphabetic_symbols"
+        ],
+        "EGY": [
+            "greek_and_coptic",
+            "arabic",
+            "arabic_supplement",
+            "arabic_extended_b",
+            "arabic_extended_a",
+            "coptic",
+            "arabic_presentation_forms_a",
+            "arabic_presentation_forms_b",
+            "coptic_epact_numbers",
+            "arabic_extended_c",
+            "arabic_mathematical_alphabetic_symbols"
+        ],
+        "ERI": [
+            "ethiopic",
+            "ethiopic_supplement",
+            "ethiopic_extended",
+            "ethiopic_extended_a",
+            "ethiopic_extended_b"
+        ],
+        "ESP": [
+            "basic_latin",
+            "latin_1_supplement",
+            "latin_extended_a",
+            "latin_extended_b",
+            "latin_extended_additional",
+            "latin_extended_c",
+            "latin_extended_d",
+            "latin_extended_e",
+            "latin_extended_f",
+            "latin_extended_g"
+        ],
+        "ETH": [
+            "ethiopic",
+            "ethiopic_supplement",
+            "ethiopic_extended",
+            "ethiopic_extended_a",
+            "ethiopic_extended_b"
+        ],
+        "FRA": [
+            "basic_latin",
+            "latin_1_supplement",
+            "latin_extended_a",
+            "latin_extended_b",
+            "latin_extended_additional",
+            "latin_extended_c",
+            "latin_extended_d",
+            "latin_extended_e",
+            "latin_extended_f",
+            "latin_extended_g"
+        ],
+        "GBR": [
+            "basic_latin",
+            "latin_1_supplement",
+            "latin_extended_a",
+            "latin_extended_b",
+            "latin_extended_additional",
+            "latin_extended_c",
+            "latin_extended_d",
+            "latin_extended_e",
+            "latin_extended_f",
+            "latin_extended_g"
+        ],
+        "GEO": [
+            "georgian",
+            "georgian_extended",
+            "georgian_supplement"
+        ],
+        "GRC": [
+            "greek_and_coptic",
+            "greek_extended",
+            "ancient_greek_numbers",
+            "ancient_greek_musical_notation"
+        ],
+        "IDN": [
+            "basic_latin",
+            "latin_1_supplement",
+            "latin_extended_a",
+            "latin_extended_b",
+            "buginese",
+            "balinese",
+            "sundanese",
+            "batak",
+            "sundanese_supplement",
+            "latin_extended_additional",
+            "latin_extended_c",
+            "latin_extended_d",
+            "rejang",
+            "javanese",
+            "latin_extended_e",
+            "latin_extended_f",
+            "makasar",
+            "kawi",
+            "latin_extended_g"
+        ],
+        "IND": [
+            "devanagari",
+            "bengali",
+            "gurmukhi",
+            "gujarati",
+            "oriya",
+            "tamil",
+            "telugu",
+            "kannada",
+            "malayalam",
+            "devanagari_extended",
+            "devanagari_extended_a",
+            "tamil_supplement"
+        ],
+        "IRN": [
+            "arabic",
+            "syriac",
+            "arabic_supplement",
+            "syriac_supplement",
+            "arabic_extended_b",
+            "arabic_extended_a",
+            "arabic_presentation_forms_a",
+            "arabic_presentation_forms_b",
+            "arabic_extended_c",
+            "arabic_mathematical_alphabetic_symbols"
+        ],
+        "IRQ": [
+            "arabic",
+            "syriac",
+            "arabic_supplement",
+            "syriac_supplement",
+            "arabic_extended_b",
+            "arabic_extended_a",
+            "arabic_presentation_forms_a",
+            "arabic_presentation_forms_b",
+            "arabic_extended_c",
+            "arabic_mathematical_alphabetic_symbols"
+        ],
+        "ISR": [
+            "hebrew"
+        ],
+        "ITA": [
+            "basic_latin",
+            "latin_1_supplement",
+            "latin_extended_a",
+            "latin_extended_b",
+            "latin_extended_additional",
+            "latin_extended_c",
+            "latin_extended_d",
+            "latin_extended_e",
+            "latin_extended_f",
+            "latin_extended_g"
+        ],
+        "JOR": [
+            "arabic",
+            "arabic_supplement",
+            "arabic_extended_b",
+            "arabic_extended_a",
+            "arabic_presentation_forms_a",
+            "arabic_presentation_forms_b",
+            "arabic_extended_c",
+            "arabic_mathematical_alphabetic_symbols"
+        ],
+        "JPN": [
+            "cjk_radicals_supplement",
+            "cjk_symbols_and_punctuation",
+            "hiragana",
+            "katakana",
+            "cjk_strokes",
+            "katakana_phonetic_extensions",
+            "enclosed_cjk_letters_and_months",
+            "cjk_compatibility",
+            "cjk_unified_ideographs_extension_a",
+            "cjk_unified_ideographs",
+            "cjk_compatibility_ideographs",
+            "cjk_compatibility_forms",
+            "kana_extended_b",
+            "kana_supplement",
+            "kana_extended_a",
+            "small_kana_extension",
+            "cjk_unified_ideographs_extension_b",
+            "cjk_unified_ideographs_extension_c",
+            "cjk_unified_ideographs_extension_d",
+            "cjk_unified_ideographs_extension_e",
+            "cjk_unified_ideographs_extension_f",
+            "cjk_unified_ideographs_extension_i",
+            "cjk_compatibility_ideographs_supplement",
+            "cjk_unified_ideographs_extension_g",
+            "cjk_unified_ideographs_extension_h",
+            "cjk_unified_ideographs_extension_j"
+        ],
+        "KAZ": [
+            "cyrillic",
+            "cyrillic_supplement",
+            "cyrillic_extended_c",
+            "cyrillic_extended_a",
+            "cyrillic_extended_b",
+            "cyrillic_extended_d"
+        ],
+        "KGZ": [
+            "cyrillic",
+            "cyrillic_supplement",
+            "cyrillic_extended_c",
+            "cyrillic_extended_a",
+            "cyrillic_extended_b",
+            "cyrillic_extended_d"
+        ],
+        "KHM": [
+            "khmer",
+            "khmer_symbols",
+            "cham"
+        ],
+        "KOR": [
+            "hangul_jamo",
+            "cjk_radicals_supplement",
+            "cjk_symbols_and_punctuation",
+            "hangul_compatibility_jamo",
+            "cjk_strokes",
+            "enclosed_cjk_letters_and_months",
+            "cjk_compatibility",
+            "cjk_unified_ideographs_extension_a",
+            "cjk_unified_ideographs",
+            "hangul_jamo_extended_a",
+            "hangul_syllables",
+            "hangul_jamo_extended_b",
+            "cjk_compatibility_ideographs",
+            "cjk_compatibility_forms",
+            "cjk_unified_ideographs_extension_b",
+            "cjk_unified_ideographs_extension_c",
+            "cjk_unified_ideographs_extension_d",
+            "cjk_unified_ideographs_extension_e",
+            "cjk_unified_ideographs_extension_f",
+            "cjk_unified_ideographs_extension_i",
+            "cjk_compatibility_ideographs_supplement",
+            "cjk_unified_ideographs_extension_g",
+            "cjk_unified_ideographs_extension_h",
+            "cjk_unified_ideographs_extension_j"
+        ],
+        "KWT": [
+            "arabic",
+            "arabic_supplement",
+            "arabic_extended_b",
+            "arabic_extended_a",
+            "arabic_presentation_forms_a",
+            "arabic_presentation_forms_b",
+            "arabic_extended_c",
+            "arabic_mathematical_alphabetic_symbols"
+        ],
+        "LAO": [
+            "lao",
+            "tai_tham"
+        ],
+        "LBN": [
+            "arabic",
+            "arabic_supplement",
+            "arabic_extended_b",
+            "arabic_extended_a",
+            "arabic_presentation_forms_a",
+            "arabic_presentation_forms_b",
+            "arabic_extended_c",
+            "arabic_mathematical_alphabetic_symbols"
+        ],
+        "LBY": [
+            "arabic",
+            "arabic_supplement",
+            "arabic_extended_b",
+            "arabic_extended_a",
+            "tifinagh",
+            "arabic_presentation_forms_a",
+            "arabic_presentation_forms_b",
+            "arabic_extended_c",
+            "arabic_mathematical_alphabetic_symbols"
+        ],
+        "LKA": [
+            "tamil",
+            "sinhala",
+            "sinhala_archaic_numbers",
+            "tamil_supplement"
+        ],
+        "MAR": [
+            "arabic",
+            "arabic_supplement",
+            "arabic_extended_b",
+            "arabic_extended_a",
+            "tifinagh",
+            "arabic_presentation_forms_a",
+            "arabic_presentation_forms_b",
+            "arabic_extended_c",
+            "arabic_mathematical_alphabetic_symbols"
+        ],
+        "MDV": [
+            "thaana"
+        ],
+        "MKD": [
+            "cyrillic",
+            "cyrillic_supplement",
+            "cyrillic_extended_c",
+            "cyrillic_extended_a",
+            "cyrillic_extended_b",
+            "cyrillic_extended_d"
+        ],
+        "MMR": [
+            "myanmar",
+            "tai_tham",
+            "kayah_li",
+            "myanmar_extended_b",
+            "myanmar_extended_a",
+            "hanifi_rohingya",
+            "myanmar_extended_c"
+        ],
+        "MNG": [
+            "cyrillic",
+            "cyrillic_supplement",
+            "mongolian",
+            "cyrillic_extended_c",
+            "cyrillic_extended_a",
+            "cyrillic_extended_b",
+            "mongolian_supplement",
+            "cyrillic_extended_d"
+        ],
+        "MYS": [
+            "basic_latin",
+            "latin_1_supplement",
+            "latin_extended_a",
+            "latin_extended_b",
+            "tamil",
+            "latin_extended_additional",
+            "latin_extended_c",
+            "latin_extended_d",
+            "latin_extended_e",
+            "latin_extended_f",
+            "tamil_supplement",
+            "latin_extended_g"
+        ],
+        "NPL": [
+            "devanagari",
+            "devanagari_extended",
+            "devanagari_extended_a"
+        ],
+        "NZL": [
+            "basic_latin",
+            "latin_1_supplement",
+            "latin_extended_a",
+            "latin_extended_b",
+            "latin_extended_additional",
+            "latin_extended_c",
+            "latin_extended_d",
+            "latin_extended_e",
+            "latin_extended_f",
+            "latin_extended_g"
+        ],
+        "OMN": [
+            "arabic",
+            "arabic_supplement",
+            "arabic_extended_b",
+            "arabic_extended_a",
+            "arabic_presentation_forms_a",
+            "arabic_presentation_forms_b",
+            "arabic_extended_c",
+            "arabic_mathematical_alphabetic_symbols"
+        ],
+        "PAK": [
+            "arabic",
+            "arabic_supplement",
+            "arabic_extended_b",
+            "arabic_extended_a",
+            "arabic_presentation_forms_a",
+            "arabic_presentation_forms_b",
+            "arabic_extended_c",
+            "arabic_mathematical_alphabetic_symbols"
+        ],
+        "PHL": [
+            "basic_latin",
+            "latin_1_supplement",
+            "latin_extended_a",
+            "latin_extended_b",
+            "tagalog",
+            "hanunoo",
+            "buhid",
+            "tagbanwa",
+            "latin_extended_additional",
+            "latin_extended_c",
+            "latin_extended_d",
+            "latin_extended_e",
+            "latin_extended_f",
+            "latin_extended_g"
+        ],
+        "PRK": [
+            "hangul_jamo",
+            "hangul_compatibility_jamo",
+            "hangul_jamo_extended_a",
+            "hangul_syllables",
+            "hangul_jamo_extended_b"
+        ],
+        "QAT": [
+            "arabic",
+            "arabic_supplement",
+            "arabic_extended_b",
+            "arabic_extended_a",
+            "arabic_presentation_forms_a",
+            "arabic_presentation_forms_b",
+            "arabic_extended_c",
+            "arabic_mathematical_alphabetic_symbols"
+        ],
+        "RUS": [
+            "cyrillic",
+            "cyrillic_supplement",
+            "cyrillic_extended_c",
+            "cyrillic_extended_a",
+            "cyrillic_extended_b",
+            "cyrillic_extended_d"
+        ],
+        "SAU": [
+            "arabic",
+            "arabic_supplement",
+            "arabic_extended_b",
+            "arabic_extended_a",
+            "arabic_presentation_forms_a",
+            "arabic_presentation_forms_b",
+            "arabic_extended_c",
+            "arabic_mathematical_alphabetic_symbols"
+        ],
+        "SDN": [
+            "arabic",
+            "arabic_supplement",
+            "arabic_extended_b",
+            "arabic_extended_a",
+            "arabic_presentation_forms_a",
+            "arabic_presentation_forms_b",
+            "arabic_extended_c",
+            "arabic_mathematical_alphabetic_symbols"
+        ],
+        "SGP": [
+            "basic_latin",
+            "latin_1_supplement",
+            "latin_extended_a",
+            "latin_extended_b",
+            "tamil",
+            "latin_extended_additional",
+            "latin_extended_c",
+            "cjk_radicals_supplement",
+            "cjk_symbols_and_punctuation",
+            "cjk_strokes",
+            "enclosed_cjk_letters_and_months",
+            "cjk_compatibility",
+            "cjk_unified_ideographs_extension_a",
+            "cjk_unified_ideographs",
+            "latin_extended_d",
+            "latin_extended_e",
+            "cjk_compatibility_ideographs",
+            "cjk_compatibility_forms",
+            "latin_extended_f",
+            "tamil_supplement",
+            "latin_extended_g",
+            "cjk_unified_ideographs_extension_b",
+            "cjk_unified_ideographs_extension_c",
+            "cjk_unified_ideographs_extension_d",
+            "cjk_unified_ideographs_extension_e",
+            "cjk_unified_ideographs_extension_f",
+            "cjk_unified_ideographs_extension_i",
+            "cjk_compatibility_ideographs_supplement",
+            "cjk_unified_ideographs_extension_g",
+            "cjk_unified_ideographs_extension_h",
+            "cjk_unified_ideographs_extension_j"
+        ],
+        "SRB": [
+            "cyrillic",
+            "cyrillic_supplement",
+            "cyrillic_extended_c",
+            "cyrillic_extended_a",
+            "cyrillic_extended_b",
+            "cyrillic_extended_d"
+        ],
+        "SYR": [
+            "arabic",
+            "syriac",
+            "arabic_supplement",
+            "syriac_supplement",
+            "arabic_extended_b",
+            "arabic_extended_a",
+            "arabic_presentation_forms_a",
+            "arabic_presentation_forms_b",
+            "arabic_extended_c",
+            "arabic_mathematical_alphabetic_symbols"
+        ],
+        "THA": [
+            "thai",
+            "tai_tham",
+            "kayah_li"
+        ],
+        "TJK": [
+            "cyrillic",
+            "cyrillic_supplement",
+            "cyrillic_extended_c",
+            "cyrillic_extended_a",
+            "cyrillic_extended_b",
+            "cyrillic_extended_d"
+        ],
+        "TUN": [
+            "arabic",
+            "arabic_supplement",
+            "arabic_extended_b",
+            "arabic_extended_a",
+            "arabic_presentation_forms_a",
+            "arabic_presentation_forms_b",
+            "arabic_extended_c",
+            "arabic_mathematical_alphabetic_symbols"
+        ],
+        "TUR": [
+            "basic_latin",
+            "latin_1_supplement",
+            "latin_extended_a",
+            "latin_extended_b",
+            "syriac",
+            "syriac_supplement",
+            "latin_extended_additional",
+            "latin_extended_c",
+            "latin_extended_d",
+            "latin_extended_e",
+            "latin_extended_f",
+            "latin_extended_g"
+        ],
+        "TWN": [
+            "cjk_radicals_supplement",
+            "cjk_symbols_and_punctuation",
+            "bopomofo",
+            "bopomofo_extended",
+            "cjk_strokes",
+            "enclosed_cjk_letters_and_months",
+            "cjk_compatibility",
+            "cjk_unified_ideographs_extension_a",
+            "cjk_unified_ideographs",
+            "cjk_compatibility_ideographs",
+            "cjk_compatibility_forms",
+            "cjk_unified_ideographs_extension_b",
+            "cjk_unified_ideographs_extension_c",
+            "cjk_unified_ideographs_extension_d",
+            "cjk_unified_ideographs_extension_e",
+            "cjk_unified_ideographs_extension_f",
+            "cjk_unified_ideographs_extension_i",
+            "cjk_compatibility_ideographs_supplement",
+            "cjk_unified_ideographs_extension_g",
+            "cjk_unified_ideographs_extension_h",
+            "cjk_unified_ideographs_extension_j"
+        ],
+        "UKR": [
+            "cyrillic",
+            "cyrillic_supplement",
+            "cyrillic_extended_c",
+            "cyrillic_extended_a",
+            "cyrillic_extended_b",
+            "cyrillic_extended_d"
+        ],
+        "USA": [
+            "basic_latin",
+            "latin_1_supplement",
+            "latin_extended_a",
+            "latin_extended_b",
+            "cherokee",
+            "latin_extended_additional",
+            "latin_extended_c",
+            "latin_extended_d",
+            "latin_extended_e",
+            "cherokee_supplement",
+            "latin_extended_f",
+            "latin_extended_g"
+        ],
+        "UZB": [
+            "basic_latin",
+            "latin_1_supplement",
+            "latin_extended_a",
+            "latin_extended_b",
+            "cyrillic",
+            "cyrillic_supplement",
+            "cyrillic_extended_c",
+            "latin_extended_additional",
+            "latin_extended_c",
+            "cyrillic_extended_a",
+            "cyrillic_extended_b",
+            "latin_extended_d",
+            "latin_extended_e",
+            "latin_extended_f",
+            "latin_extended_g",
+            "cyrillic_extended_d"
+        ],
+        "VNM": [
+            "basic_latin",
+            "latin_1_supplement",
+            "latin_extended_a",
+            "latin_extended_b",
+            "latin_extended_additional",
+            "latin_extended_c",
+            "cjk_radicals_supplement",
+            "cjk_symbols_and_punctuation",
+            "cjk_strokes",
+            "enclosed_cjk_letters_and_months",
+            "cjk_compatibility",
+            "cjk_unified_ideographs_extension_a",
+            "cjk_unified_ideographs",
+            "latin_extended_d",
+            "cham",
+            "tai_viet",
+            "latin_extended_e",
+            "cjk_compatibility_ideographs",
+            "cjk_compatibility_forms",
+            "latin_extended_f",
+            "latin_extended_g",
+            "cjk_unified_ideographs_extension_b",
+            "cjk_unified_ideographs_extension_c",
+            "cjk_unified_ideographs_extension_d",
+            "cjk_unified_ideographs_extension_e",
+            "cjk_unified_ideographs_extension_f",
+            "cjk_unified_ideographs_extension_i",
+            "cjk_compatibility_ideographs_supplement",
+            "cjk_unified_ideographs_extension_g",
+            "cjk_unified_ideographs_extension_h",
+            "cjk_unified_ideographs_extension_j"
+        ],
+        "XXX": [
+            "ipa_extensions",
+            "spacing_modifier_letters",
+            "combining_diacritical_marks",
+            "nko",
+            "samaritan",
+            "mandaic",
+            "ogham",
+            "runic",
+            "limbu",
+            "tai_le",
+            "new_tai_lue",
+            "khmer_symbols",
+            "combining_diacritical_marks_extended",
+            "lepcha",
+            "ol_chiki",
+            "vedic_extensions",
+            "phonetic_extensions",
+            "phonetic_extensions_supplement",
+            "combining_diacritical_marks_supplement",
+            "general_punctuation",
+            "superscripts_and_subscripts",
+            "currency_symbols",
+            "combining_diacritical_marks_for_symbols",
+            "letterlike_symbols",
+            "number_forms",
+            "arrows",
+            "mathematical_operators",
+            "miscellaneous_technical",
+            "control_pictures",
+            "optical_character_recognition",
+            "enclosed_alphanumerics",
+            "box_drawing",
+            "block_elements",
+            "geometric_shapes",
+            "miscellaneous_symbols",
+            "dingbats",
+            "miscellaneous_mathematical_symbols_a",
+            "supplemental_arrows_a",
+            "braille_patterns",
+            "supplemental_arrows_b",
+            "miscellaneous_mathematical_symbols_b",
+            "supplemental_mathematical_operators",
+            "miscellaneous_symbols_and_arrows",
+            "glagolitic",
+            "supplemental_punctuation",
+            "kangxi_radicals",
+            "ideographic_description_characters",
+            "cjk_symbols_and_punctuation",
+            "kanbun",
+            "yijing_hexagram_symbols",
+            "vai",
+            "bamum",
+            "modifier_tone_letters",
+            "syloti_nagri",
+            "common_indic_number_forms",
+            "phags_pa",
+            "saurashtra",
+            "meetei_mayek_extensions",
+            "meetei_mayek",
+            "high_surrogates",
+            "high_private_use_surrogates",
+            "low_surrogates",
+            "private_use_area",
+            "alphabetic_presentation_forms",
+            "arabic_presentation_forms_a",
+            "variation_selectors",
+            "vertical_forms",
+            "combining_half_marks",
+            "cjk_compatibility_forms",
+            "small_form_variants",
+            "arabic_presentation_forms_b",
+            "halfwidth_and_fullwidth_forms",
+            "specials",
+            "linear_b_syllabary",
+            "linear_b_ideograms",
+            "aegean_numbers",
+            "ancient_symbols",
+            "phaistos_disc",
+            "lycian",
+            "carian",
+            "old_italic",
+            "gothic",
+            "old_permic",
+            "ugaritic",
+            "old_persian",
+            "deseret",
+            "shavian",
+            "osmanya",
+            "osage",
+            "elbasan",
+            "caucasian_albanian",
+            "vithkuqi",
+            "todhri",
+            "linear_a",
+            "cypriot_syllabary",
+            "imperial_aramaic",
+            "palmyrene",
+            "nabataean",
+            "hatran",
+            "phoenician",
+            "lydian",
+            "sidetic",
+            "meroitic_hieroglyphs",
+            "meroitic_cursive",
+            "kharoshthi",
+            "old_south_arabian",
+            "old_north_arabian",
+            "manichaean",
+            "avestan",
+            "inscriptional_parthian",
+            "inscriptional_pahlavi",
+            "psalter_pahlavi",
+            "old_turkic",
+            "old_hungarian",
+            "garay",
+            "rumi_numeral_symbols",
+            "yezidi",
+            "old_sogdian",
+            "sogdian",
+            "old_uyghur",
+            "chorasmian",
+            "elymaic",
+            "brahmi",
+            "kaithi",
+            "sora_sompeng",
+            "chakma",
+            "mahajani",
+            "sharada",
+            "khojki",
+            "multani",
+            "khudawadi",
+            "grantha",
+            "tulu_tigalari",
+            "newa",
+            "tirhuta",
+            "siddham",
+            "modi",
+            "takri",
+            "ahom",
+            "dogra",
+            "warang_citi",
+            "dives_akuru",
+            "nandinagari",
+            "zanabazar_square",
+            "soyombo",
+            "pau_cin_hau",
+            "sharada_supplement",
+            "sunuwar",
+            "bhaiksuki",
+            "marchen",
+            "masaram_gondi",
+            "gunjala_gondi",
+            "tolong_siki",
+            "cuneiform",
+            "cuneiform_numbers_and_punctuation",
+            "early_dynastic_cuneiform",
+            "cypro_minoan",
+            "egyptian_hieroglyphs",
+            "egyptian_hieroglyph_format_controls",
+            "egyptian_hieroglyphs_extended_a",
+            "anatolian_hieroglyphs",
+            "gurung_khema",
+            "bamum_supplement",
+            "mro",
+            "tangsa",
+            "bassa_vah",
+            "pahawh_hmong",
+            "kirat_rai",
+            "medefaidrin",
+            "beria_erfe",
+            "miao",
+            "ideographic_symbols_and_punctuation",
+            "khitan_small_script",
+            "duployan",
+            "shorthand_format_controls",
+            "symbols_for_legacy_computing_supplement",
+            "miscellaneous_symbols_supplement",
+            "znamenny_musical_notation",
+            "byzantine_musical_symbols",
+            "musical_symbols",
+            "ancient_greek_musical_notation",
+            "kaktovik_numerals",
+            "mayan_numerals",
+            "tai_xuan_jing_symbols",
+            "counting_rod_numerals",
+            "mathematical_alphanumeric_symbols",
+            "sutton_signwriting",
+            "glagolitic_supplement",
+            "nyiakeng_puachue_hmong",
+            "toto",
+            "wancho",
+            "nag_mundari",
+            "ol_onal",
+            "tai_yo",
+            "mende_kikakui",
+            "adlam",
+            "indic_siyaq_numbers",
+            "ottoman_siyaq_numbers",
+            "arabic_mathematical_alphabetic_symbols",
+            "mahjong_tiles",
+            "domino_tiles",
+            "playing_cards",
+            "enclosed_alphanumeric_supplement",
+            "enclosed_ideographic_supplement",
+            "miscellaneous_symbols_and_pictographs",
+            "emoticons",
+            "ornamental_dingbats",
+            "transport_and_map_symbols",
+            "alchemical_symbols",
+            "geometric_shapes_extended",
+            "supplemental_arrows_c",
+            "supplemental_symbols_and_pictographs",
+            "chess_symbols",
+            "symbols_and_pictographs_extended_a",
+            "symbols_for_legacy_computing",
+            "tags",
+            "variation_selectors_supplement",
+            "supplementary_private_use_area_a",
+            "supplementary_private_use_area_b"
+        ],
+        "YEM": [
+            "arabic",
+            "arabic_supplement",
+            "arabic_extended_b",
+            "arabic_extended_a",
+            "arabic_presentation_forms_a",
+            "arabic_presentation_forms_b",
+            "arabic_extended_c",
+            "arabic_mathematical_alphabetic_symbols"
+        ]
     }
 };
         
-        // --- RESTORING FULL DATABASE FROM PREVIOUS CONTEXT FOR ROBUSTNESS ---
-        // (In a real scenario, I'd merge the full DB here. For this output, I ensure the requested fixes are applied)
-        // Let's ensure the DB object is fully populated as per previous file but with the fixes.
+        // Paste your countries mapping JSON here (from the attached document)
+        // Simply copy-paste the entire countries object
+               // Copy the entire structure from your JSON file
+            // Example: "AFG": ["arabic", "arabic_supplement", ...],
+        const COUNTRIES_SCRIPTS = 
+        {
+    "AFG": ["arabic", "arabic_supplement", "arabic_extended_b", "arabic_extended_a", "arabic_presentation_forms_a", "arabic_presentation_forms_b", "arabic_extended_c", "arabic_mathematical_alphabetic_symbols"],
+    "ARE": ["arabic", "arabic_supplement", "arabic_extended_b", "arabic_extended_a", "arabic_presentation_forms_a", "arabic_presentation_forms_b", "arabic_extended_c", "arabic_mathematical_alphabetic_symbols"],
+    "ARM": ["armenian"],
+    "AUS": ["basic_latin", "latin_1_supplement", "latin_extended_a", "latin_extended_b", "latin_extended_additional", "latin_extended_c", "latin_extended_d", "latin_extended_e", "latin_extended_f", "latin_extended_g"],
+    "AUT": ["basic_latin", "latin_1_supplement", "latin_extended_a", "latin_extended_b", "latin_extended_additional", "latin_extended_c", "latin_extended_d", "latin_extended_e", "latin_extended_f", "latin_extended_g"],
+    "AZE": ["cyrillic", "cyrillic_supplement", "cyrillic_extended_c", "cyrillic_extended_a", "cyrillic_extended_b", "cyrillic_extended_d"],
+    "BEL": ["basic_latin", "latin_1_supplement", "latin_extended_a", "latin_extended_b", "latin_extended_additional", "latin_extended_c", "latin_extended_d", "latin_extended_e", "latin_extended_f", "latin_extended_g"],
+    "BGD": ["bengali", "hanifi_rohingya"],
+    "BGR": ["cyrillic", "cyrillic_supplement", "cyrillic_extended_c", "cyrillic_extended_a", "cyrillic_extended_b", "cyrillic_extended_d"],
+    "BHR": ["arabic", "arabic_supplement", "arabic_extended_b", "arabic_extended_a", "arabic_presentation_forms_a", "arabic_presentation_forms_b", "arabic_extended_c", "arabic_mathematical_alphabetic_symbols"],
+    "BRA": ["basic_latin", "latin_1_supplement", "latin_extended_a", "latin_extended_b", "latin_extended_additional", "latin_extended_c", "latin_extended_d", "latin_extended_e", "latin_extended_f", "latin_extended_g"],
+    "CAN": ["unified_canadian_aboriginal_syllabics", "unified_canadian_aboriginal_syllabics_extended", "unified_canadian_aboriginal_syllabics_extended_a"],
+    "CHE": ["basic_latin", "latin_1_supplement", "latin_extended_a", "latin_extended_b", "latin_extended_additional", "latin_extended_c", "latin_extended_d", "latin_extended_e", "latin_extended_f", "latin_extended_g"],
+    "CHL": ["basic_latin", "latin_1_supplement", "latin_extended_a", "latin_extended_b", "latin_extended_additional", "latin_extended_c", "latin_extended_d", "latin_extended_e", "latin_extended_f", "latin_extended_g"],
+    "CHN": ["tibetan", "mongolian", "cjk_radicals_supplement", "cjk_symbols_and_punctuation", "cjk_strokes", "enclosed_cjk_letters_and_months", "cjk_compatibility", "cjk_unified_ideographs_extension_a", "yijing_hexagram_symbols", "cjk_unified_ideographs", "yi_syllables", "yi_radicals", "lisu", "cjk_compatibility_ideographs", "cjk_compatibility_forms", "mongolian_supplement", "lisu_supplement", "tangut", "tangut_components", "tangut_supplement", "tangut_components_supplement", "nushu", "cjk_unified_ideographs_extension_b", "cjk_unified_ideographs_extension_c", "cjk_unified_ideographs_extension_d", "cjk_unified_ideographs_extension_e", "cjk_unified_ideographs_extension_f", "cjk_unified_ideographs_extension_i", "cjk_compatibility_ideographs_supplement", "cjk_unified_ideographs_extension_g", "cjk_unified_ideographs_extension_h", "cjk_unified_ideographs_extension_j"],
+    "COL": ["basic_latin", "latin_1_supplement", "latin_extended_a", "latin_extended_b", "latin_extended_additional", "latin_extended_c", "latin_extended_d", "latin_extended_e", "latin_extended_f", "latin_extended_g"],
+    "CUB": ["basic_latin", "latin_1_supplement", "latin_extended_a", "latin_extended_b", "latin_extended_additional", "latin_extended_c", "latin_extended_d", "latin_extended_e", "latin_extended_f", "latin_extended_g"],
+    "CYP": ["greek_and_coptic", "greek_extended", "ancient_greek_numbers", "ancient_greek_musical_notation"],
+    "CZE": ["basic_latin", "latin_1_supplement", "latin_extended_a", "latin_extended_b", "latin_extended_additional", "latin_extended_c", "latin_extended_d", "latin_extended_e", "latin_extended_f", "latin_extended_g"],
+    "DEU": ["basic_latin", "latin_1_supplement", "latin_extended_a", "latin_extended_b", "latin_extended_additional", "latin_extended_c", "latin_extended_d", "latin_extended_e", "latin_extended_f", "latin_extended_g"],
+    "DNK": ["basic_latin", "latin_1_supplement", "latin_extended_a", "latin_extended_b", "latin_extended_additional", "latin_extended_c", "latin_extended_d", "latin_extended_e", "latin_extended_f", "latin_extended_g"],
+    "DZA": ["arabic", "arabic_supplement", "arabic_extended_b", "arabic_extended_a", "tifinagh", "arabic_presentation_forms_a", "arabic_presentation_forms_b", "arabic_extended_c", "arabic_mathematical_alphabetic_symbols"],
+    "EGY": ["greek_and_coptic", "arabic", "arabic_supplement", "arabic_extended_b", "arabic_extended_a", "coptic", "arabic_presentation_forms_a", "arabic_presentation_forms_b", "coptic_epact_numbers", "arabic_extended_c", "arabic_mathematical_alphabetic_symbols"],
+    "ERI": ["ethiopic", "ethiopic_supplement", "ethiopic_extended", "ethiopic_extended_a", "ethiopic_extended_b"],
+    "ESP": ["basic_latin", "latin_1_supplement", "latin_extended_a", "latin_extended_b", "latin_extended_additional", "latin_extended_c", "latin_extended_d", "latin_extended_e", "latin_extended_f", "latin_extended_g"],
+    "ETH": ["ethiopic", "ethiopic_supplement", "ethiopic_extended", "ethiopic_extended_a", "ethiopic_extended_b"],
+    "FIN": ["basic_latin", "latin_1_supplement", "latin_extended_a", "latin_extended_b", "latin_extended_additional", "latin_extended_c", "latin_extended_d", "latin_extended_e", "latin_extended_f", "latin_extended_g"],
+    "FRA": ["basic_latin", "latin_1_supplement", "latin_extended_a", "latin_extended_b", "latin_extended_additional", "latin_extended_c", "latin_extended_d", "latin_extended_e", "latin_extended_f", "latin_extended_g"],
+    "GBR": ["basic_latin", "latin_1_supplement", "latin_extended_a", "latin_extended_b", "latin_extended_additional", "latin_extended_c", "latin_extended_d", "latin_extended_e", "latin_extended_f", "latin_extended_g"],
+    "GEO": ["georgian", "georgian_extended", "georgian_supplement"],
+    "GRC": ["greek_and_coptic", "greek_extended", "ancient_greek_numbers", "ancient_greek_musical_notation"],
+    "HRV": ["basic_latin", "latin_1_supplement", "latin_extended_a", "latin_extended_b", "latin_extended_additional", "latin_extended_c", "latin_extended_d", "latin_extended_e", "latin_extended_f", "latin_extended_g"],
+    "HUN": ["basic_latin", "latin_1_supplement", "latin_extended_a", "latin_extended_b", "latin_extended_additional", "latin_extended_c", "latin_extended_d", "latin_extended_e", "latin_extended_f", "latin_extended_g"],
+    "IDN": ["basic_latin", "latin_1_supplement", "latin_extended_a", "latin_extended_b", "buginese", "balinese", "sundanese", "batak", "sundanese_supplement", "latin_extended_additional", "latin_extended_c", "latin_extended_d", "rejang", "javanese", "latin_extended_e", "latin_extended_f", "makasar", "kawi", "latin_extended_g"],
+    "IND": ["devanagari", "bengali", "gurmukhi", "gujarati", "oriya", "tamil", "telugu", "kannada", "malayalam", "devanagari_extended", "devanagari_extended_a", "tamil_supplement"],
+    "IRN": ["arabic", "syriac", "arabic_supplement", "syriac_supplement", "arabic_extended_b", "arabic_extended_a", "arabic_presentation_forms_a", "arabic_presentation_forms_b", "arabic_extended_c", "arabic_mathematical_alphabetic_symbols"],
+    "IRQ": ["arabic", "syriac", "arabic_supplement", "syriac_supplement", "arabic_extended_b", "arabic_extended_a", "arabic_presentation_forms_a", "arabic_presentation_forms_b", "arabic_extended_c", "arabic_mathematical_alphabetic_symbols"],
+    "ISR": ["hebrew"],
+    "ITA": ["basic_latin", "latin_1_supplement", "latin_extended_a", "latin_extended_b", "latin_extended_additional", "latin_extended_c", "latin_extended_d", "latin_extended_e", "latin_extended_f", "latin_extended_g"],
+    "JOR": ["arabic", "arabic_supplement", "arabic_extended_b", "arabic_extended_a", "arabic_presentation_forms_a", "arabic_presentation_forms_b", "arabic_extended_c", "arabic_mathematical_alphabetic_symbols"],
+    "JPN": ["cjk_radicals_supplement", "cjk_symbols_and_punctuation", "hiragana", "katakana", "cjk_strokes", "katakana_phonetic_extensions", "enclosed_cjk_letters_and_months", "cjk_compatibility", "cjk_unified_ideographs_extension_a", "cjk_unified_ideographs", "cjk_compatibility_ideographs", "cjk_compatibility_forms", "kana_extended_b", "kana_supplement", "kana_extended_a", "small_kana_extension", "cjk_unified_ideographs_extension_b", "cjk_unified_ideographs_extension_c", "cjk_unified_ideographs_extension_d", "cjk_unified_ideographs_extension_e", "cjk_unified_ideographs_extension_f", "cjk_unified_ideographs_extension_i", "cjk_compatibility_ideographs_supplement", "cjk_unified_ideographs_extension_g", "cjk_unified_ideographs_extension_h", "cjk_unified_ideographs_extension_j"],
+    "KAZ": ["cyrillic", "cyrillic_supplement", "cyrillic_extended_c", "cyrillic_extended_a", "cyrillic_extended_b", "cyrillic_extended_d"],
+    "KEN": ["basic_latin", "latin_1_supplement", "latin_extended_a", "latin_extended_b", "latin_extended_additional", "latin_extended_c", "latin_extended_d", "latin_extended_e", "latin_extended_f", "latin_extended_g"],
+    "KGZ": ["cyrillic", "cyrillic_supplement", "cyrillic_extended_c", "cyrillic_extended_a", "cyrillic_extended_b", "cyrillic_extended_d"],
+    "KHM": ["khmer", "khmer_symbols", "cham"],
+    "KOR": ["hangul_jamo", "cjk_radicals_supplement", "cjk_symbols_and_punctuation", "hangul_compatibility_jamo", "cjk_strokes", "enclosed_cjk_letters_and_months", "cjk_compatibility", "cjk_unified_ideographs_extension_a", "cjk_unified_ideographs", "hangul_jamo_extended_a", "hangul_syllables", "hangul_jamo_extended_b", "cjk_compatibility_ideographs", "cjk_compatibility_forms", "cjk_unified_ideographs_extension_b", "cjk_unified_ideographs_extension_c", "cjk_unified_ideographs_extension_d", "cjk_unified_ideographs_extension_e", "cjk_unified_ideographs_extension_f", "cjk_unified_ideographs_extension_i", "cjk_compatibility_ideographs_supplement", "cjk_unified_ideographs_extension_g", "cjk_unified_ideographs_extension_h", "cjk_unified_ideographs_extension_j"],
+    "KWT": ["arabic", "arabic_supplement", "arabic_extended_b", "arabic_extended_a", "arabic_presentation_forms_a", "arabic_presentation_forms_b", "arabic_extended_c", "arabic_mathematical_alphabetic_symbols"],
+    "LAO": ["lao", "tai_tham"],
+    "LBN": ["arabic", "arabic_supplement", "arabic_extended_b", "arabic_extended_a", "arabic_presentation_forms_a", "arabic_presentation_forms_b", "arabic_extended_c", "arabic_mathematical_alphabetic_symbols"],
+    "LBY": ["arabic", "arabic_supplement", "arabic_extended_b", "arabic_extended_a", "tifinagh", "arabic_presentation_forms_a", "arabic_presentation_forms_b", "arabic_extended_c", "arabic_mathematical_alphabetic_symbols"],
+    "LKA": ["tamil", "sinhala", "sinhala_archaic_numbers", "tamil_supplement"],
+    "MAR": ["arabic", "arabic_supplement", "arabic_extended_b", "arabic_extended_a", "tifinagh", "arabic_presentation_forms_a", "arabic_presentation_forms_b", "arabic_extended_c", "arabic_mathematical_alphabetic_symbols"],
+    "MEX": ["basic_latin", "latin_1_supplement", "latin_extended_a", "latin_extended_b", "latin_extended_additional", "latin_extended_c", "latin_extended_d", "latin_extended_e", "latin_extended_f", "latin_extended_g"],
+    "MMR": ["myanmar", "tai_tham", "kayah_li", "myanmar_extended_b", "myanmar_extended_a", "hanifi_rohingya", "myanmar_extended_c"],
+    "MNG": ["cyrillic", "cyrillic_supplement", "mongolian", "cyrillic_extended_c", "cyrillic_extended_a", "cyrillic_extended_b", "mongolian_supplement", "cyrillic_extended_d"],
+    "MYS": ["basic_latin", "latin_1_supplement", "latin_extended_a", "latin_extended_b", "tamil", "latin_extended_additional", "latin_extended_c", "latin_extended_d", "latin_extended_e", "latin_extended_f", "tamil_supplement", "latin_extended_g"],
+    "NLD": ["basic_latin", "latin_1_supplement", "latin_extended_a", "latin_extended_b", "latin_extended_additional", "latin_extended_c", "latin_extended_d", "latin_extended_e", "latin_extended_f", "latin_extended_g"],
+    "NOR": ["basic_latin", "latin_1_supplement", "latin_extended_a", "latin_extended_b", "latin_extended_additional", "latin_extended_c", "latin_extended_d", "latin_extended_e", "latin_extended_f", "latin_extended_g"],
+    "NPL": ["devanagari", "devanagari_extended", "devanagari_extended_a"],
+    "NZL": ["basic_latin", "latin_1_supplement", "latin_extended_a", "latin_extended_b", "latin_extended_additional", "latin_extended_c", "latin_extended_d", "latin_extended_e", "latin_extended_f", "latin_extended_g"],
+    "OMN": ["arabic", "arabic_supplement", "arabic_extended_b", "arabic_extended_a", "arabic_presentation_forms_a", "arabic_presentation_forms_b", "arabic_extended_c", "arabic_mathematical_alphabetic_symbols"],
+    "PAK": ["arabic", "arabic_supplement", "arabic_extended_b", "arabic_extended_a", "arabic_presentation_forms_a", "arabic_presentation_forms_b", "arabic_extended_c", "arabic_mathematical_alphabetic_symbols"],
+    "PHL": ["basic_latin", "latin_1_supplement", "latin_extended_a", "latin_extended_b", "tagalog", "hanunoo", "buhid", "tagbanwa", "latin_extended_additional", "latin_extended_c", "latin_extended_d", "latin_extended_e", "latin_extended_f", "latin_extended_g"],
+    "POL": ["basic_latin", "latin_1_supplement", "latin_extended_a", "latin_extended_b", "latin_extended_additional", "latin_extended_c", "latin_extended_d", "latin_extended_e", "latin_extended_f", "latin_extended_g"],
+    "PRK": ["hangul_jamo", "hangul_compatibility_jamo", "hangul_jamo_extended_a", "hangul_syllables", "hangul_jamo_extended_b"],
+    "PRT": ["basic_latin", "latin_1_supplement", "latin_extended_a", "latin_extended_b", "latin_extended_additional", "latin_extended_c", "latin_extended_d", "latin_extended_e", "latin_extended_f", "latin_extended_g"],
+    "QAT": ["arabic", "arabic_supplement", "arabic_extended_b", "arabic_extended_a", "arabic_presentation_forms_a", "arabic_presentation_forms_b", "arabic_extended_c", "arabic_mathematical_alphabetic_symbols"],
+    "RUS": ["cyrillic", "cyrillic_supplement", "cyrillic_extended_c", "cyrillic_extended_a", "cyrillic_extended_b", "cyrillic_extended_d"],
+    "SAU": ["arabic", "arabic_supplement", "arabic_extended_b", "arabic_extended_a", "arabic_presentation_forms_a", "arabic_presentation_forms_b", "arabic_extended_c", "arabic_mathematical_alphabetic_symbols"],
+    "SDN": ["arabic", "arabic_supplement", "arabic_extended_b", "arabic_extended_a", "arabic_presentation_forms_a", "arabic_presentation_forms_b", "arabic_extended_c", "arabic_mathematical_alphabetic_symbols"],
+    "SGP": ["basic_latin", "latin_1_supplement", "latin_extended_a", "latin_extended_b", "tamil", "latin_extended_additional", "latin_extended_c", "cjk_radicals_supplement", "cjk_symbols_and_punctuation", "cjk_strokes", "enclosed_cjk_letters_and_months", "cjk_compatibility", "cjk_unified_ideographs_extension_a", "cjk_unified_ideographs", "latin_extended_d", "latin_extended_e", "cjk_compatibility_ideographs", "cjk_compatibility_forms", "latin_extended_f", "tamil_supplement", "latin_extended_g", "cjk_unified_ideographs_extension_b", "cjk_unified_ideographs_extension_c", "cjk_unified_ideographs_extension_d", "cjk_unified_ideographs_extension_e", "cjk_unified_ideographs_extension_f", "cjk_unified_ideographs_extension_i", "cjk_compatibility_ideographs_supplement", "cjk_unified_ideographs_extension_g", "cjk_unified_ideographs_extension_h", "cjk_unified_ideographs_extension_j"],
+    "SRB": ["cyrillic", "cyrillic_supplement", "cyrillic_extended_c", "cyrillic_extended_a", "cyrillic_extended_b", "cyrillic_extended_d"],
+    "SWE": ["basic_latin", "latin_1_supplement", "latin_extended_a", "latin_extended_b", "latin_extended_additional", "latin_extended_c", "latin_extended_d", "latin_extended_e", "latin_extended_f", "latin_extended_g"],
+    "SYR": ["arabic", "syriac", "arabic_supplement", "syriac_supplement", "arabic_extended_b", "arabic_extended_a", "arabic_presentation_forms_a", "arabic_presentation_forms_b", "arabic_extended_c", "arabic_mathematical_alphabetic_symbols"],
+    "THA": ["thai", "tai_tham", "kayah_li"],
+    "TUN": ["arabic", "arabic_supplement", "arabic_extended_b", "arabic_extended_a", "arabic_presentation_forms_a", "arabic_presentation_forms_b", "arabic_extended_c", "arabic_mathematical_alphabetic_symbols"],
+    "TUR": ["basic_latin", "latin_1_supplement", "latin_extended_a", "latin_extended_b", "syriac", "syriac_supplement", "latin_extended_additional", "latin_extended_c", "latin_extended_d", "latin_extended_e", "latin_extended_f", "latin_extended_g"],
+    "TWN": ["cjk_radicals_supplement", "cjk_symbols_and_punctuation", "bopomofo", "bopomofo_extended", "cjk_strokes", "enclosed_cjk_letters_and_months", "cjk_compatibility", "cjk_unified_ideographs_extension_a", "cjk_unified_ideographs", "cjk_compatibility_ideographs", "cjk_compatibility_forms", "cjk_unified_ideographs_extension_b", "cjk_unified_ideographs_extension_c", "cjk_unified_ideographs_extension_d", "cjk_unified_ideographs_extension_e", "cjk_unified_ideographs_extension_f", "cjk_unified_ideographs_extension_i", "cjk_compatibility_ideographs_supplement", "cjk_unified_ideographs_extension_g", "cjk_unified_ideographs_extension_h", "cjk_unified_ideographs_extension_j"],
+    "UKR": ["cyrillic", "cyrillic_supplement", "cyrillic_extended_c", "cyrillic_extended_a", "cyrillic_extended_b", "cyrillic_extended_d"],
+    "USA": ["basic_latin", "latin_1_supplement", "latin_extended_a", "latin_extended_b", "cherokee", "latin_extended_additional", "latin_extended_c", "latin_extended_d", "latin_extended_e", "cherokee_supplement", "latin_extended_f", "latin_extended_g"],
+    "UZB": ["basic_latin", "latin_1_supplement", "latin_extended_a", "latin_extended_b", "cyrillic", "cyrillic_supplement", "cyrillic_extended_c", "latin_extended_additional", "latin_extended_c", "cyrillic_extended_a", "cyrillic_extended_b", "latin_extended_d", "latin_extended_e", "latin_extended_f", "latin_extended_g", "cyrillic_extended_d"],
+    "VNM": ["basic_latin", "latin_1_supplement", "latin_extended_a", "latin_extended_b", "latin_extended_additional", "latin_extended_c", "cjk_radicals_supplement", "cjk_symbols_and_punctuation", "cjk_strokes", "enclosed_cjk_letters_and_months", "cjk_compatibility", "cjk_unified_ideographs_extension_a", "cjk_unified_ideographs", "latin_extended_d", "cham", "tai_viet", "latin_extended_e", "cjk_compatibility_ideographs", "cjk_compatibility_forms", "latin_extended_f", "latin_extended_g", "cjk_unified_ideographs_extension_b", "cjk_unified_ideographs_extension_c", "cjk_unified_ideographs_extension_d", "cjk_unified_ideographs_extension_e", "cjk_unified_ideographs_extension_f", "cjk_unified_ideographs_extension_i", "cjk_compatibility_ideographs_supplement", "cjk_unified_ideographs_extension_g", "cjk_unified_ideographs_extension_h", "cjk_unified_ideographs_extension_j"],
+    "XXX": ["ipa_extensions", "spacing_modifier_letters", "combining_diacritical_marks", "nko", "samaritan", "mandaic", "ogham", "runic", "limbu", "tai_le", "new_tai_lue", "khmer_symbols", "combining_diacritical_marks_extended", "lepcha", "ol_chiki", "vedic_extensions", "phonetic_extensions", "phonetic_extensions_supplement", "combining_diacritical_marks_supplement", "general_punctuation", "superscripts_and_subscripts", "currency_symbols", "combining_diacritical_marks_for_symbols", "letterlike_symbols", "number_forms", "arrows", "mathematical_operators", "miscellaneous_technical", "control_pictures", "optical_character_recognition", "enclosed_alphanumerics", "box_drawing", "block_elements", "geometric_shapes", "miscellaneous_symbols", "dingbats", "miscellaneous_mathematical_symbols_a", "supplemental_arrows_a", "braille_patterns", "supplemental_arrows_b", "miscellaneous_mathematical_symbols_b", "supplemental_mathematical_operators", "miscellaneous_symbols_and_arrows", "glagolitic", "supplemental_punctuation", "kangxi_radicals", "ideographic_description_characters", "cjk_symbols_and_punctuation", "kanbun", "yijing_hexagram_symbols", "vai", "bamum", "modifier_tone_letters", "syloti_nagri", "common_indic_number_forms", "phags_pa", "saurashtra", "meetei_mayek_extensions", "meetei_mayek", "high_surrogates", "high_private_use_surrogates", "low_surrogates", "private_use_area", "alphabetic_presentation_forms", "arabic_presentation_forms_a", "variation_selectors", "vertical_forms", "combining_half_marks", "cjk_compatibility_forms", "small_form_variants", "arabic_presentation_forms_b", "halfwidth_and_fullwidth_forms", "specials", "linear_b_syllabary", "linear_b_ideograms", "aegean_numbers", "ancient_symbols", "phaistos_disc", "lycian", "carian", "old_italic", "gothic", "old_permic", "ugaritic", "old_persian", "deseret", "shavian", "osmanya", "osage", "elbasan", "caucasian_albanian", "vithkuqi", "todhri", "linear_a", "cypriot_syllabary", "imperial_aramaic", "palmyrene", "nabataean", "hatran", "phoenician", "lydian", "sidetic", "meroitic_hieroglyphs", "meroitic_cursive", "kharoshthi", "old_south_arabian", "old_north_arabian", "manichaean", "avestan", "inscriptional_parthian", "inscriptional_pahlavi", "psalter_pahlavi", "old_turkic", "old_hungarian", "garay", "rumi_numeral_symbols", "yezidi", "old_sogdian", "sogdian", "old_uyghur", "chorasmian", "elymaic", "brahmi", "kaithi", "sora_sompeng", "chakma", "mahajani", "sharada", "khojki", "multani", "khudawadi", "grantha", "tulu_tigalari", "newa", "tirhuta", "siddham", "modi", "takri", "ahom", "dogra", "warang_citi", "dives_akuru", "nandinagari", "zanabazar_square", "soyombo", "pau_cin_hau", "sharada_supplement", "sunuwar", "bhaiksuki", "marchen", "masaram_gondi", "gunjala_gondi", "tolong_siki", "cuneiform", "cuneiform_numbers_and_punctuation", "early_dynastic_cuneiform", "cypro_minoan", "egyptian_hieroglyphs", "egyptian_hieroglyph_format_controls", "egyptian_hieroglyphs_extended_a", "anatolian_hieroglyphs", "gurung_khema", "bamum_supplement", "mro", "tangsa", "bassa_vah", "pahawh_hmong", "kirat_rai", "medefaidrin", "beria_erfe", "miao", "ideographic_symbols_and_punctuation", "khitan_small_script", "duployan", "shorthand_format_controls", "symbols_for_legacy_computing_supplement", "miscellaneous_symbols_supplement", "znamenny_musical_notation", "byzantine_musical_symbols", "musical_symbols", "ancient_greek_musical_notation", "kaktovik_numerals", "mayan_numerals", "tai_xuan_jing_symbols", "counting_rod_numerals", "mathematical_alphanumeric_symbols", "sutton_signwriting", "glagolitic_supplement", "nyiakeng_puachue_hmong", "toto", "wancho", "nag_mundari", "ol_onal", "tai_yo", "mende_kikakui", "adlam", "indic_siyaq_numbers", "ottoman_siyaq_numbers", "arabic_mathematical_alphabetic_symbols", "mahjong_tiles", "domino_tiles", "playing_cards", "enclosed_alphanumeric_supplement", "enclosed_ideographic_supplement", "miscellaneous_symbols_and_pictographs", "emoticons", "ornamental_dingbats", "transport_and_map_symbols", "alchemical_symbols", "geometric_shapes_extended", "supplemental_arrows_c", "supplemental_symbols_and_pictographs", "chess_symbols", "symbols_and_pictographs_extended_a", "symbols_for_legacy_computing", "tags", "variation_selectors_supplement", "supplementary_private_use_area_a", "supplementary_private_use_area_b"],
+    "YEM": ["arabic", "arabic_supplement", "arabic_extended_b", "arabic_extended_a", "arabic_presentation_forms_a", "arabic_presentation_forms_b", "arabic_extended_c", "arabic_mathematical_alphabetic_symbols"]
+}
+            ;
+
+        // =============================================================================
+        // END OF UPDATE SECTION
+        // =============================================================================
+
+        // Combine into the expected GLOBAL_SCRIPT_DB structure
+        const GLOBAL_SCRIPT_DB = {
+            definitions: SCRIPT_DEFINITIONS,
+            countries: COUNTRIES_SCRIPTS
+        };
+
+        // --- I18N & CONFIG ---
+        const i18n = {
+            en: { app_title: "World Script Explorer", app_subtitle: "UNICODE DATA VIEWER", reg: "REGISTERED", miss: "PROPOSED", btn_dl: "Download Font", btn_view: "View Characters", font_missing: "Font not yet available in registry", paging: "{start}-{end} of {total}", stat: "Ready: Local Data" },
+            id: { app_title: "Penjelajah Aksara Dunia", app_subtitle: "DATA UNICODE VIEWER", reg: "TERDAFTAR", miss: "BELUM ADA", btn_dl: "Unduh Font", btn_view: "Lihat Karakter", font_missing: "Font belum tersedia di registry", paging: "{start}-{end} dari {total}", stat: "Siap: Data Lokal" }
+        };
+
+        let currentLang = 'en';
+        let modalState = { rangeStart: 0, rangeEnd: 0, fontName: '', page: 0, pageSize: 300 };
         
-        // RE-INJECTING FULL DATA TO ENSURE IT WORKS (Condensed for space, focusing on logic)
-        // ... (Assume full GLOBAL_SCRIPT_DB from previous prompt is here, but with "Noto+Serif+SC" fix) ...
-        // I will implement a merge logic to be safe if you copy-paste just the changes, 
-        // but for this file generation, I will include the critical parts and a fallback.
+        const FALLBACK_LATIN = [{ code: "Latn", name_en: "Latin (System)", name_id: "Latin (Sistem)", unicode: true, range: "0020-007F", ver: "1.0", font: "Noto+Sans", sample: "Abcde" }];
+
+        // ISO-3 to ISO-2 conversion mapping (comprehensive)
+        const ISO3_TO_ISO2 = {
+            'AFG': 'AF', 'ARE': 'AE', 'ARM': 'AM', 'AUS': 'AU', 'BGD': 'BD', 
+            'BGR': 'BG', 'BHR': 'BH', 'BRA': 'BR', 'CAN': 'CA', 'CHN': 'CN',
+            'CYP': 'CY', 'DEU': 'DE', 'DZA': 'DZ', 'EGY': 'EG', 'ERI': 'ER',
+            'ESP': 'ES', 'ETH': 'ET', 'FRA': 'FR', 'GBR': 'GB', 'GEO': 'GE',
+            'GRC': 'GR', 'IDN': 'ID', 'IND': 'IN', 'IRN': 'IR', 'IRQ': 'IQ',
+            'ISR': 'IL', 'ITA': 'IT', 'JOR': 'JO', 'JPN': 'JP', 'KAZ': 'KZ',
+            'KGZ': 'KG', 'KHM': 'KH', 'KOR': 'KR', 'KWT': 'KW', 'LAO': 'LA',
+            'LBN': 'LB', 'LBY': 'LY', 'LKA': 'LK', 'MAR': 'MA', 'MDV': 'MV',
+            'MKD': 'MK', 'MMR': 'MM', 'MNG': 'MN', 'MYS': 'MY', 'NPL': 'NP',
+            'NZL': 'NZ', 'OMN': 'OM', 'PAK': 'PK', 'PHL': 'PH', 'PRK': 'KP',
+            'QAT': 'QA', 'RUS': 'RU', 'SAU': 'SA', 'SDN': 'SD', 'SGP': 'SG',
+            'SRB': 'RS', 'SYR': 'SY', 'THA': 'TH', 'TJK': 'TJ', 'TUN': 'TN',
+            'TUR': 'TR', 'TWN': 'TW', 'UKR': 'UA', 'USA': 'US', 'UZB': 'UZ',
+            'VNM': 'VN', 'XXX': 'XX', 'YEM': 'YE'
+        };
+
+        // Reverse mapping for lookups
+        const ISO2_TO_ISO3 = Object.fromEntries(
+            Object.entries(ISO3_TO_ISO2).map(([k, v]) => [v, k])
+        );
+
+        // --- LANDING PAGE ---
+        function enterApp() {
+            const landing = document.getElementById('landing-page');
+            landing.classList.add('hidden');
+            setTimeout(() => {
+                landing.style.display = 'none';
+            }, 800);
+        }
 
         // --- MAP SETUP ---
-        const map = L.map('map', { zoomControl: false, minZoom: 2, maxZoom: 8 }).setView([35, 105], 3); // Center on Asia/China for testing
+        const map = L.map('map', { zoomControl: false, minZoom: 2, maxZoom: 8 }).setView([20, 0], 2);
         L.control.zoom({ position: 'bottomright' }).addTo(map);
 
         fetch('https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json')
@@ -470,66 +4624,39 @@
                     style: { fillColor: '#E6DFD3', weight: 1, opacity: 1, color: '#B0A99F', fillOpacity: 1 },
                     onEachFeature: (f, l) => {
                         l.on('click', (e) => {
-                            const iso = convertIso3to2(f.id);
-                            openCountry(iso, f.properties.name);
+                            const iso3 = f.id; // GeoJSON uses ISO-3
+                            const iso2 = ISO3_TO_ISO2[iso3] || iso3.substring(0, 2).toUpperCase();
+                            openCountry(iso3, iso2, f.properties.name);
                             L.DomEvent.stopPropagation(e);
                         });
                     }
                 }).addTo(map);
             });
 
-        function convertIso3to2(iso3) {
-            const m = { 'IDN': 'ID', 'CHN': 'CN', 'USA': 'US', 'IND': 'IN', 'JPN': 'JP' };
-            return m[iso3] || iso3.substring(0, 2).toUpperCase();
-        }
-
         // --- CORE FUNCTIONALITY ---
-        function getScriptData(iso) {
+        function getScriptData(iso3Code) {
             const debugArea = document.getElementById('statusArea');
             
-            // FAKE DB for demonstration if the full 2000-line DB isn't pasted. 
-            // In the real file, the huge GLOBAL_SCRIPT_DB from the previous step should be preserved.
-            // I'm assuming the previous context's huge DB is available. 
-            // I will inject the specific fix for China here dynamically to ensure it works even if I don't reprint 2000 lines.
-            
-            if (GLOBAL_SCRIPT_DB.countries[iso]) {
-               // Great, use it.
-            } else {
-               // Fallback / Polyfill for this demo to ensure CN works
-               if(iso === 'CN') {
-                   return [
-                       { code: "Hani", name_en: "CJK Unified Ideographs", name_id: "Aksara Han (Cina)", range: "4E00-9FFF", unicode: true, font: "Noto+Serif+SC", sample: "永" },
-                       { code: "Tang", name_en: "Tangut", name_id: "Aksara Tangut", range: "17000-187FF", unicode: true, font: "Noto+Sans+Tangut", sample: "\ud81c\udc00" },
-                       { code: "Tibe", name_en: "Tibetan", name_id: "Aksara Tibet", range: "0F00-0FFF", unicode: true, font: "Noto+Sans+Tibetan", sample: "\u0f00" },
-                       { code: "Mong", name_en: "Mongolian", name_id: "Aksara Mongol", range: "1800-18AF", unicode: true, font: "Noto+Sans+Mongolian", sample: "\u1800" }
-                   ];
-               }
-            }
-
-            if (GLOBAL_SCRIPT_DB.countries && GLOBAL_SCRIPT_DB.countries[iso]) {
-                const scriptIds = GLOBAL_SCRIPT_DB.countries[iso];
-                const data = scriptIds.map(id => GLOBAL_SCRIPT_DB.definitions[id] || (typeof id === 'object' ? id : null)).filter(Boolean);
-                debugArea.innerHTML = `<span style="color:green">Loaded: ${iso} (${data.length} scripts)</span>`;
+            // Try exact match with ISO-3
+            if (GLOBAL_SCRIPT_DB.countries && GLOBAL_SCRIPT_DB.countries[iso3Code]) {
+                const scriptIds = GLOBAL_SCRIPT_DB.countries[iso3Code];
+                const data = scriptIds.map(id => GLOBAL_SCRIPT_DB.definitions[id]).filter(Boolean);
+                debugArea.innerHTML = `<span style="color:green">✓ Loaded: ${iso3Code} (${data.length} scripts)</span>`;
                 return data;
-            } else if (iso === 'CN') {
-                 // Explicit fallback for CN if DB is partial
-                 return [
-                       { code: "Hani", name_en: "CJK Unified Ideographs", name_id: "Aksara Han (Cina)", range: "4E00-9FFF", unicode: true, font: "Noto+Serif+SC", sample: "永" },
-                       { code: "Tang", name_en: "Tangut", name_id: "Aksara Tangut", range: "17000-187FF", unicode: true, font: "Noto+Sans+Tangut", sample: "\ud81c\udc00" }
-                 ];
-            } else {
-                debugArea.innerHTML = `<span style="color:red">Missing: ${iso} (Using Fallback)</span>`;
-                return FALLBACK_LATIN; 
             }
+            
+            // Fallback
+            debugArea.innerHTML = `<span style="color:orange">⚠ Missing data: ${iso3Code} (Using fallback)</span>`;
+            return FALLBACK_LATIN;
         }
 
         // --- UI LOGIC ---
-        function openCountry(iso, name) {
+        function openCountry(iso3, iso2, name) {
             document.getElementById('countryName').innerText = name;
-            document.getElementById('countryCode').innerText = iso;
+            document.getElementById('countryCode').innerText = `${iso2} (${iso3})`;
             document.getElementById('infoPanel').classList.add('open');
             
-            const scripts = getScriptData(iso);
+            const scripts = getScriptData(iso3);
             renderScripts(scripts, name);
         }
 
@@ -538,7 +4665,7 @@
             list.innerHTML = '';
             
             if (!scripts || scripts.length === 0) {
-                list.innerHTML = '<div style="padding:20px; text-align:center;">No script data available.</div>';
+                list.innerHTML = '<div style="padding:20px; text-align:center; color:#999;">No script data available for this country.</div>';
                 return;
             }
             
@@ -552,7 +4679,6 @@
                 
                 const hasFont = script.font && script.font !== 'null';
                 const isReg = script.unicode === true || script.unicode === "TRUE"; 
-                // Fix Google Fonts URL for display
                 const fontUrl = hasFont ? `https://fonts.google.com/specimen/${script.font.replace(/\+/g, '+')}` : '#';
                 const fontFamily = hasFont ? script.font.replace(/\+/g, ' ') : 'sans-serif';
 
@@ -614,7 +4740,7 @@
             URL.revokeObjectURL(url);
         }
 
-        // --- PAGINATION & MODAL LOGIC (UNCHANGED) ---
+        // --- PAGINATION & MODAL ---
         function openGrid(name, range, font) {
             document.getElementById('charModal').classList.add('active');
             document.getElementById('modalTitle').innerText = name;
@@ -688,6 +4814,10 @@
             document.querySelector('[data-i18n="app_title"]').innerText = i18n[currentLang].app_title;
             document.querySelector('[data-i18n="app_subtitle"]').innerText = i18n[currentLang].app_subtitle;
         }
+
+        // Initial data check
+        console.log('📊 Script Definitions:', Object.keys(SCRIPT_DEFINITIONS).length);
+        console.log('🌍 Country Mappings:', Object.keys(COUNTRIES_SCRIPTS).length);
     </script>
 </body>
 </html>
