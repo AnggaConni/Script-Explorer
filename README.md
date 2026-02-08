@@ -1,6 +1,4 @@
-# Script-Explorer
-
->World Script Explorer 🌍
+World Script Explorer 🌍
 
 World Script Explorer is an interactive, open-source visualization tool designed to map the world's writing systems (scripts) based on the Unicode Standard.
 
@@ -34,34 +32,39 @@ Step 2: Process with Python (via Google Colab)
 
 We use Python to "enrich" the raw data—guessing the country of origin, assigning Google Fonts, and generating sample characters.
 
-Recommended: Run this script in Google Colab. It's free, requires no installation, and runs in your browser.
+Recommended: Run this script in Google Colab. It's free, requires no installation, and runs directly in your browser.
 
-Open Google Colab https://colab.google 
+Open Google Colab.
 
 Create a New Notebook.
 
 Copy and Paste the Python Script below.
 
-Paste your raw Blocks.txt data into the raw_data variable in the script.
+Paste your raw Blocks.txt data into the raw_data variable inside the script (replace the dummy data).
 
 Run the script (Play button).
 
-Copy the Output (Tab-Separated values).
+Copy the Output (The Tab-Separated values generated at the bottom).
 
 Step 3: Convert to JSON
 
 The Python script outputs raw tabular data. We need to convert this into a structured JSON format for the web app.
 
-Tool: UNICODE JSON Converter https://github.com/AnggaConni/UNICODEJSONConvert 
+Tool: UNICODE JSON Converter
 
-Action: 1.  Go to the converter tool (or download the HTML file from the link above).
-2.  Paste the output from Python into the tool.
-3.  Click Convert.
-4.  Copy the resulting const GLOBAL_SCRIPT_DB = { ... } code.
+Action:
+
+Go to the converter tool (or download the HTML file from the link above).
+
+Paste the output from the Python script into the tool.
+
+Click Convert.
+
+Copy the resulting const GLOBAL_SCRIPT_DB = { ... } code.
 
 Step 4: Update the App
 
-Open index.html in this repository and replace the content of const GLOBAL_SCRIPT_DB with your new JSON data.
+Open index.html in this repository and replace the existing content of const GLOBAL_SCRIPT_DB with your new JSON data.
 
 🐍 Python Automation Script
 
@@ -69,8 +72,9 @@ You can embed this script in your local environment or Google Colab. This script
 
 import re
 
-# --- 1. DATA MENTAH DARI UNICODE/UNICODE RAW DATA (Blocks.txt) ---
+# --- 1. DATA MENTAH DARI UNICODE (Blocks.txt) ---
 # Paste content from [https://www.unicode.org/Public/17.0.0/ucd/Blocks.txt](https://www.unicode.org/Public/17.0.0/ucd/Blocks.txt) here
+# Note: Ensure you paste the FULL content of the file below.
 raw_data = """
 0000..007F; Basic Latin
 0600..06FF; Arabic
@@ -252,6 +256,8 @@ for line in raw_data.strip().split('\n'):
 📜 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
+
+Initiated by Angga Conni Saputra.
 
 Initiated by Angga Conni Saputra.
 **Angga Conni Saputra**
