@@ -29,6 +29,10 @@ This project relies on data from the Unicode Consortium. Since the data is massi
 
 Step 1: Get the Raw Data
 
+<p align="center">
+<img src="assets/unicodeblocks.png" width="700")
+</p>
+
 Download the latest Blocks.txt file from the official Unicode FTP server. This file contains the ranges for every registered writing system.
 
 Source: Unicode 17.0.0 Blocks.txt https://www.unicode.org/Public/17.0.0/ucd/Blocks.txt 
