@@ -1,4 +1,6 @@
-![World Script Explorer Screenshot](assets/world-script-map.png)
+<p align="center">
+  <img src="assets/world-script-map.png" width="700">
+</p>
 
 World Script Explorer 🌍
 
@@ -59,7 +61,9 @@ The Python script outputs raw tabular data. We need to convert this into a struc
 
 Tool: UNICODE JSON Converter https://anggaconni.github.io/UNICODEJSONConvert/ 
 
-![UNICODE JSON Converter](assets/jsonconvert.png)
+<p align="center">
+![UNICODE JSON Converter](assets/jsonconvert.png" width="700")
+</p>
 
 Action:
 
