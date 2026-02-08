@@ -8,6 +8,9 @@ World Script Explorer is an interactive, open-source visualization tool designed
 
 This project aims to help linguists, typography enthusiasts, and cultural preservationists explore the rich diversity of human writing systems through an interactive globe.
 
+<p align="center">
+<img src="assets/maps.png" width="700")
+</p>
 
 🚀 Features
 
