@@ -1,3 +1,5 @@
+![World Script Explorer Screenshot](assets/world-script-map.png)
+
 World Script Explorer 🌍
 
 World Script Explorer is an interactive, open-source visualization tool designed to map the world's writing systems (scripts) based on the Unicode Standard.
@@ -57,6 +59,7 @@ The Python script outputs raw tabular data. We need to convert this into a struc
 
 Tool: UNICODE JSON Converter https://anggaconni.github.io/UNICODEJSONConvert/ 
 
+![UNICODE JSON Converter](assets/jsonconvert.png)
 
 Action:
 
