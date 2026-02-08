@@ -62,7 +62,7 @@ The Python script outputs raw tabular data. We need to convert this into a struc
 Tool: UNICODE JSON Converter https://anggaconni.github.io/UNICODEJSONConvert/ 
 
 <p align="center">
-![UNICODE JSON Converter](assets/jsonconvert.png" width="700")
+<img src="assets/jsonconvert.png" width="700")
 </p>
 
 Action:
