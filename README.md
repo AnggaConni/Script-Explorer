@@ -67,28 +67,7 @@ Run the script (Play button).
 Copy the Output (The Tab-Separated values generated at the bottom).
 
 
-Step 3: Convert to JSON
-
-The Python script outputs raw tabular data. We need to convert this into a structured JSON format for the web app.
-
-Tool: UNICODE JSON Converter https://anggaconni.github.io/UNICODEJSONConvert/ 
-
-<p align="center">
-<img src="assets/jsonconvert.png" width="700")
-</p>
-
-Action:
-
-Go to the converter tool (or download the HTML file from the link above).
-
-Paste the output from the Python script into the tool.
-
-Click Convert.
-
-Copy the resulting const GLOBAL_SCRIPT_DB = { ... } code.
-
-
-Step 4: Update the App
+Step 3: Update the App
 
 Open index.html in this repository and replace the existing content of const GLOBAL_SCRIPT_DB with your new JSON data.
 
@@ -99,112 +78,563 @@ You can embed this script in your local environment or Google Colab. This script
 
 ```python
 import re
+import json
 
 # --- 1. DATA MENTAH DARI UNICODE (Blocks.txt) ---
-# Paste content from https://www.unicode.org/Public/17.0.0/ucd/Blocks.txt here
-# Note: Ensure you paste the FULL content of the file below.
+# Data ini mencakup rentang hex dan nama blok Unicode
 raw_data = """
 0000..007F; Basic Latin
+0080..00FF; Latin-1 Supplement
+0100..017F; Latin Extended-A
+0180..024F; Latin Extended-B
+0250..02AF; IPA Extensions
+02B0..02FF; Spacing Modifier Letters
+0300..036F; Combining Diacritical Marks
+0370..03FF; Greek and Coptic
+0400..04FF; Cyrillic
+0500..052F; Cyrillic Supplement
+0530..058F; Armenian
+0590..05FF; Hebrew
 0600..06FF; Arabic
+0700..074F; Syriac
+0750..077F; Arabic Supplement
+0780..07BF; Thaana
+07C0..07FF; NKo
+0800..083F; Samaritan
+0840..085F; Mandaic
+0860..086F; Syriac Supplement
+0870..089F; Arabic Extended-B
+08A0..08FF; Arabic Extended-A
+0900..097F; Devanagari
+0980..09FF; Bengali
+0A00..0A7F; Gurmukhi
+0A80..0AFF; Gujarati
+0B00..0B7F; Oriya
+0B80..0BFF; Tamil
+0C00..0C7F; Telugu
+0C80..0CFF; Kannada
+0D00..0D7F; Malayalam
+0D80..0DFF; Sinhala
+0E00..0E7F; Thai
+0E80..0EFF; Lao
+0F00..0FFF; Tibetan
+1000..109F; Myanmar
+10A0..10FF; Georgian
+1100..11FF; Hangul Jamo
+1200..137F; Ethiopic
+1380..139F; Ethiopic Supplement
+13A0..13FF; Cherokee
+1400..167F; Unified Canadian Aboriginal Syllabics
+1680..169F; Ogham
+16A0..16FF; Runic
+1700..171F; Tagalog
+1720..173F; Hanunoo
+1740..175F; Buhid
+1760..177F; Tagbanwa
+1780..17FF; Khmer
+1800..18AF; Mongolian
+18B0..18FF; Unified Canadian Aboriginal Syllabics Extended
+1900..194F; Limbu
+1950..197F; Tai Le
+1980..19DF; New Tai Lue
+19E0..19FF; Khmer Symbols
+1A00..1A1F; Buginese
+1A20..1AAF; Tai Tham
+1AB0..1AFF; Combining Diacritical Marks Extended
+1B00..1B7F; Balinese
+1B80..1BBF; Sundanese
+1BC0..1BFF; Batak
+1C00..1C4F; Lepcha
+1C50..1C7F; Ol Chiki
+1C80..1C8F; Cyrillic Extended-C
+1C90..1CBF; Georgian Extended
+1CC0..1CCF; Sundanese Supplement
+1CD0..1CFF; Vedic Extensions
+1D00..1D7F; Phonetic Extensions
+1D80..1DBF; Phonetic Extensions Supplement
+1DC0..1DFF; Combining Diacritical Marks Supplement
+1E00..1EFF; Latin Extended Additional
+1F00..1FFF; Greek Extended
+2000..206F; General Punctuation
+2070..209F; Superscripts and Subscripts
+20A0..20CF; Currency Symbols
+20D0..20FF; Combining Diacritical Marks for Symbols
+2100..214F; Letterlike Symbols
+2150..218F; Number Forms
+2190..21FF; Arrows
+2200..22FF; Mathematical Operators
+2300..23FF; Miscellaneous Technical
+2400..243F; Control Pictures
+2440..245F; Optical Character Recognition
+2460..24FF; Enclosed Alphanumerics
+2500..257F; Box Drawing
+2580..259F; Block Elements
+25A0..25FF; Geometric Shapes
+2600..26FF; Miscellaneous Symbols
+2700..27BF; Dingbats
+27C0..27EF; Miscellaneous Mathematical Symbols-A
+27F0..27FF; Supplemental Arrows-A
+2800..28FF; Braille Patterns
+2900..297F; Supplemental Arrows-B
+2980..29FF; Miscellaneous Mathematical Symbols-B
+2A00..2AFF; Supplemental Mathematical Operators
+2B00..2BFF; Miscellaneous Symbols and Arrows
+2C00..2C5F; Glagolitic
+2C60..2C7F; Latin Extended-C
+2C80..2CFF; Coptic
+2D00..2D2F; Georgian Supplement
+2D30..2D7F; Tifinagh
+2D80..2DDF; Ethiopic Extended
+2DE0..2DFF; Cyrillic Extended-A
+2E00..2E7F; Supplemental Punctuation
+2E80..2EFF; CJK Radicals Supplement
+2F00..2FDF; Kangxi Radicals
+2FF0..2FFF; Ideographic Description Characters
+3000..303F; CJK Symbols and Punctuation
+3040..309F; Hiragana
+30A0..30FF; Katakana
+3100..312F; Bopomofo
+3130..318F; Hangul Compatibility Jamo
+3190..319F; Kanbun
+31A0..31BF; Bopomofo Extended
+31C0..31EF; CJK Strokes
+31F0..31FF; Katakana Phonetic Extensions
+3200..32FF; Enclosed CJK Letters and Months
+3300..33FF; CJK Compatibility
+3400..4DBF; CJK Unified Ideographs Extension A
+4DC0..4DFF; Yijing Hexagram Symbols
+4E00..9FFF; CJK Unified Ideographs
+A000..A48F; Yi Syllables
+A490..A4CF; Yi Radicals
+A4D0..A4FF; Lisu
+A500..A63F; Vai
+A640..A69F; Cyrillic Extended-B
+A6A0..A6FF; Bamum
+A700..A71F; Modifier Tone Letters
+A720..A7FF; Latin Extended-D
+A800..A82F; Syloti Nagri
+A830..A83F; Common Indic Number Forms
+A840..A87F; Phags-pa
+A880..A8DF; Saurashtra
+A8E0..A8FF; Devanagari Extended
+A900..A92F; Kayah Li
+A930..A95F; Rejang
+A960..A97F; Hangul Jamo Extended-A
 A980..A9DF; Javanese
+A9E0..A9FF; Myanmar Extended-B
+AA00..AA5F; Cham
+AA60..AA7F; Myanmar Extended-A
+AA80..AADF; Tai Viet
+AAE0..AAFF; Meetei Mayek Extensions
+AB00..AB2F; Ethiopic Extended-A
+AB30..AB6F; Latin Extended-E
+AB70..ABBF; Cherokee Supplement
+ABC0..ABFF; Meetei Mayek
+AC00..D7AF; Hangul Syllables
+D7B0..D7FF; Hangul Jamo Extended-B
 D800..DB7F; High Surrogates
+DB80..DBFF; High Private Use Surrogates
 DC00..DFFF; Low Surrogates
 E000..F8FF; Private Use Area
+F900..FAFF; CJK Compatibility Ideographs
+FB00..FB4F; Alphabetic Presentation Forms
+FB50..FDFF; Arabic Presentation Forms-A
+FE00..FE0F; Variation Selectors
+FE10..FE1F; Vertical Forms
+FE20..FE2F; Combining Half Marks
+FE30..FE4F; CJK Compatibility Forms
+FE50..FE6F; Small Form Variants
+FE70..FEFF; Arabic Presentation Forms-B
+FF00..FFEF; Halfwidth and Fullwidth Forms
+FFF0..FFFF; Specials
+10000..1007F; Linear B Syllabary
+10080..100FF; Linear B Ideograms
+10100..1013F; Aegean Numbers
+10140..1018F; Ancient Greek Numbers
+10190..101CF; Ancient Symbols
+101D0..101FF; Phaistos Disc
+10280..1029F; Lycian
+102A0..102DF; Carian
+102E0..102FF; Coptic Epact Numbers
+10300..1032F; Old Italic
+10330..1034F; Gothic
+10350..1037F; Old Permic
+10380..1039F; Ugaritic
+103A0..103DF; Old Persian
+10400..1044F; Deseret
+10450..1047F; Shavian
+10480..104AF; Osmanya
+104B0..104FF; Osage
+10500..1052F; Elbasan
+10530..1056F; Caucasian Albanian
+10570..105BF; Vithkuqi
+105C0..105FF; Todhri
+10600..1077F; Linear A
+10780..107BF; Latin Extended-F
+10800..1083F; Cypriot Syllabary
+10840..1085F; Imperial Aramaic
+10860..1087F; Palmyrene
+10880..108AF; Nabataean
+108E0..108FF; Hatran
+10900..1091F; Phoenician
+10920..1093F; Lydian
+10940..1095F; Sidetic
+10980..1099F; Meroitic Hieroglyphs
+109A0..109FF; Meroitic Cursive
+10A00..10A5F; Kharoshthi
+10A60..10A7F; Old South Arabian
+10A80..10A9F; Old North Arabian
+10AC0..10AFF; Manichaean
+10B00..10B3F; Avestan
+10B40..10B5F; Inscriptional Parthian
+10B60..10B7F; Inscriptional Pahlavi
+10B80..10BAF; Psalter Pahlavi
+10C00..10C4F; Old Turkic
+10C80..10CFF; Old Hungarian
+10D00..10D3F; Hanifi Rohingya
+10D40..10D8F; Garay
+10E60..10E7F; Rumi Numeral Symbols
+10E80..10EBF; Yezidi
+10EC0..10EFF; Arabic Extended-C
+10F00..10F2F; Old Sogdian
+10F30..10F6F; Sogdian
+10F70..10FAF; Old Uyghur
+10FB0..10FDF; Chorasmian
+10FE0..10FFF; Elymaic
+11000..1107F; Brahmi
+11080..110CF; Kaithi
+110D0..110FF; Sora Sompeng
+11100..1114F; Chakma
+11150..1117F; Mahajani
+11180..111DF; Sharada
+111E0..111FF; Sinhala Archaic Numbers
+11200..1124F; Khojki
+11280..112AF; Multani
+112B0..112FF; Khudawadi
+11300..1137F; Grantha
+11380..113FF; Tulu-Tigalari
+11400..1147F; Newa
+11480..114DF; Tirhuta
+11580..115FF; Siddham
+11600..1165F; Modi
+11660..1167F; Mongolian Supplement
+11680..116CF; Takri
+116D0..116FF; Myanmar Extended-C
+11700..1174F; Ahom
+11800..1184F; Dogra
+118A0..118FF; Warang Citi
+11900..1195F; Dives Akuru
+119A0..119FF; Nandinagari
+11A00..11A4F; Zanabazar Square
+11A50..11AAF; Soyombo
+11AB0..11ABF; Unified Canadian Aboriginal Syllabics Extended-A
+11AC0..11AFF; Pau Cin Hau
+11B00..11B5F; Devanagari Extended-A
+11B60..11B7F; Sharada Supplement
+11BC0..11BFF; Sunuwar
+11C00..11C6F; Bhaiksuki
+11C70..11CBF; Marchen
+11D00..11D5F; Masaram Gondi
+11D60..11DAF; Gunjala Gondi
+11DB0..11DEF; Tolong Siki
+11EE0..11EFF; Makasar
+11F00..11F5F; Kawi
+11FB0..11FBF; Lisu Supplement
+11FC0..11FFF; Tamil Supplement
+12000..123FF; Cuneiform
+12400..1247F; Cuneiform Numbers and Punctuation
+12480..1254F; Early Dynastic Cuneiform
+12F90..12FFF; Cypro-Minoan
+13000..1342F; Egyptian Hieroglyphs
+13430..1345F; Egyptian Hieroglyph Format Controls
+13460..143FF; Egyptian Hieroglyphs Extended-A
+14400..1467F; Anatolian Hieroglyphs
+16100..1613F; Gurung Khema
+16800..16A3F; Bamum Supplement
+16A40..16A6F; Mro
+16A70..16ACF; Tangsa
+16AD0..16AFF; Bassa Vah
+16B00..16B8F; Pahawh Hmong
+16D40..16D7F; Kirat Rai
+16E40..16E9F; Medefaidrin
+16EA0..16EDF; Beria Erfe
+16F00..16F9F; Miao
+16FE0..16FFF; Ideographic Symbols and Punctuation
+17000..187FF; Tangut
+18800..18AFF; Tangut Components
+18B00..18CFF; Khitan Small Script
+18D00..18D7F; Tangut Supplement
+18D80..18DFF; Tangut Components Supplement
+1AFF0..1AFFF; Kana Extended-B
+1B000..1B0FF; Kana Supplement
+1B100..1B12F; Kana Extended-A
+1B130..1B16F; Small Kana Extension
+1B170..1B2FF; Nushu
+1BC00..1BC9F; Duployan
+1BCA0..1BCAF; Shorthand Format Controls
+1CC00..1CEBF; Symbols for Legacy Computing Supplement
+1CEC0..1CEFF; Miscellaneous Symbols Supplement
+1CF00..1CFCF; Znamenny Musical Notation
+1D000..1D0FF; Byzantine Musical Symbols
+1D100..1D1FF; Musical Symbols
+1D200..1D24F; Ancient Greek Musical Notation
+1D2C0..1D2DF; Kaktovik Numerals
+1D2E0..1D2FF; Mayan Numerals
+1D300..1D35F; Tai Xuan Jing Symbols
+1D360..1D37F; Counting Rod Numerals
+1D400..1D7FF; Mathematical Alphanumeric Symbols
+1D800..1DAAF; Sutton SignWriting
+1DF00..1DFFF; Latin Extended-G
+1E000..1E02F; Glagolitic Supplement
+1E030..1E08F; Cyrillic Extended-D
+1E100..1E14F; Nyiakeng Puachue Hmong
+1E290..1E2BF; Toto
+1E2C0..1E2FF; Wancho
+1E4D0..1E4FF; Nag Mundari
+1E5D0..1E5FF; Ol Onal
+1E6C0..1E6FF; Tai Yo
+1E7E0..1E7FF; Ethiopic Extended-B
+1E800..1E8DF; Mende Kikakui
+1E900..1E95F; Adlam
+1EC70..1ECBF; Indic Siyaq Numbers
+1ED00..1ED4F; Ottoman Siyaq Numbers
+1EE00..1EEFF; Arabic Mathematical Alphabetic Symbols
+1F000..1F02F; Mahjong Tiles
+1F030..1F09F; Domino Tiles
+1F0A0..1F0FF; Playing Cards
+1F100..1F1FF; Enclosed Alphanumeric Supplement
+1F200..1F2FF; Enclosed Ideographic Supplement
+1F300..1F5FF; Miscellaneous Symbols and Pictographs
+1F600..1F64F; Emoticons
+1F650..1F67F; Ornamental Dingbats
+1F680..1F6FF; Transport and Map Symbols
+1F700..1F77F; Alchemical Symbols
+1F780..1F7FF; Geometric Shapes Extended
+1F800..1F8FF; Supplemental Arrows-C
+1F900..1F9FF; Supplemental Symbols and Pictographs
+1FA00..1FA6F; Chess Symbols
+1FA70..1FAFF; Symbols and Pictographs Extended-A
+1FB00..1FBFF; Symbols for Legacy Computing
+20000..2A6DF; CJK Unified Ideographs Extension B
+2A700..2B73F; CJK Unified Ideographs Extension C
+2B740..2B81F; CJK Unified Ideographs Extension D
+2B820..2CEAF; CJK Unified Ideographs Extension E
+2CEB0..2EBEF; CJK Unified Ideographs Extension F
+2EBF0..2EE5F; CJK Unified Ideographs Extension I
+2F800..2FA1F; CJK Compatibility Ideographs Supplement
+30000..3134F; CJK Unified Ideographs Extension G
+31350..323AF; CJK Unified Ideographs Extension H
+323B0..3347F; CJK Unified Ideographs Extension J
+E0000..E007F; Tags
+E0100..E01EF; Variation Selectors Supplement
+F0000..FFFFF; Supplementary Private Use Area-A
+100000..10FFFF; Supplementary Private Use Area-B
 """
 
-# --- 2. KAMUS PINTAR (MAPPING) ---
-# FORMAT: "Keyword": "COUNTRY_CODE"
+# --- 2. CONFIG: DEFINISI GRUP NEGARA ---
+# List negara pengguna utama Latin (bisa ditambah sesuai kebutuhan)
+LATIN_GLOBAL  = ["ID", "US", "GB", "FR", "DE", "IT", "ES", "BR", "TR", "VN", "PH", "MY", "AU", "NZ", "SG"]
+CYRILLIC_USER = ["RU", "MN", "BG", "UA", "KZ", "KG", "TJ", "RS", "MK"]
+ARABIC_USER   = ["SA", "EG", "IR", "PK", "AF", "IQ", "SY", "JO", "LB", "KW", "OM", "YE", "QA", "AE", "BH", "SD", "LY", "TN", "DZ", "MA"]
+
+# --- 3. MAPPING NEGARA (LOGIKA BARU - ANTI BOCOR) ---
+# Kunci di sini HARUS sesuai dengan substring nama blok Unicode
 iso_mapping = {
+    # --- GLOBAL SCRIPTS ---
+    "Latin": LATIN_GLOBAL,
+    "Cyrillic": CYRILLIC_USER,
+    "Arabic": ARABIC_USER,
+
     # --- INDONESIA & ASEAN ---
-    "Latin": "ID", "Javanese": "ID", "Balinese": "ID", "Sundanese": "ID",
-    "Batak": "ID", "Rejang": "ID", "Buginese": "ID", "Makasar": "ID",
-    "Kawi": "ID", "Thai": "TH", "Lao": "LA", "Khmer": "KH", "Myanmar": "MM",
-    "Tagalog": "PH", "Hanunoo": "PH", "Buhid": "PH", "Tagbanwa": "PH",
-    "Viet": "VN", "Cham": "VN", "Kayah Li": "MM", "Pau Cin Hau": "MM",
-    "Hanifi Rohingya": "MM", "Chakma": "BD", "Tai Le": "CN", "New Tai Lue": "CN",
-    "Tai Tham": "TH", "Tai Viet": "VN", "Mro": "BD", "Tangsa": "IN",
-    "Tai Yo": "VN", "Pahawh Hmong": "CN", "Nyiakeng Puachue Hmong": "LA"
+    "Javanese": ["ID"], "Balinese": ["ID"], "Sundanese": ["ID"],
+    "Batak": ["ID"], "Rejang": ["ID"], "Buginese": ["ID"], "Makasar": ["ID"],
+    "Kawi": ["ID"],
+    "Thai": ["TH"], "Lao": ["LA"], "Khmer": ["KH"], "Myanmar": ["MM"],
+    "Tagalog": ["PH"], "Hanunoo": ["PH"], "Buhid": ["PH"], "Tagbanwa": ["PH"],
+    "Viet": ["VN"], "Cham": ["VN", "KH"],
+    "Kayah Li": ["MM", "TH"],
+    "Tai Tham": ["TH", "LA", "MM"],
+
+    # --- EAST ASIA ---
+    # Gunakan 'CJK' untuk Hanzi/Kanji/Hanja (China, Taiwan, Jepang, Korea, Vietnam, Singapura)
+    # Ini akan mencocokkan 'CJK Unified Ideographs', 'CJK Compatibility', dll.
+    "CJK": ["CN", "TW", "JP", "KR", "VN", "SG"],
+    
+    # Korea: Hangul spesifik (untuk memisahkan dari CJK umum)
+    "Hangul": ["KR", "KP"], 
+    "Jamo": ["KR", "KP"], # Perlu spesifik 'Jamo' karena nama blok 'Hangul Jamo'
+    
+    # Jepang: Kana spesifik
+    "Hiragana": ["JP"], "Katakana": ["JP"], "Kana": ["JP"],
+    
+    # China/Taiwan spesifik
+    "Bopomofo": ["TW"],
+    "Yi": ["CN"], "Lisu": ["CN"], "Nushu": ["CN"], "Tangut": ["CN"], "Mongolian": ["MN", "CN"], "Tibetan": ["CN"],
+
+    # --- SOUTH ASIA ---
+    "Devanagari": ["IN", "NP"],
+    "Bengali": ["BD", "IN"],
+    "Tamil": ["IN", "LK", "SG", "MY"],
+    "Sinhala": ["LK"], "Thaana": ["MV"],
+    "Gurmukhi": ["IN"], "Gujarati": ["IN"], "Oriya": ["IN"],
+    "Telugu": ["IN"], "Kannada": ["IN"], "Malayalam": ["IN"],
+    
+    # Rohingya Mapping (Hanya BD dan MM, tidak kena 'Han')
+    "Hanifi": ["MM", "BD"], 
+
+    # --- OTHERS ---
+    "Hebrew": ["IL"], "Syriac": ["SY", "IQ", "IR", "TR"],
+    "Ethiopic": ["ET", "ER"],
+    "Tifinagh": ["MA", "DZ", "LY"],
+    "Cherokee": ["US"], "Canadian": ["CA"],
+    "Greek": ["GR", "CY"], "Coptic": ["EG"],
+    "Georgian": ["GE"], "Armenian": ["AM"],
+
+    # --- TECH / SYMBOLS (Universal) ---
+    "Symbol": ["XX"], "Mark": ["XX"], "Punctuation": ["XX"],
+    "Surrogates": ["XX"], "Private Use": ["XX"], "Variation": ["XX"],
+    "Braille": ["XX"], "Music": ["XX"], "Math": ["XX"], "Forms": ["XX"]
 }
 
 trans_mapping = {
-    "Script": "Aksara",
-    "Sign": "Tanda",
-    "Extension": "Ekstensi",
-    "Basic": "Dasar",
-    "Supplement": "Suplemen",
-    "Unified Ideographs": "Ideograf Bersatu",
-    "Private Use Area": "Area Penggunaan Pribadi",
-    "Surrogates": "Surrogates (Teknis)",
-    "Symbols": "Simbol",
-    "Forms": "Bentuk",
-    "Operators": "Operator",
-    "Extended": "Perluasan"
+    "Script": "Aksara", "Sign": "Tanda", "Extension": "Ekstensi",
+    "Basic": "Dasar", "Supplement": "Suplemen", "Unified Ideographs": "Ideograf Bersatu",
+    "Private Use Area": "Area Penggunaan Pribadi", "Surrogates": "Surrogates (Teknis)",
+    "Symbols": "Simbol", "Forms": "Bentuk", "Operators": "Operator", "Extended": "Perluasan"
 }
 
-print(f"{'ISO':<4}\t{'Code':<6}\t{'Name (EN)':<35}\t{'Name (ID)':<35}\t{'Unicode':<7}\t{'Range':<15}\t{'Ver':<5}\t{'Font':<25}\t{'Sample'}")
-print("-" * 160)
+# --- 4. PROSES GENERATE JSON ---
 
-# --- 3. AUTOMATION PROCESS ---
+definitions = {}
+country_registry = {}
+
+# Inisialisasi list untuk setiap negara agar urutan rapi
+all_countries = set()
+for clist in iso_mapping.values():
+    all_countries.update(clist)
+for c in sorted(list(all_countries)):
+    country_registry[c] = []
+
 for line in raw_data.strip().split('\n'):
-    if not line or line.startswith('#'):
-        continue
-
+    if not line or line.startswith('#'): continue
     try:
         parts = line.split('; ')
-        if len(parts) < 2:
-            continue
+        if len(parts) < 2: continue
 
         range_raw = parts[0].strip()
         name_en = parts[1].strip()
 
+        # ID Unik
+        block_id = name_en.lower().replace(" ", "_").replace("-", "_")
+
+        # Proses Range & Sample
         start_hex, end_hex = range_raw.split('..')
         range_clean = f"{start_hex}-{end_hex}"
         start_int = int(start_hex, 16)
 
-        if 0xD800 <= start_int <= 0xDFFF:
-            sample_char = ""
-            unicode_bool = "FALSE"
-        elif 0xE000 <= start_int <= 0xF8FF:
-            sample_char = ""
-            unicode_bool = "FALSE"
+        is_unicode = True
+        sample_char = ""
+        font_slug = "Noto+Sans+" + name_en.replace(" ", "+")
+
+        # Filter Area Khusus
+        if (0xD800 <= start_int <= 0xDFFF) or (0xE000 <= start_int <= 0xF8FF) or (0xF0000 <= start_int <= 0x10FFFF):
+            is_unicode = False
+            font_slug = None
+            if 0xE000 <= start_int <= 0xF8FF: sample_char = ""
         else:
             try:
                 sample_char = chr(start_int)
-                unicode_bool = "TRUE"
             except:
                 sample_char = "?"
-                unicode_bool = "FALSE"
+                is_unicode = False
 
-        iso_code = "??"
-        for key, val in iso_mapping.items():
-            if key in name_en:
-                iso_code = val
-                break
+        if "Latin" in name_en: font_slug = "Noto+Sans"
 
-        if "Latin" in name_en:
-            script_code = "Latn"
-        elif "Arabic" in name_en:
-            script_code = "Arab"
-        else:
-            script_code = name_en[:4].title().replace(" ", "")
-
-        font_slug = "Noto+Sans+" + name_en.replace(" ", "+")
-        if "Latin" in name_en:
-            font_slug = "Noto+Sans"
-        if unicode_bool == "FALSE":
-            font_slug = "null"
+        # Translate Nama
+        if "Latin" in name_en: script_code = "Latn"
+        elif "Arabic" in name_en: script_code = "Arab"
+        elif "Cyrillic" in name_en: script_code = "Cyrl"
+        elif "Han" in name_en or "Ideograph" in name_en: script_code = "Hani"
+        else: script_code = name_en[:4].title().replace(" ", "")
 
         name_id = name_en
-        if "Latin" not in name_en and unicode_bool == "TRUE" and "Symbol" not in name_en:
-            name_id = "Aksara " + name_id
-
+        if is_unicode and "Symbol" not in name_en and script_code not in ["Latn", "Arab", "Cyrl"]:
+             name_id = "Aksara " + name_id
         for en, idn in trans_mapping.items():
             name_id = name_id.replace(en, idn)
 
-        print(f"{iso_code}\t{script_code}\t{name_en:<35}\t{name_id:<35}\t{unicode_bool}\t{range_clean}\t1.0\t{font_slug}\t{sample_char}")
+        # Simpan Definisi
+        definitions[block_id] = {
+            "code": script_code,
+            "name_en": name_en,
+            "name_id": name_id,
+            "range": range_clean,
+            "unicode": is_unicode,
+            "font": font_slug,
+            "sample": sample_char
+        }
+
+        # --- LOGIKA MATCHING (FIXED) ---
+        target_countries = []
+        
+        # 1. Cek CJK dulu secara spesifik agar tidak greedy
+        # Masalah utama adalah nama blok "CJK..." mengandung "Han" atau bisa ambigu
+        # Kita andalkan keyword "CJK" di mapping
+        
+        # 2. Iterasi mapping standar
+        for keyword, country_list in iso_mapping.items():
+            # Special case untuk menghindari 'Han' match dengan 'Hanunoo' atau 'Hanifi'
+            # Di mapping baru tidak ada key 'Han' sendirian, sudah aman.
+            
+            # Cek apakah keyword ada di nama blok
+            if keyword in name_en:
+                # FILTER TAMBAHAN: Jangan masukkan VN/SG ke blok Hangul atau Filipina
+                # Jika nama blok mengandung 'Hangul' atau 'Hanunoo', jangan masukkan negara CJK umum (VN, SG)
+                # kecuali jika mereka terdaftar eksplisit di keyword tersebut (misal KR di Hangul)
+                
+                # Filter manual untuk kasus corner case jika masih bocor
+                if "Hangul" in name_en or "Jamo" in name_en:
+                    # Pastikan hanya negara yang ada di list 'Hangul'/'Jamo' yang masuk
+                    # Filter country_list agar hanya berisi KR/KP
+                    filtered_list = [c for c in country_list if c in ["KR", "KP"]]
+                    if filtered_list:
+                        target_countries.extend(filtered_list)
+                elif "Hanunoo" in name_en:
+                     # Hanya PH
+                     if "PH" in country_list:
+                         target_countries.append("PH")
+                elif "Hanifi" in name_en:
+                     # Hanya MM, BD
+                     filtered_list = [c for c in country_list if c in ["MM", "BD"]]
+                     target_countries.extend(filtered_list)
+                else:
+                    target_countries.extend(country_list)
+        
+        target_countries = sorted(list(set(target_countries)))
+        
+        # Fallback ke XX jika tidak ada yang cocok
+        if not target_countries: 
+            target_countries = ["XX"]
+
+        # Assign ke Registry
+        for iso in target_countries:
+            if iso not in country_registry:
+                country_registry[iso] = []
+            country_registry[iso].append(block_id)
 
     except Exception as e:
-        print(f"Error on line: {line} -> {e}")
+        pass
+
+# Bersihkan negara yang kosong (opsional)
+country_registry = {k: v for k, v in country_registry.items() if v}
+
+# --- 5. OUTPUT ---
+final_db = {
+    "definitions": definitions,
+    "countries": country_registry
+}
+
+print("const GLOBAL_SCRIPT_DB = " + json.dumps(final_db, indent=4) + ";")
 ```
 
 
