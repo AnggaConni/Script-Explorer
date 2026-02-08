@@ -4718,8 +4718,33 @@
         }
 
         // Initial data check
-        console.log('📊 Script Definitions:', Object.keys(SCRIPT_DEFINITIONS).length);
-        console.log('🌍 Country Mappings:', Object.keys(COUNTRIES_SCRIPTS).length);
+       // --- UI LOGIC ---
+        function openCountry(iso3, iso2, name) {
+            document.getElementById('countryName').innerText = name;
+            document.getElementById('countryCode').innerText = `${iso2} (${iso3})`;
+            document.getElementById('infoPanel').classList.add('open');
+            
+            const scripts = getScriptData(iso3);
+            renderScripts(scripts, name);
+        }
+
+        // ... (fungsi lainnya tetap sama) ...
+
+        function toggleLang() {
+            currentLang = currentLang === 'en' ? 'id' : 'en';
+            document.getElementById('btn-id').classList.toggle('active');
+            document.getElementById('btn-en').classList.toggle('active');
+            document.querySelector('[data-i18n="app_title"]').innerText = i18n[currentLang].app_title;
+            document.querySelector('[data-i18n="app_subtitle"]').innerText = i18n[currentLang].app_subtitle;
+        }
+
+        // PERBAIKAN DI SINI:
+        // Gunakan nama objek yang benar: GLOBAL_SCRIPT_DB
+        if (typeof GLOBAL_SCRIPT_DB !== 'undefined') {
+            console.log('📊 Script Definitions:', Object.keys(GLOBAL_SCRIPT_DB.definitions).length);
+            console.log('🌍 Country Mappings:', Object.keys(GLOBAL_SCRIPT_DB.countries).length);
+        }
     </script>
 </body>
 </html>
+
