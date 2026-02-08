@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- PERBAIKAN 1: Meta tag ini penting untuk mobile agar tidak memblokir redirect Google Script -->
+    <meta name="referrer" content="no-referrer">
     <title>Global Script Explorer | By Angga Conni Saputra</title>
     
     <!-- Leaflet CSS -->
@@ -374,19 +376,22 @@
             return m[iso3] || iso3.substring(0, 2);
         }
 
-        // --- ROBUST FETCH (HYBRID) ---
+        // --- ROBUST FETCH (HYBRID - FIXED FOR MOBILE) ---
         async function fetchScriptData(iso) {
             const statusLamp = document.getElementById('connStatus');
             
             // 1. Try Google Sheet API
             if (GAS_API_URL) {
                 try {
-                    // Add timestamp to prevent caching
-                    // credentials: 'omit' fixes some multi-login CORS issues
+                    // PERBAIKAN UTAMA DI SINI
+                    // Menambahkan redirect: 'follow' dan referrerPolicy: 'no-referrer'
+                    // Ini memungkinkan fetch mengikuti redirect 302 Google tanpa diblokir browser mobile
                     const res = await fetch(`${GAS_API_URL}?iso=${iso}&t=${Date.now()}`, { 
                         method: 'GET', 
                         mode: 'cors',
-                        credentials: 'omit'
+                        credentials: 'omit',
+                        redirect: 'follow', // PENTING: Ikuti redirect
+                        referrerPolicy: 'no-referrer' // PENTING: Jangan kirim referrer header
                     });
                     
                     if (!res.ok) throw new Error("Network Error");
