@@ -46,6 +46,10 @@ Action: Copy the entire content of the text file.
 
 Step 2: Process with Python (via Google Colab)
 
+<p align="center">
+<img src="assets/gc.png" width="700")
+</p>
+
 We use Python to "enrich" the raw data—guessing the country of origin, assigning Google Fonts, and generating sample characters.
 
 Recommended: Run this script in Google Colab. It's free, requires no installation, and runs directly in your browser.
