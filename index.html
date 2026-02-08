@@ -299,59 +299,3599 @@
         const ARABIC_SCRIPT = { code: "Arab", name_en: "Arabic", name_id: "Arab", unicode: true, range: "0600-06FF", ver: "1.0", font: "Noto+Sans+Arabic", sample: "العربية" };
 
         const GLOBAL_SCRIPT_DB = {
-            "ID": [
-                LATIN_SCRIPT,
-                { code: "Pegon", name_en: "Pegon", name_id: "Aksara Pegon", unicode: true, range: "0600-06FF", ver: "1.0", font: "Noto+Sans+Arabic", sample: "ڤيڮون" },
-                { code: "Java", name_en: "Javanese", name_id: "Aksara Jawa", unicode: true, range: "A980-A9DF", ver: "5.2", font: "Noto+Sans+Javanese", sample: "ꦲꦏ꧀ꦱꦫꦗꦮ" },
-                { code: "Bali", name_en: "Balinese", name_id: "Aksara Bali", unicode: true, range: "1B00-1B7F", ver: "5.0", font: "Noto+Sans+Balinese", sample: "ᬅᬓ᭄ᬱᬭᬩᬮᬶ" },
-                { code: "Sund", name_en: "Sundanese", name_id: "Aksara Sunda", unicode: true, range: "1B80-1BBF", ver: "5.1", font: "Noto+Sans+Sundanese", sample: "ᮃᮊ᮪ᮞᮒ᮪ᮓ" },
-                { code: "Batk", name_en: "Batak", name_id: "Surat Batak", unicode: true, range: "1BC0-1BFF", ver: "6.0", font: "Noto+Sans+Batak", sample: "ᯅᯖᯂ᯳" },
-                { code: "Bugi", name_en: "Buginese", name_id: "Lontara", unicode: true, range: "1A00-1A1F", ver: "4.1", font: "Noto+Sans+Buginese", sample: "ᨒᨚᨈᨑ" },
-                { code: "Kawi", name_en: "Kawi", name_id: "Aksara Kawi", unicode: true, range: "11F00-11F5F", ver: "15.0", font: "Noto+Sans+Kawi", sample: "𑼒𑼪𑼶" },
-                { code: "Maka", name_en: "Makasar", name_id: "Makassar", unicode: true, range: "11EE0-11EFF", ver: "11.0", font: null, sample: "𑻱𑻭" },
-                { code: "Rjng", name_en: "Rejang", name_id: "Aksara Rejang", unicode: true, range: "A930-A95F", ver: "5.1", font: "Noto+Sans+Rejang", sample: "ꤽꤿꤺꤴꤷ" },
-                { code: "Lamp", name_en: "Lampung", name_id: "Aksara Lampung", unicode: false, range: null, font: null, sample: "(Proposed)" },
-                { code: "Kinc", name_en: "Kerinci (Incung)", name_id: "Aksara Incung", unicode: false, range: null, font: null, sample: "(Proposed)" }
-            ],
-            "PH": [ LATIN_SCRIPT, { code: "Tglg", name_en: "Baybayin", name_id: "Baybayin", unicode: true, range: "1700-171F", ver: "3.2", font: "Noto+Sans+Tagalog", sample: "ᜊᜌ᜔ᜊᜌ᜔" }, { code: "Hano", name_en: "Hanunoo", name_id: "Hanunoo", unicode: true, range: "1720-173F", ver: "3.2", font: "Noto+Sans+Hanunoo", sample: "ᜱᜨᜳᜨᜳᜠᜳ" }, { code: "Tagb", name_en: "Tagbanwa", name_id: "Tagbanwa", unicode: true, range: "1760-177F", ver: "3.2", font: "Noto+Sans+Tagbanwa", sample: "ᝦᝢᝪ" }, { code: "Buhd", name_en: "Buhid", name_id: "Buhid", unicode: true, range: "1740-175F", ver: "3.2", font: "Noto+Sans+Buhid", sample: "ᝀᝁᝂ" } ],
-            "VN": [ LATIN_SCRIPT, { code: "Tavt", name_en: "Tai Viet", name_id: "Tai Viet", unicode: true, range: "AA80-AADF", ver: "5.2", font: "Noto+Sans+Tai+Viet", sample: "ꪼꪖꪫꪸꪝ" }, { code: "Cham", name_en: "Cham", name_id: "Cham", unicode: true, range: "AA00-AA5F", ver: "5.1", font: "Noto+Sans+Cham", sample: "ꨆꨭꨩꨣ" }, { code: "Hani", name_en: "Han (Nom)", name_id: "Aksara Nom (Han)", unicode: true, range: "20000-2A6DF", ver: "3.1", font: "Noto+Sans+TC", sample: "𠮩" } ],
-            "TH": [ { code: "Thai", name_en: "Thai", name_id: "Thai", unicode: true, range: "0E00-0E7F", ver: "1.0", font: "Noto+Sans+Thai", sample: "ไทย" } ],
-            "LA": [ { code: "Laoo", name_en: "Lao", name_id: "Lao", unicode: true, range: "0E80-0EFF", ver: "1.0", font: "Noto+Sans+Lao", sample: "ລາວ" } ],
-            "KH": [ { code: "Khmr", name_en: "Khmer", name_id: "Khmer", unicode: true, range: "1780-17FF", ver: "3.0", font: "Noto+Sans+Khmer", sample: "ខ្មែរ" } ],
-            "MM": [ { code: "Mymr", name_en: "Myanmar", name_id: "Myanmar", unicode: true, range: "1000-109F", ver: "3.0", font: "Noto+Sans+Myanmar", sample: "မြန်မာ" } ],
-            "CN": [ { code: "Hans", name_en: "Han (Simplified)", name_id: "Han (Sederhana)", unicode: true, range: "4E00-9FFF", ver: "1.0", font: "Noto+Sans+SC", sample: "汉字" }, { code: "ExtA", name_en: "Han Extension A", name_id: "Han Ext-A (Rare)", unicode: true, range: "3400-4DBF", ver: "3.0", font: "Noto+Sans+SC", sample: "㐀" }, { code: "ExtB", name_en: "Han Extension B", name_id: "Han Ext-B (Rare)", unicode: true, range: "20000-2A6DF", ver: "3.1", font: "Noto+Sans+SC", sample: "𠀀" }, { code: "ExtC", name_en: "Han Extension C", name_id: "Han Ext-C (Rare)", unicode: true, range: "2A700-2B73F", ver: "5.2", font: "Noto+Sans+SC", sample: "𪜀" }, { code: "Nshu", name_en: "Nushu", name_id: "Nushu", unicode: true, range: "1B170-1B2FF", ver: "10.0", font: "Noto+Sans+Nushu", sample: "𖿡𖿢" }, LATIN_SCRIPT ],
-            "TW": [ { code: "Hant", name_en: "Han (Traditional)", name_id: "Han (Tradisional)", unicode: true, range: "4E00-9FFF", ver: "1.0", font: "Noto+Sans+TC", sample: "漢字" }, LATIN_SCRIPT ],
-            "JP": [ { code: "Jpan", name_en: "Japanese (Hiragana)", name_id: "Hiragana", unicode: true, range: "3040-309F", ver: "1.0", font: "Noto+Sans+JP", sample: "ひらがな" }, { code: "Hani", name_en: "Kanji", name_id: "Kanji", unicode: true, range: "4E00-9FFF", ver: "1.0", font: "Noto+Sans+JP", sample: "漢字" }, { code: "Kana", name_en: "Katakana", name_id: "Katakana", unicode: true, range: "30A0-30FF", ver: "1.0", font: "Noto+Sans+JP", sample: "カタカナ" } ],
-            "KR": [ { code: "Kore", name_en: "Hangul", name_id: "Hangul", unicode: true, range: "AC00-D7A3", ver: "1.0", font: "Noto+Sans+KR", sample: "한글" } ],
-            "MN": [ { code: "Cyrl", name_en: "Cyrillic", name_id: "Sirilik", unicode: true, range: "0400-04FF", ver: "1.0", font: "Noto+Sans", sample: "Кирилица" }, { code: "Mong", name_en: "Mongolian", name_id: "Mongol", unicode: true, range: "1800-18AF", ver: "3.0", font: "Noto+Sans+Mongolian", sample: "ᠮᠣᠩᠭᠣᠯ" } ],
-            "IN": [ LATIN_SCRIPT, { code: "Deva", name_en: "Devanagari", name_id: "Devanagari", unicode: true, range: "0900-097F", ver: "1.0", font: "Noto+Sans+Devanagari", sample: "देवनागरी" }, { code: "Taml", name_en: "Tamil", name_id: "Tamil", unicode: true, range: "0B80-0BFF", ver: "1.0", font: "Noto+Sans+Tamil", sample: "தமிழ்" }, { code: "Telu", name_en: "Telugu", name_id: "Telugu", unicode: true, range: "0C00-0C7F", ver: "1.0", font: "Noto+Sans+Telugu", sample: "తెలుగు" }, { code: "Knda", name_en: "Kannada", name_id: "Kannada", unicode: true, range: "0C80-0CFF", ver: "1.0", font: "Noto+Sans+Kannada", sample: "ಕನ್ನಡ" }, { code: "Gujr", name_en: "Gujarati", name_id: "Gujarati", unicode: true, range: "0A80-0AFF", ver: "1.0", font: "Noto+Sans+Gujarati", sample: "ગુજરાતી" }, { code: "Guru", name_en: "Gurmukhi", name_id: "Gurmukhi", unicode: true, range: "0A00-0A7F", ver: "1.0", font: "Noto+Sans+Gurmukhi", sample: "ਗੁਰਮੁਖੀ" }, { code: "Orya", name_en: "Odia", name_id: "Odia", unicode: true, range: "0B00-0B7F", ver: "1.0", font: "Noto+Sans+Oriya", sample: "ଓଡ଼ିଆ" } ],
-            "LK": [ { code: "Sinh", name_en: "Sinhala", name_id: "Sinhala", unicode: true, range: "0D80-0DFF", ver: "3.0", font: "Noto+Sans+Sinhala", sample: "සිංහල" } ],
-            "BD": [ { code: "Beng", name_en: "Bengali", name_id: "Bengali", unicode: true, range: "0980-09FF", ver: "1.0", font: "Noto+Sans+Bengali", sample: "বাংলা" } ],
-            "NP": [ { code: "Deva", name_en: "Devanagari", name_id: "Devanagari", unicode: true, range: "0900-097F", ver: "1.0", font: "Noto+Sans+Devanagari", sample: "नेपाली" } ],
-            "SA": [ ARABIC_SCRIPT ], "IR": [ ARABIC_SCRIPT ], "PK": [ ARABIC_SCRIPT ],
-            "IL": [ { code: "Hebr", name_en: "Hebrew", name_id: "Ibrani", unicode: true, range: "0590-05FF", ver: "1.0", font: "Noto+Sans+Hebrew", sample: "עברית" } ],
-            "TR": [ LATIN_SCRIPT ],
-            "GB": [ LATIN_SCRIPT ], "FR": [ LATIN_SCRIPT ], "DE": [ LATIN_SCRIPT ], "IT": [ LATIN_SCRIPT ], "ES": [ LATIN_SCRIPT ], "PT": [ LATIN_SCRIPT ], "AU": [ LATIN_SCRIPT ], "BR": [ LATIN_SCRIPT ],
-            "RU": [ CYRILLIC_SCRIPT ], "UA": [ CYRILLIC_SCRIPT ],
-            "BG": [ CYRILLIC_SCRIPT, { code: "Glag", name_en: "Glagolitic", name_id: "Glagolitik", unicode: true, range: "2C00-2C5F", ver: "4.1", font: "Noto+Sans+Glagolitic", sample: "Ⰳⰾⰰⰳⱁⰾⰹⱌⰰ" } ],
-            "GR": [ { code: "Grek", name_en: "Greek", name_id: "Yunani", unicode: true, range: "0370-03FF", ver: "1.0", font: "Noto+Sans", sample: "Ελληνικά" } ],
-            "AM": [ { code: "Armn", name_en: "Armenian", name_id: "Armenia", unicode: true, range: "0530-058F", ver: "1.0", font: "Noto+Sans+Armenian", sample: "Հայերեն" } ],
-            "GE": [ { code: "Geor", name_en: "Georgian", name_id: "Georgia", unicode: true, range: "10A0-10FF", ver: "1.0", font: "Noto+Sans+Georgian", sample: "ქართული" } ],
-            "IE": [ LATIN_SCRIPT, { code: "Ogam", name_en: "Ogham", name_id: "Ogham", unicode: true, range: "1680-169F", ver: "3.0", font: "Noto+Sans+Ogham", sample: "᚛ᚑᚌᚐᚋ᚜" } ],
-            "IS": [ LATIN_SCRIPT, { code: "Runr", name_en: "Runic", name_id: "Rune", unicode: true, range: "16A0-16FF", ver: "3.0", font: "Noto+Sans+Runic", sample: "ᚠᚢᚦ" } ],
-            "EG": [ ARABIC_SCRIPT, { code: "Copt", name_en: "Coptic", name_id: "Koptik", unicode: true, range: "2C80-2CFF", ver: "4.1", font: "Noto+Sans+Coptic", sample: "ⲙⲉⲧⲣⲉⲙⲛ̀ⲭⲏⲙⲓ" }, { code: "Egyp", name_en: "Hieroglyphs", name_id: "Hieroglif", unicode: true, range: "13000-1342F", ver: "5.2", font: "Noto+Sans+Egyptian+Hieroglyphs", sample: "𓂋𓏤𓈖𓆓𓅓𓏏𓊖" } ],
-            "ET": [ { code: "Ethi", name_en: "Ethiopic", name_id: "Ge'ez", unicode: true, range: "1200-137F", ver: "3.0", font: "Noto+Sans+Ethiopic", sample: "ግዕዝ" } ],
-            "MA": [ { code: "Tfng", name_en: "Tifinagh", name_id: "Tifinagh", unicode: true, range: "2D30-2D7F", ver: "4.1", font: "Noto+Sans+Tifinagh", sample: "ⵜⵉⴼⵉⵏⴰⵖ" } ],
-            "NG": [ LATIN_SCRIPT, { code: "Nkoo", name_en: "N'Ko", name_id: "N'Ko", unicode: true, range: "07C0-07FF", ver: "5.0", font: "Noto+Sans+NKo", sample: "ߒߞߏ" } ],
-            "GN": [ { code: "Adlm", name_en: "Adlam", name_id: "Adlam", unicode: true, range: "1E900-1E95F", ver: "9.0", font: "Noto+Sans+Adlam", sample: "𞤀𞤣𞤤𞤢𞤥" } ],
-            "LR": [ { code: "Vaii", name_en: "Vai", name_id: "Vai", unicode: true, range: "A500-A63F", ver: "5.1", font: "Noto+Sans+Vai", sample: "ꕙꔤ" } ],
-            "US": [ LATIN_SCRIPT, { code: "Cher", name_en: "Cherokee", name_id: "Cherokee", unicode: true, range: "13A0-13FF", ver: "3.0", font: "Noto+Sans+Cherokee", sample: "ᏣᎳᎩ" }, { code: "Osge", name_en: "Osage", name_id: "Osage", unicode: true, range: "104B0-104FF", ver: "9.0", font: "Noto+Sans+Osage", sample: "𐒻𐓟" } ],
-            "CA": [ LATIN_SCRIPT, { code: "Cans", name_en: "Canadian Aboriginal", name_id: "Aborigin Kanada", unicode: true, range: "1400-167F", ver: "3.0", font: "Noto+Sans+Canadian+Aboriginal", sample: "ᐄᔨᔫ" } ],
-            "MX": [ LATIN_SCRIPT, { code: "Maya", name_en: "Mayan", name_id: "Maya", unicode: false, range: null, font: null, sample: "(Proposed)" } ]
-        };
-
-        const FALLBACK_LATIN = [{ code: "Latn", name_en: "Latin (System)", name_id: "Latin (Sistem)", unicode: true, range: "0020-007F", ver: "1.0", font: "Noto+Sans", sample: "Abcde" }];
-
+    "ISO": [
+        {
+            "code": "Code",
+            "name_en": "Name (EN)",
+            "name_id": "Name (ID)",
+            "unicode": false,
+            "range": "Range",
+            "ver": "Ver",
+            "font": "Font",
+            "sample": "Sample"
+        }
+    ],
+    "ID": [
+        {
+            "code": "Latn",
+            "name_en": "Basic Latin",
+            "name_id": "Dasar Latin",
+            "unicode": true,
+            "range": "0000-007F",
+            "ver": "1.0",
+            "font": "Noto+Sans",
+            "sample": ""
+        },
+        {
+            "code": "Latn",
+            "name_en": "Latin-1 Supplement",
+            "name_id": "Latin-1 Suplemen",
+            "unicode": true,
+            "range": "0080-00FF",
+            "ver": "1.0",
+            "font": "Noto+Sans",
+            "sample": ""
+        },
+        {
+            "code": "Latn",
+            "name_en": "Latin Extended-A",
+            "name_id": "Latin Perluasan-A",
+            "unicode": true,
+            "range": "0100-017F",
+            "ver": "1.0",
+            "font": "Noto+Sans",
+            "sample": "Ā"
+        },
+        {
+            "code": "Latn",
+            "name_en": "Latin Extended-B",
+            "name_id": "Latin Perluasan-B",
+            "unicode": true,
+            "range": "0180-024F",
+            "ver": "1.0",
+            "font": "Noto+Sans",
+            "sample": "ƀ"
+        },
+        {
+            "code": "Bugi",
+            "name_en": "Buginese",
+            "name_id": "Aksara Buginese",
+            "unicode": true,
+            "range": "1A00-1A1F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Buginese",
+            "sample": "ᨀ"
+        },
+        {
+            "code": "Bali",
+            "name_en": "Balinese",
+            "name_id": "Aksara Balinese",
+            "unicode": true,
+            "range": "1B00-1B7F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Balinese",
+            "sample": "ᬀ"
+        },
+        {
+            "code": "Sund",
+            "name_en": "Sundanese",
+            "name_id": "Aksara Sundanese",
+            "unicode": true,
+            "range": "1B80-1BBF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Sundanese",
+            "sample": "ᮀ"
+        },
+        {
+            "code": "Bata",
+            "name_en": "Batak",
+            "name_id": "Aksara Batak",
+            "unicode": true,
+            "range": "1BC0-1BFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Batak",
+            "sample": "ᯀ"
+        },
+        {
+            "code": "Sund",
+            "name_en": "Sundanese Supplement",
+            "name_id": "Aksara Sundanese Suplemen",
+            "unicode": true,
+            "range": "1CC0-1CCF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Sundanese+Supplement",
+            "sample": "᳀"
+        },
+        {
+            "code": "Latn",
+            "name_en": "Latin Extended Additional",
+            "name_id": "Latin Perluasan Additional",
+            "unicode": true,
+            "range": "1E00-1EFF",
+            "ver": "1.0",
+            "font": "Noto+Sans",
+            "sample": "Ḁ"
+        },
+        {
+            "code": "Latn",
+            "name_en": "Latin Extended-C",
+            "name_id": "Latin Perluasan-C",
+            "unicode": true,
+            "range": "2C60-2C7F",
+            "ver": "1.0",
+            "font": "Noto+Sans",
+            "sample": "Ⱡ"
+        },
+        {
+            "code": "Latn",
+            "name_en": "Latin Extended-D",
+            "name_id": "Latin Perluasan-D",
+            "unicode": true,
+            "range": "A720-A7FF",
+            "ver": "1.0",
+            "font": "Noto+Sans",
+            "sample": "꜠"
+        },
+        {
+            "code": "Reja",
+            "name_en": "Rejang",
+            "name_id": "Aksara Rejang",
+            "unicode": true,
+            "range": "A930-A95F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Rejang",
+            "sample": "ꤰ"
+        },
+        {
+            "code": "Java",
+            "name_en": "Javanese",
+            "name_id": "Aksara Javanese",
+            "unicode": true,
+            "range": "A980-A9DF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Javanese",
+            "sample": "ꦀ"
+        },
+        {
+            "code": "Latn",
+            "name_en": "Latin Extended-E",
+            "name_id": "Latin Perluasan-E",
+            "unicode": true,
+            "range": "AB30-AB6F",
+            "ver": "1.0",
+            "font": "Noto+Sans",
+            "sample": "ꬰ"
+        },
+        {
+            "code": "Latn",
+            "name_en": "Latin Extended-F",
+            "name_id": "Latin Perluasan-F",
+            "unicode": true,
+            "range": "10780-107BF",
+            "ver": "1.0",
+            "font": "Noto+Sans",
+            "sample": "𐞀"
+        },
+        {
+            "code": "Maka",
+            "name_en": "Makasar",
+            "name_id": "Aksara Makasar",
+            "unicode": true,
+            "range": "11EE0-11EFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Makasar",
+            "sample": "𑻠"
+        },
+        {
+            "code": "Kawi",
+            "name_en": "Kawi",
+            "name_id": "Aksara Kawi",
+            "unicode": true,
+            "range": "11F00-11F5F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Kawi",
+            "sample": "𑼀"
+        },
+        {
+            "code": "Latn",
+            "name_en": "Latin Extended-G",
+            "name_id": "Latin Perluasan-G",
+            "unicode": true,
+            "range": "1DF00-1DFFF",
+            "ver": "1.0",
+            "font": "Noto+Sans",
+            "sample": "𝼀"
+        }
+    ],
+    "XX": [
+        {
+            "code": "Ipa",
+            "name_en": "IPA Extensions",
+            "name_id": "Aksara IPA Ekstensis",
+            "unicode": true,
+            "range": "0250-02AF",
+            "ver": "1.0",
+            "font": "Noto+Sans+IPA+Extensions",
+            "sample": "ɐ"
+        },
+        {
+            "code": "Comb",
+            "name_en": "Combining Diacritical Marks",
+            "name_id": "Aksara Combining Diacritical Marks",
+            "unicode": true,
+            "range": "0300-036F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Combining+Diacritical+Marks",
+            "sample": "̀"
+        },
+        {
+            "code": "Comb",
+            "name_en": "Combining Diacritical Marks Extended",
+            "name_id": "Aksara Combining Diacritical Marks Perluasan",
+            "unicode": true,
+            "range": "1AB0-1AFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Combining+Diacritical+Marks+Extended",
+            "sample": "᪰"
+        },
+        {
+            "code": "Phon",
+            "name_en": "Phonetic Extensions",
+            "name_id": "Aksara Phonetic Ekstensis",
+            "unicode": true,
+            "range": "1D00-1D7F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Phonetic+Extensions",
+            "sample": "ᴀ"
+        },
+        {
+            "code": "Phon",
+            "name_en": "Phonetic Extensions Supplement",
+            "name_id": "Aksara Phonetic Ekstensis Suplemen",
+            "unicode": true,
+            "range": "1D80-1DBF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Phonetic+Extensions+Supplement",
+            "sample": "ᶀ"
+        },
+        {
+            "code": "Comb",
+            "name_en": "Combining Diacritical Marks Supplement",
+            "name_id": "Aksara Combining Diacritical Marks Suplemen",
+            "unicode": true,
+            "range": "1DC0-1DFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Combining+Diacritical+Marks+Supplement",
+            "sample": "᷀"
+        },
+        {
+            "code": "Gene",
+            "name_en": "General Punctuation",
+            "name_id": "Aksara General Punctuation",
+            "unicode": true,
+            "range": "2000-206F",
+            "ver": "1.0",
+            "font": "Noto+Sans+General+Punctuation",
+            "sample": ""
+        },
+        {
+            "code": "Supe",
+            "name_en": "Superscripts and Subscripts",
+            "name_id": "Aksara Superscripts and Subscripts",
+            "unicode": true,
+            "range": "2070-209F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Superscripts+and+Subscripts",
+            "sample": "⁰"
+        },
+        {
+            "code": "Curr",
+            "name_en": "Currency Symbols",
+            "name_id": "Currency Simbol",
+            "unicode": true,
+            "range": "20A0-20CF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Currency+Symbols",
+            "sample": "₠"
+        },
+        {
+            "code": "Comb",
+            "name_en": "Combining Diacritical Marks for Symbols",
+            "name_id": "Combining Diacritical Marks for Simbol",
+            "unicode": true,
+            "range": "20D0-20FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Combining+Diacritical+Marks+for+Symbols",
+            "sample": "⃐"
+        },
+        {
+            "code": "Lett",
+            "name_en": "Letterlike Symbols",
+            "name_id": "Letterlike Simbol",
+            "unicode": true,
+            "range": "2100-214F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Letterlike+Symbols",
+            "sample": "℀"
+        },
+        {
+            "code": "Numb",
+            "name_en": "Number Forms",
+            "name_id": "Aksara Number Bentuk",
+            "unicode": true,
+            "range": "2150-218F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Number+Forms",
+            "sample": "⅐"
+        },
+        {
+            "code": "Arro",
+            "name_en": "Arrows",
+            "name_id": "Aksara Arrows",
+            "unicode": true,
+            "range": "2190-21FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Arrows",
+            "sample": "←"
+        },
+        {
+            "code": "Math",
+            "name_en": "Mathematical Operators",
+            "name_id": "Aksara Mathematical Operator",
+            "unicode": true,
+            "range": "2200-22FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Mathematical+Operators",
+            "sample": "∀"
+        },
+        {
+            "code": "Misc",
+            "name_en": "Miscellaneous Technical",
+            "name_id": "Aksara Miscellaneous Technical",
+            "unicode": true,
+            "range": "2300-23FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Miscellaneous+Technical",
+            "sample": "⌀"
+        },
+        {
+            "code": "Cont",
+            "name_en": "Control Pictures",
+            "name_id": "Aksara Control Pictures",
+            "unicode": true,
+            "range": "2400-243F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Control+Pictures",
+            "sample": "␀"
+        },
+        {
+            "code": "Opti",
+            "name_en": "Optical Character Recognition",
+            "name_id": "Aksara Optical Character Recognition",
+            "unicode": true,
+            "range": "2440-245F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Optical+Character+Recognition",
+            "sample": "⑀"
+        },
+        {
+            "code": "Encl",
+            "name_en": "Enclosed Alphanumerics",
+            "name_id": "Aksara Enclosed Alphanumerics",
+            "unicode": true,
+            "range": "2460-24FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Enclosed+Alphanumerics",
+            "sample": "①"
+        },
+        {
+            "code": "Box",
+            "name_en": "Box Drawing",
+            "name_id": "Aksara Box Drawing",
+            "unicode": true,
+            "range": "2500-257F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Box+Drawing",
+            "sample": "─"
+        },
+        {
+            "code": "Bloc",
+            "name_en": "Block Elements",
+            "name_id": "Aksara Block Elements",
+            "unicode": true,
+            "range": "2580-259F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Block+Elements",
+            "sample": "▀"
+        },
+        {
+            "code": "Geom",
+            "name_en": "Geometric Shapes",
+            "name_id": "Aksara Geometric Shapes",
+            "unicode": true,
+            "range": "25A0-25FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Geometric+Shapes",
+            "sample": "■"
+        },
+        {
+            "code": "Misc",
+            "name_en": "Miscellaneous Symbols",
+            "name_id": "Miscellaneous Simbol",
+            "unicode": true,
+            "range": "2600-26FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Miscellaneous+Symbols",
+            "sample": "☀"
+        },
+        {
+            "code": "Ding",
+            "name_en": "Dingbats",
+            "name_id": "Aksara Dingbats",
+            "unicode": true,
+            "range": "2700-27BF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Dingbats",
+            "sample": "✀"
+        },
+        {
+            "code": "Misc",
+            "name_en": "Miscellaneous Mathematical Symbols-A",
+            "name_id": "Miscellaneous Mathematical Simbol-A",
+            "unicode": true,
+            "range": "27C0-27EF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Miscellaneous+Mathematical+Symbols-A",
+            "sample": "⟀"
+        },
+        {
+            "code": "Supp",
+            "name_en": "Supplemental Arrows-A",
+            "name_id": "Aksara Suplemenal Arrows-A",
+            "unicode": true,
+            "range": "27F0-27FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Supplemental+Arrows-A",
+            "sample": "⟰"
+        },
+        {
+            "code": "Brai",
+            "name_en": "Braille Patterns",
+            "name_id": "Aksara Braille Patterns",
+            "unicode": true,
+            "range": "2800-28FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Braille+Patterns",
+            "sample": "⠀"
+        },
+        {
+            "code": "Supp",
+            "name_en": "Supplemental Arrows-B",
+            "name_id": "Aksara Suplemenal Arrows-B",
+            "unicode": true,
+            "range": "2900-297F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Supplemental+Arrows-B",
+            "sample": "⤀"
+        },
+        {
+            "code": "Misc",
+            "name_en": "Miscellaneous Mathematical Symbols-B",
+            "name_id": "Miscellaneous Mathematical Simbol-B",
+            "unicode": true,
+            "range": "2980-29FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Miscellaneous+Mathematical+Symbols-B",
+            "sample": "⦀"
+        },
+        {
+            "code": "Supp",
+            "name_en": "Supplemental Mathematical Operators",
+            "name_id": "Aksara Suplemenal Mathematical Operator",
+            "unicode": true,
+            "range": "2A00-2AFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Supplemental+Mathematical+Operators",
+            "sample": "⨀"
+        },
+        {
+            "code": "Misc",
+            "name_en": "Miscellaneous Symbols and Arrows",
+            "name_id": "Miscellaneous Simbol and Arrows",
+            "unicode": true,
+            "range": "2B00-2BFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Miscellaneous+Symbols+and+Arrows",
+            "sample": "⬀"
+        },
+        {
+            "code": "Supp",
+            "name_en": "Supplemental Punctuation",
+            "name_id": "Aksara Suplemenal Punctuation",
+            "unicode": true,
+            "range": "2E00-2E7F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Supplemental+Punctuation",
+            "sample": "⸀"
+        },
+        {
+            "code": "High",
+            "name_en": "High Surrogates",
+            "name_id": "High Surrogates (Teknis)",
+            "unicode": false,
+            "range": "D800-DB7F",
+            "ver": "1.0",
+            "font": null,
+            "sample": ""
+        },
+        {
+            "code": "High",
+            "name_en": "High Private Use Surrogates",
+            "name_id": "High Private Use Surrogates (Teknis)",
+            "unicode": false,
+            "range": "DB80-DBFF",
+            "ver": "1.0",
+            "font": null,
+            "sample": ""
+        },
+        {
+            "code": "Low",
+            "name_en": "Low Surrogates",
+            "name_id": "Low Surrogates (Teknis)",
+            "unicode": false,
+            "range": "DC00-DFFF",
+            "ver": "1.0",
+            "font": null,
+            "sample": ""
+        },
+        {
+            "code": "Priv",
+            "name_en": "Private Use Area",
+            "name_id": "Area Penggunaan Pribadi",
+            "unicode": false,
+            "range": "E000-F8FF",
+            "ver": "1.0",
+            "font": null,
+            "sample": ""
+        },
+        {
+            "code": "Alph",
+            "name_en": "Alphabetic Presentation Forms",
+            "name_id": "Aksara Alphabetic Presentation Bentuk",
+            "unicode": true,
+            "range": "FB00-FB4F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Alphabetic+Presentation+Forms",
+            "sample": "ﬀ"
+        },
+        {
+            "code": "Vari",
+            "name_en": "Variation Selectors",
+            "name_id": "Aksara Variation Selectors",
+            "unicode": true,
+            "range": "FE00-FE0F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Variation+Selectors",
+            "sample": "︀"
+        },
+        {
+            "code": "Vert",
+            "name_en": "Vertical Forms",
+            "name_id": "Aksara Vertical Bentuk",
+            "unicode": true,
+            "range": "FE10-FE1F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Vertical+Forms",
+            "sample": "︐"
+        },
+        {
+            "code": "Comb",
+            "name_en": "Combining Half Marks",
+            "name_id": "Aksara Combining Half Marks",
+            "unicode": true,
+            "range": "FE20-FE2F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Combining+Half+Marks",
+            "sample": "︠"
+        },
+        {
+            "code": "Smal",
+            "name_en": "Small Form Variants",
+            "name_id": "Aksara Small Form Variants",
+            "unicode": true,
+            "range": "FE50-FE6F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Small+Form+Variants",
+            "sample": "﹐"
+        },
+        {
+            "code": "Half",
+            "name_en": "Halfwidth and Fullwidth Forms",
+            "name_id": "Aksara Halfwidth and Fullwidth Bentuk",
+            "unicode": true,
+            "range": "FF00-FFEF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Halfwidth+and+Fullwidth+Forms",
+            "sample": "＀"
+        },
+        {
+            "code": "Anci",
+            "name_en": "Ancient Symbols",
+            "name_id": "Ancient Simbol",
+            "unicode": true,
+            "range": "10190-101CF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Ancient+Symbols",
+            "sample": "𐆐"
+        },
+        {
+            "code": "Rumi",
+            "name_en": "Rumi Numeral Symbols",
+            "name_id": "Rumi Numeral Simbol",
+            "unicode": true,
+            "range": "10E60-10E7F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Rumi+Numeral+Symbols",
+            "sample": "𐹠"
+        },
+        {
+            "code": "Shor",
+            "name_en": "Shorthand Format Controls",
+            "name_id": "Aksara Shorthand Format Controls",
+            "unicode": true,
+            "range": "1BCA0-1BCAF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Shorthand+Format+Controls",
+            "sample": "𛲠"
+        },
+        {
+            "code": "Symb",
+            "name_en": "Symbols for Legacy Computing Supplement",
+            "name_id": "Simbol for Legacy Computing Suplemen",
+            "unicode": true,
+            "range": "1CC00-1CEBF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Symbols+for+Legacy+Computing+Supplement",
+            "sample": "𜰀"
+        },
+        {
+            "code": "Misc",
+            "name_en": "Miscellaneous Symbols Supplement",
+            "name_id": "Miscellaneous Simbol Suplemen",
+            "unicode": true,
+            "range": "1CEC0-1CEFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Miscellaneous+Symbols+Supplement",
+            "sample": "𜻀"
+        },
+        {
+            "code": "Musi",
+            "name_en": "Musical Symbols",
+            "name_id": "Musical Simbol",
+            "unicode": true,
+            "range": "1D100-1D1FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Musical+Symbols",
+            "sample": "𝄀"
+        },
+        {
+            "code": "Math",
+            "name_en": "Mathematical Alphanumeric Symbols",
+            "name_id": "Mathematical Alphanumeric Simbol",
+            "unicode": true,
+            "range": "1D400-1D7FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Mathematical+Alphanumeric+Symbols",
+            "sample": "𝐀"
+        },
+        {
+            "code": "Play",
+            "name_en": "Playing Cards",
+            "name_id": "Aksara Playing Cards",
+            "unicode": true,
+            "range": "1F0A0-1F0FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Playing+Cards",
+            "sample": "🂠"
+        },
+        {
+            "code": "Encl",
+            "name_en": "Enclosed Alphanumeric Supplement",
+            "name_id": "Aksara Enclosed Alphanumeric Suplemen",
+            "unicode": true,
+            "range": "1F100-1F1FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Enclosed+Alphanumeric+Supplement",
+            "sample": "🄀"
+        },
+        {
+            "code": "Misc",
+            "name_en": "Miscellaneous Symbols and Pictographs",
+            "name_id": "Miscellaneous Simbol and Pictographs",
+            "unicode": true,
+            "range": "1F300-1F5FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Miscellaneous+Symbols+and+Pictographs",
+            "sample": "🌀"
+        },
+        {
+            "code": "Emot",
+            "name_en": "Emoticons",
+            "name_id": "Aksara Emoticons",
+            "unicode": true,
+            "range": "1F600-1F64F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Emoticons",
+            "sample": "😀"
+        },
+        {
+            "code": "Orna",
+            "name_en": "Ornamental Dingbats",
+            "name_id": "Aksara Ornamental Dingbats",
+            "unicode": true,
+            "range": "1F650-1F67F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Ornamental+Dingbats",
+            "sample": "🙐"
+        },
+        {
+            "code": "Tran",
+            "name_en": "Transport and Map Symbols",
+            "name_id": "Transport and Map Simbol",
+            "unicode": true,
+            "range": "1F680-1F6FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Transport+and+Map+Symbols",
+            "sample": "🚀"
+        },
+        {
+            "code": "Alch",
+            "name_en": "Alchemical Symbols",
+            "name_id": "Alchemical Simbol",
+            "unicode": true,
+            "range": "1F700-1F77F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Alchemical+Symbols",
+            "sample": "🜀"
+        },
+        {
+            "code": "Geom",
+            "name_en": "Geometric Shapes Extended",
+            "name_id": "Aksara Geometric Shapes Perluasan",
+            "unicode": true,
+            "range": "1F780-1F7FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Geometric+Shapes+Extended",
+            "sample": "🞀"
+        },
+        {
+            "code": "Supp",
+            "name_en": "Supplemental Arrows-C",
+            "name_id": "Aksara Suplemenal Arrows-C",
+            "unicode": true,
+            "range": "1F800-1F8FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Supplemental+Arrows-C",
+            "sample": "🠀"
+        },
+        {
+            "code": "Supp",
+            "name_en": "Supplemental Symbols and Pictographs",
+            "name_id": "Suplemenal Simbol and Pictographs",
+            "unicode": true,
+            "range": "1F900-1F9FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Supplemental+Symbols+and+Pictographs",
+            "sample": "🤀"
+        },
+        {
+            "code": "Ches",
+            "name_en": "Chess Symbols",
+            "name_id": "Chess Simbol",
+            "unicode": true,
+            "range": "1FA00-1FA6F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Chess+Symbols",
+            "sample": "🨀"
+        },
+        {
+            "code": "Symb",
+            "name_en": "Symbols and Pictographs Extended-A",
+            "name_id": "Simbol and Pictographs Perluasan-A",
+            "unicode": true,
+            "range": "1FA70-1FAFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Symbols+and+Pictographs+Extended-A",
+            "sample": "🩰"
+        },
+        {
+            "code": "Symb",
+            "name_en": "Symbols for Legacy Computing",
+            "name_id": "Simbol for Legacy Computing",
+            "unicode": true,
+            "range": "1FB00-1FBFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Symbols+for+Legacy+Computing",
+            "sample": "🬀"
+        },
+        {
+            "code": "Tags",
+            "name_en": "Tags",
+            "name_id": "Aksara Tags",
+            "unicode": true,
+            "range": "E0000-E007F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Tags",
+            "sample": "󠀀"
+        },
+        {
+            "code": "Vari",
+            "name_en": "Variation Selectors Supplement",
+            "name_id": "Aksara Variation Selectors Suplemen",
+            "unicode": true,
+            "range": "E0100-E01EF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Variation+Selectors+Supplement",
+            "sample": "󠄀"
+        },
+        {
+            "code": "Supp",
+            "name_en": "Supplementary Private Use Area-A",
+            "name_id": "Suplemenary Area Penggunaan Pribadi-A",
+            "unicode": false,
+            "range": "F0000-FFFFF",
+            "ver": "1.0",
+            "font": null,
+            "sample": ""
+        },
+        {
+            "code": "Supp",
+            "name_en": "Supplementary Private Use Area-B",
+            "name_id": "Suplemenary Area Penggunaan Pribadi-B",
+            "unicode": false,
+            "range": "100000-10FFFF",
+            "ver": "1.0",
+            "font": null,
+            "sample": ""
+        }
+    ],
+    "IN": [
+        {
+            "code": "Spac",
+            "name_en": "Spacing Modifier Letters",
+            "name_id": "Aksara Spacing Modifier Letters",
+            "unicode": true,
+            "range": "02B0-02FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Spacing+Modifier+Letters",
+            "sample": "ʰ"
+        },
+        {
+            "code": "Deva",
+            "name_en": "Devanagari",
+            "name_id": "Aksara Devanagari",
+            "unicode": true,
+            "range": "0900-097F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Devanagari",
+            "sample": "ऀ"
+        },
+        {
+            "code": "Gurm",
+            "name_en": "Gurmukhi",
+            "name_id": "Aksara Gurmukhi",
+            "unicode": true,
+            "range": "0A00-0A7F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Gurmukhi",
+            "sample": "਀"
+        },
+        {
+            "code": "Guja",
+            "name_en": "Gujarati",
+            "name_id": "Aksara Gujarati",
+            "unicode": true,
+            "range": "0A80-0AFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Gujarati",
+            "sample": "઀"
+        },
+        {
+            "code": "Oriy",
+            "name_en": "Oriya",
+            "name_id": "Aksara Oriya",
+            "unicode": true,
+            "range": "0B00-0B7F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Oriya",
+            "sample": "଀"
+        },
+        {
+            "code": "Tami",
+            "name_en": "Tamil",
+            "name_id": "Aksara Tamil",
+            "unicode": true,
+            "range": "0B80-0BFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Tamil",
+            "sample": "஀"
+        },
+        {
+            "code": "Telu",
+            "name_en": "Telugu",
+            "name_id": "Aksara Telugu",
+            "unicode": true,
+            "range": "0C00-0C7F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Telugu",
+            "sample": "ఀ"
+        },
+        {
+            "code": "Kann",
+            "name_en": "Kannada",
+            "name_id": "Aksara Kannada",
+            "unicode": true,
+            "range": "0C80-0CFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Kannada",
+            "sample": "ಀ"
+        },
+        {
+            "code": "Mala",
+            "name_en": "Malayalam",
+            "name_id": "Aksara Malayalam",
+            "unicode": true,
+            "range": "0D00-0D7F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Malayalam",
+            "sample": "ഀ"
+        },
+        {
+            "code": "Lepc",
+            "name_en": "Lepcha",
+            "name_id": "Aksara Lepcha",
+            "unicode": true,
+            "range": "1C00-1C4F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Lepcha",
+            "sample": "ᰀ"
+        },
+        {
+            "code": "OlC",
+            "name_en": "Ol Chiki",
+            "name_id": "Aksara Ol Chiki",
+            "unicode": true,
+            "range": "1C50-1C7F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Ol+Chiki",
+            "sample": "᱐"
+        },
+        {
+            "code": "Vedi",
+            "name_en": "Vedic Extensions",
+            "name_id": "Aksara Vedic Ekstensis",
+            "unicode": true,
+            "range": "1CD0-1CFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Vedic+Extensions",
+            "sample": "᳐"
+        },
+        {
+            "code": "Modi",
+            "name_en": "Modifier Tone Letters",
+            "name_id": "Aksara Modifier Tone Letters",
+            "unicode": true,
+            "range": "A700-A71F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Modifier+Tone+Letters",
+            "sample": "꜀"
+        },
+        {
+            "code": "Comm",
+            "name_en": "Common Indic Number Forms",
+            "name_id": "Aksara Common Indic Number Bentuk",
+            "unicode": true,
+            "range": "A830-A83F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Common+Indic+Number+Forms",
+            "sample": "꠰"
+        },
+        {
+            "code": "Saur",
+            "name_en": "Saurashtra",
+            "name_id": "Aksara Saurashtra",
+            "unicode": true,
+            "range": "A880-A8DF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Saurashtra",
+            "sample": "ꢀ"
+        },
+        {
+            "code": "Deva",
+            "name_en": "Devanagari Extended",
+            "name_id": "Aksara Devanagari Perluasan",
+            "unicode": true,
+            "range": "A8E0-A8FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Devanagari+Extended",
+            "sample": "꣠"
+        },
+        {
+            "code": "Meet",
+            "name_en": "Meetei Mayek Extensions",
+            "name_id": "Aksara Meetei Mayek Ekstensis",
+            "unicode": true,
+            "range": "AAE0-AAFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Meetei+Mayek+Extensions",
+            "sample": "ꫠ"
+        },
+        {
+            "code": "Meet",
+            "name_en": "Meetei Mayek",
+            "name_id": "Aksara Meetei Mayek",
+            "unicode": true,
+            "range": "ABC0-ABFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Meetei+Mayek",
+            "sample": "ꯀ"
+        },
+        {
+            "code": "Brah",
+            "name_en": "Brahmi",
+            "name_id": "Aksara Brahmi",
+            "unicode": true,
+            "range": "11000-1107F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Brahmi",
+            "sample": "𑀀"
+        },
+        {
+            "code": "Kait",
+            "name_en": "Kaithi",
+            "name_id": "Aksara Kaithi",
+            "unicode": true,
+            "range": "11080-110CF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Kaithi",
+            "sample": "𑂀"
+        },
+        {
+            "code": "Sora",
+            "name_en": "Sora Sompeng",
+            "name_id": "Aksara Sora Sompeng",
+            "unicode": true,
+            "range": "110D0-110FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Sora+Sompeng",
+            "sample": "𑃐"
+        },
+        {
+            "code": "Maha",
+            "name_en": "Mahajani",
+            "name_id": "Aksara Mahajani",
+            "unicode": true,
+            "range": "11150-1117F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Mahajani",
+            "sample": "𑅐"
+        },
+        {
+            "code": "Shar",
+            "name_en": "Sharada",
+            "name_id": "Aksara Sharada",
+            "unicode": true,
+            "range": "11180-111DF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Sharada",
+            "sample": "𑆀"
+        },
+        {
+            "code": "Khoj",
+            "name_en": "Khojki",
+            "name_id": "Aksara Khojki",
+            "unicode": true,
+            "range": "11200-1124F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Khojki",
+            "sample": "𑈀"
+        },
+        {
+            "code": "Mult",
+            "name_en": "Multani",
+            "name_id": "Aksara Multani",
+            "unicode": true,
+            "range": "11280-112AF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Multani",
+            "sample": "𑊀"
+        },
+        {
+            "code": "Khud",
+            "name_en": "Khudawadi",
+            "name_id": "Aksara Khudawadi",
+            "unicode": true,
+            "range": "112B0-112FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Khudawadi",
+            "sample": "𑊰"
+        },
+        {
+            "code": "Gran",
+            "name_en": "Grantha",
+            "name_id": "Aksara Grantha",
+            "unicode": true,
+            "range": "11300-1137F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Grantha",
+            "sample": "𑌀"
+        },
+        {
+            "code": "Tulu",
+            "name_en": "Tulu-Tigalari",
+            "name_id": "Aksara Tulu-Tigalari",
+            "unicode": true,
+            "range": "11380-113FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Tulu-Tigalari",
+            "sample": "𑎀"
+        },
+        {
+            "code": "Tirh",
+            "name_en": "Tirhuta",
+            "name_id": "Aksara Tirhuta",
+            "unicode": true,
+            "range": "11480-114DF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Tirhuta",
+            "sample": "𑒀"
+        },
+        {
+            "code": "Sidd",
+            "name_en": "Siddham",
+            "name_id": "Aksara Siddham",
+            "unicode": true,
+            "range": "11580-115FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Siddham",
+            "sample": "𑖀"
+        },
+        {
+            "code": "Modi",
+            "name_en": "Modi",
+            "name_id": "Aksara Modi",
+            "unicode": true,
+            "range": "11600-1165F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Modi",
+            "sample": "𑘀"
+        },
+        {
+            "code": "Takr",
+            "name_en": "Takri",
+            "name_id": "Aksara Takri",
+            "unicode": true,
+            "range": "11680-116CF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Takri",
+            "sample": "𑚀"
+        },
+        {
+            "code": "Ahom",
+            "name_en": "Ahom",
+            "name_id": "Aksara Ahom",
+            "unicode": true,
+            "range": "11700-1174F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Ahom",
+            "sample": "𑜀"
+        },
+        {
+            "code": "Dogr",
+            "name_en": "Dogra",
+            "name_id": "Aksara Dogra",
+            "unicode": true,
+            "range": "11800-1184F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Dogra",
+            "sample": "𑠀"
+        },
+        {
+            "code": "Wara",
+            "name_en": "Warang Citi",
+            "name_id": "Aksara Warang Citi",
+            "unicode": true,
+            "range": "118A0-118FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Warang+Citi",
+            "sample": "𑢠"
+        },
+        {
+            "code": "Nand",
+            "name_en": "Nandinagari",
+            "name_id": "Aksara Nandinagari",
+            "unicode": true,
+            "range": "119A0-119FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Nandinagari",
+            "sample": "𑦠"
+        },
+        {
+            "code": "Deva",
+            "name_en": "Devanagari Extended-A",
+            "name_id": "Aksara Devanagari Perluasan-A",
+            "unicode": true,
+            "range": "11B00-11B5F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Devanagari+Extended-A",
+            "sample": "𑬀"
+        },
+        {
+            "code": "Shar",
+            "name_en": "Sharada Supplement",
+            "name_id": "Aksara Sharada Suplemen",
+            "unicode": true,
+            "range": "11B60-11B7F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Sharada+Supplement",
+            "sample": "𑭠"
+        },
+        {
+            "code": "Bhai",
+            "name_en": "Bhaiksuki",
+            "name_id": "Aksara Bhaiksuki",
+            "unicode": true,
+            "range": "11C00-11C6F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Bhaiksuki",
+            "sample": "𑰀"
+        },
+        {
+            "code": "Masa",
+            "name_en": "Masaram Gondi",
+            "name_id": "Aksara Masaram Gondi",
+            "unicode": true,
+            "range": "11D00-11D5F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Masaram+Gondi",
+            "sample": "𑴀"
+        },
+        {
+            "code": "Gunj",
+            "name_en": "Gunjala Gondi",
+            "name_id": "Aksara Gunjala Gondi",
+            "unicode": true,
+            "range": "11D60-11DAF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Gunjala+Gondi",
+            "sample": "𑵠"
+        },
+        {
+            "code": "Tolo",
+            "name_en": "Tolong Siki",
+            "name_id": "Aksara Tolong Siki",
+            "unicode": true,
+            "range": "11DB0-11DEF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Tolong+Siki",
+            "sample": "𑶰"
+        },
+        {
+            "code": "Tami",
+            "name_en": "Tamil Supplement",
+            "name_id": "Aksara Tamil Suplemen",
+            "unicode": true,
+            "range": "11FC0-11FFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Tamil+Supplement",
+            "sample": "𑿀"
+        },
+        {
+            "code": "Tang",
+            "name_en": "Tangsa",
+            "name_id": "Aksara Tangsa",
+            "unicode": true,
+            "range": "16A70-16ACF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Tangsa",
+            "sample": "𖩰"
+        },
+        {
+            "code": "Toto",
+            "name_en": "Toto",
+            "name_id": "Aksara Toto",
+            "unicode": true,
+            "range": "1E290-1E2BF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Toto",
+            "sample": "𞊐"
+        },
+        {
+            "code": "Wanc",
+            "name_en": "Wancho",
+            "name_id": "Aksara Wancho",
+            "unicode": true,
+            "range": "1E2C0-1E2FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Wancho",
+            "sample": "𞋀"
+        },
+        {
+            "code": "Nag",
+            "name_en": "Nag Mundari",
+            "name_id": "Aksara Nag Mundari",
+            "unicode": true,
+            "range": "1E4D0-1E4FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Nag+Mundari",
+            "sample": "𞓐"
+        },
+        {
+            "code": "OlO",
+            "name_en": "Ol Onal",
+            "name_id": "Aksara Ol Onal",
+            "unicode": true,
+            "range": "1E5D0-1E5FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Ol+Onal",
+            "sample": "𞗐"
+        },
+        {
+            "code": "Indi",
+            "name_en": "Indic Siyaq Numbers",
+            "name_id": "Aksara Indic Siyaq Numbers",
+            "unicode": true,
+            "range": "1EC70-1ECBF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Indic+Siyaq+Numbers",
+            "sample": "𞱰"
+        }
+    ],
+    "GR": [
+        {
+            "code": "Gree",
+            "name_en": "Greek and Coptic",
+            "name_id": "Aksara Greek and Coptic",
+            "unicode": true,
+            "range": "0370-03FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Greek+and+Coptic",
+            "sample": "Ͱ"
+        },
+        {
+            "code": "Gree",
+            "name_en": "Greek Extended",
+            "name_id": "Aksara Greek Perluasan",
+            "unicode": true,
+            "range": "1F00-1FFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Greek+Extended",
+            "sample": "ἀ"
+        },
+        {
+            "code": "Line",
+            "name_en": "Linear B Syllabary",
+            "name_id": "Aksara Linear B Syllabary",
+            "unicode": true,
+            "range": "10000-1007F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Linear+B+Syllabary",
+            "sample": "𐀀"
+        },
+        {
+            "code": "Line",
+            "name_en": "Linear B Ideograms",
+            "name_id": "Aksara Linear B Ideograms",
+            "unicode": true,
+            "range": "10080-100FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Linear+B+Ideograms",
+            "sample": "𐂀"
+        },
+        {
+            "code": "Aege",
+            "name_en": "Aegean Numbers",
+            "name_id": "Aksara Aegean Numbers",
+            "unicode": true,
+            "range": "10100-1013F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Aegean+Numbers",
+            "sample": "𐄀"
+        },
+        {
+            "code": "Anci",
+            "name_en": "Ancient Greek Numbers",
+            "name_id": "Aksara Ancient Greek Numbers",
+            "unicode": true,
+            "range": "10140-1018F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Ancient+Greek+Numbers",
+            "sample": "𐅀"
+        },
+        {
+            "code": "Phai",
+            "name_en": "Phaistos Disc",
+            "name_id": "Aksara Phaistos Disc",
+            "unicode": true,
+            "range": "101D0-101FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Phaistos+Disc",
+            "sample": "𐇐"
+        },
+        {
+            "code": "Line",
+            "name_en": "Linear A",
+            "name_id": "Aksara Linear A",
+            "unicode": true,
+            "range": "10600-1077F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Linear+A",
+            "sample": "𐘀"
+        },
+        {
+            "code": "Byza",
+            "name_en": "Byzantine Musical Symbols",
+            "name_id": "Byzantine Musical Simbol",
+            "unicode": true,
+            "range": "1D000-1D0FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Byzantine+Musical+Symbols",
+            "sample": "𝀀"
+        },
+        {
+            "code": "Anci",
+            "name_en": "Ancient Greek Musical Notation",
+            "name_id": "Aksara Ancient Greek Musical Notation",
+            "unicode": true,
+            "range": "1D200-1D24F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Ancient+Greek+Musical+Notation",
+            "sample": "𝈀"
+        }
+    ],
+    "RU": [
+        {
+            "code": "Cyri",
+            "name_en": "Cyrillic",
+            "name_id": "Aksara Cyrillic",
+            "unicode": true,
+            "range": "0400-04FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Cyrillic",
+            "sample": "Ѐ"
+        },
+        {
+            "code": "Cyri",
+            "name_en": "Cyrillic Supplement",
+            "name_id": "Aksara Cyrillic Suplemen",
+            "unicode": true,
+            "range": "0500-052F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Cyrillic+Supplement",
+            "sample": "Ԁ"
+        },
+        {
+            "code": "Cyri",
+            "name_en": "Cyrillic Extended-C",
+            "name_id": "Aksara Cyrillic Perluasan-C",
+            "unicode": true,
+            "range": "1C80-1C8F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Cyrillic+Extended-C",
+            "sample": "ᲀ"
+        },
+        {
+            "code": "Cyri",
+            "name_en": "Cyrillic Extended-A",
+            "name_id": "Aksara Cyrillic Perluasan-A",
+            "unicode": true,
+            "range": "2DE0-2DFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Cyrillic+Extended-A",
+            "sample": "ⷠ"
+        },
+        {
+            "code": "Cyri",
+            "name_en": "Cyrillic Extended-B",
+            "name_id": "Aksara Cyrillic Perluasan-B",
+            "unicode": true,
+            "range": "A640-A69F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Cyrillic+Extended-B",
+            "sample": "Ꙁ"
+        },
+        {
+            "code": "Old",
+            "name_en": "Old Permic",
+            "name_id": "Aksara Old Permic",
+            "unicode": true,
+            "range": "10350-1037F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Old+Permic",
+            "sample": "𐍐"
+        },
+        {
+            "code": "Znam",
+            "name_en": "Znamenny Musical Notation",
+            "name_id": "Aksara Znamenny Musical Notation",
+            "unicode": true,
+            "range": "1CF00-1CFCF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Znamenny+Musical+Notation",
+            "sample": "𜼀"
+        },
+        {
+            "code": "Cyri",
+            "name_en": "Cyrillic Extended-D",
+            "name_id": "Aksara Cyrillic Perluasan-D",
+            "unicode": true,
+            "range": "1E030-1E08F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Cyrillic+Extended-D",
+            "sample": "𞀰"
+        }
+    ],
+    "AM": [
+        {
+            "code": "Arme",
+            "name_en": "Armenian",
+            "name_id": "Aksara Armenian",
+            "unicode": true,
+            "range": "0530-058F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Armenian",
+            "sample": "԰"
+        }
+    ],
+    "IL": [
+        {
+            "code": "Hebr",
+            "name_en": "Hebrew",
+            "name_id": "Aksara Hebrew",
+            "unicode": true,
+            "range": "0590-05FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Hebrew",
+            "sample": "֐"
+        },
+        {
+            "code": "Sama",
+            "name_en": "Samaritan",
+            "name_id": "Aksara Samaritan",
+            "unicode": true,
+            "range": "0800-083F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Samaritan",
+            "sample": "ࠀ"
+        }
+    ],
+    "SA": [
+        {
+            "code": "Arab",
+            "name_en": "Arabic",
+            "name_id": "Aksara Arabic",
+            "unicode": true,
+            "range": "0600-06FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Arabic",
+            "sample": "؀"
+        },
+        {
+            "code": "Arab",
+            "name_en": "Arabic Supplement",
+            "name_id": "Aksara Arabic Suplemen",
+            "unicode": true,
+            "range": "0750-077F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Arabic+Supplement",
+            "sample": "ݐ"
+        },
+        {
+            "code": "Arab",
+            "name_en": "Arabic Extended-B",
+            "name_id": "Aksara Arabic Perluasan-B",
+            "unicode": true,
+            "range": "0870-089F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Arabic+Extended-B",
+            "sample": "ࡰ"
+        },
+        {
+            "code": "Arab",
+            "name_en": "Arabic Extended-A",
+            "name_id": "Aksara Arabic Perluasan-A",
+            "unicode": true,
+            "range": "08A0-08FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Arabic+Extended-A",
+            "sample": "ࢠ"
+        },
+        {
+            "code": "Arab",
+            "name_en": "Arabic Presentation Forms-A",
+            "name_id": "Aksara Arabic Presentation Bentuk-A",
+            "unicode": true,
+            "range": "FB50-FDFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Arabic+Presentation+Forms-A",
+            "sample": "ﭐ"
+        },
+        {
+            "code": "Arab",
+            "name_en": "Arabic Presentation Forms-B",
+            "name_id": "Aksara Arabic Presentation Bentuk-B",
+            "unicode": true,
+            "range": "FE70-FEFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Arabic+Presentation+Forms-B",
+            "sample": "ﹰ"
+        },
+        {
+            "code": "Old",
+            "name_en": "Old North Arabian",
+            "name_id": "Aksara Old North Arabian",
+            "unicode": true,
+            "range": "10A80-10A9F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Old+North+Arabian",
+            "sample": "𐪀"
+        },
+        {
+            "code": "Arab",
+            "name_en": "Arabic Extended-C",
+            "name_id": "Aksara Arabic Perluasan-C",
+            "unicode": true,
+            "range": "10EC0-10EFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Arabic+Extended-C",
+            "sample": "𐻀"
+        },
+        {
+            "code": "Arab",
+            "name_en": "Arabic Mathematical Alphabetic Symbols",
+            "name_id": "Arabic Mathematical Alphabetic Simbol",
+            "unicode": true,
+            "range": "1EE00-1EEFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Arabic+Mathematical+Alphabetic+Symbols",
+            "sample": "𞸀"
+        }
+    ],
+    "SY": [
+        {
+            "code": "Syri",
+            "name_en": "Syriac",
+            "name_id": "Aksara Syriac",
+            "unicode": true,
+            "range": "0700-074F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Syriac",
+            "sample": "܀"
+        },
+        {
+            "code": "Syri",
+            "name_en": "Syriac Supplement",
+            "name_id": "Aksara Syriac Suplemen",
+            "unicode": true,
+            "range": "0860-086F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Syriac+Supplement",
+            "sample": "ࡠ"
+        },
+        {
+            "code": "Ugar",
+            "name_en": "Ugaritic",
+            "name_id": "Aksara Ugaritic",
+            "unicode": true,
+            "range": "10380-1039F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Ugaritic",
+            "sample": "𐎀"
+        },
+        {
+            "code": "Palm",
+            "name_en": "Palmyrene",
+            "name_id": "Aksara Palmyrene",
+            "unicode": true,
+            "range": "10860-1087F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Palmyrene",
+            "sample": "𐡠"
+        }
+    ],
+    "MV": [
+        {
+            "code": "Thaa",
+            "name_en": "Thaana",
+            "name_id": "Aksara Thaana",
+            "unicode": true,
+            "range": "0780-07BF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Thaana",
+            "sample": "ހ"
+        },
+        {
+            "code": "Dive",
+            "name_en": "Dives Akuru",
+            "name_id": "Aksara Dives Akuru",
+            "unicode": true,
+            "range": "11900-1195F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Dives+Akuru",
+            "sample": "𑤀"
+        }
+    ],
+    "GN": [
+        {
+            "code": "Nko",
+            "name_en": "NKo",
+            "name_id": "Aksara NKo",
+            "unicode": true,
+            "range": "07C0-07FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+NKo",
+            "sample": "߀"
+        },
+        {
+            "code": "Adla",
+            "name_en": "Adlam",
+            "name_id": "Aksara Adlam",
+            "unicode": true,
+            "range": "1E900-1E95F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Adlam",
+            "sample": "𞤀"
+        }
+    ],
+    "IQ": [
+        {
+            "code": "Mand",
+            "name_en": "Mandaic",
+            "name_id": "Aksara Mandaic",
+            "unicode": true,
+            "range": "0840-085F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Mandaic",
+            "sample": "ࡀ"
+        },
+        {
+            "code": "Hatr",
+            "name_en": "Hatran",
+            "name_id": "Aksara Hatran",
+            "unicode": true,
+            "range": "108E0-108FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Hatran",
+            "sample": "𐣠"
+        },
+        {
+            "code": "Yezi",
+            "name_en": "Yezidi",
+            "name_id": "Aksara Yezidi",
+            "unicode": true,
+            "range": "10E80-10EBF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Yezidi",
+            "sample": "𐺀"
+        },
+        {
+            "code": "Cune",
+            "name_en": "Cuneiform",
+            "name_id": "Aksara Cuneiform",
+            "unicode": true,
+            "range": "12000-123FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Cuneiform",
+            "sample": "𒀀"
+        },
+        {
+            "code": "Cune",
+            "name_en": "Cuneiform Numbers and Punctuation",
+            "name_id": "Aksara Cuneiform Numbers and Punctuation",
+            "unicode": true,
+            "range": "12400-1247F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Cuneiform+Numbers+and+Punctuation",
+            "sample": "𒐀"
+        },
+        {
+            "code": "Earl",
+            "name_en": "Early Dynastic Cuneiform",
+            "name_id": "Aksara Early Dynastic Cuneiform",
+            "unicode": true,
+            "range": "12480-1254F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Early+Dynastic+Cuneiform",
+            "sample": "𒒀"
+        }
+    ],
+    "BD": [
+        {
+            "code": "Beng",
+            "name_en": "Bengali",
+            "name_id": "Aksara Bengali",
+            "unicode": true,
+            "range": "0980-09FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Bengali",
+            "sample": "ঀ"
+        },
+        {
+            "code": "Sylo",
+            "name_en": "Syloti Nagri",
+            "name_id": "Aksara Syloti Nagri",
+            "unicode": true,
+            "range": "A800-A82F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Syloti+Nagri",
+            "sample": "ꠀ"
+        },
+        {
+            "code": "Chak",
+            "name_en": "Chakma",
+            "name_id": "Aksara Chakma",
+            "unicode": true,
+            "range": "11100-1114F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Chakma",
+            "sample": "𑄀"
+        },
+        {
+            "code": "Mro",
+            "name_en": "Mro",
+            "name_id": "Aksara Mro",
+            "unicode": true,
+            "range": "16A40-16A6F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Mro",
+            "sample": "𖩀"
+        }
+    ],
+    "LK": [
+        {
+            "code": "Sinh",
+            "name_en": "Sinhala",
+            "name_id": "Aksara Sinhala",
+            "unicode": true,
+            "range": "0D80-0DFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Sinhala",
+            "sample": "඀"
+        },
+        {
+            "code": "Sinh",
+            "name_en": "Sinhala Archaic Numbers",
+            "name_id": "Aksara Sinhala Archaic Numbers",
+            "unicode": true,
+            "range": "111E0-111FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Sinhala+Archaic+Numbers",
+            "sample": "𑇠"
+        }
+    ],
+    "TH": [
+        {
+            "code": "Thai",
+            "name_en": "Thai",
+            "name_id": "Aksara Thai",
+            "unicode": true,
+            "range": "0E00-0E7F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Thai",
+            "sample": "฀"
+        },
+        {
+            "code": "Tai",
+            "name_en": "Tai Tham",
+            "name_id": "Aksara Tai Tham",
+            "unicode": true,
+            "range": "1A20-1AAF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Tai+Tham",
+            "sample": "ᨠ"
+        }
+    ],
+    "LA": [
+        {
+            "code": "Lao",
+            "name_en": "Lao",
+            "name_id": "Aksara Lao",
+            "unicode": true,
+            "range": "0E80-0EFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Lao",
+            "sample": "຀"
+        },
+        {
+            "code": "Nyia",
+            "name_en": "Nyiakeng Puachue Hmong",
+            "name_id": "Aksara Nyiakeng Puachue Hmong",
+            "unicode": true,
+            "range": "1E100-1E14F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Nyiakeng+Puachue+Hmong",
+            "sample": "𞄀"
+        }
+    ],
+    "CN": [
+        {
+            "code": "Tibe",
+            "name_en": "Tibetan",
+            "name_id": "Aksara Tibetan",
+            "unicode": true,
+            "range": "0F00-0FFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Tibetan",
+            "sample": "ༀ"
+        },
+        {
+            "code": "Tai",
+            "name_en": "Tai Le",
+            "name_id": "Aksara Tai Le",
+            "unicode": true,
+            "range": "1950-197F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Tai+Le",
+            "sample": "ᥐ"
+        },
+        {
+            "code": "New",
+            "name_en": "New Tai Lue",
+            "name_id": "Aksara New Tai Lue",
+            "unicode": true,
+            "range": "1980-19DF",
+            "ver": "1.0",
+            "font": "Noto+Sans+New+Tai+Lue",
+            "sample": "ᦀ"
+        },
+        {
+            "code": "Cjk",
+            "name_en": "CJK Radicals Supplement",
+            "name_id": "Aksara CJK Radicals Suplemen",
+            "unicode": true,
+            "range": "2E80-2EFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+CJK+Radicals+Supplement",
+            "sample": "⺀"
+        },
+        {
+            "code": "Kang",
+            "name_en": "Kangxi Radicals",
+            "name_id": "Aksara Kangxi Radicals",
+            "unicode": true,
+            "range": "2F00-2FDF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Kangxi+Radicals",
+            "sample": "⼀"
+        },
+        {
+            "code": "Ideo",
+            "name_en": "Ideographic Description Characters",
+            "name_id": "Aksara Ideographic Description Characters",
+            "unicode": true,
+            "range": "2FF0-2FFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Ideographic+Description+Characters",
+            "sample": "⿰"
+        },
+        {
+            "code": "Cjk",
+            "name_en": "CJK Symbols and Punctuation",
+            "name_id": "CJK Simbol and Punctuation",
+            "unicode": true,
+            "range": "3000-303F",
+            "ver": "1.0",
+            "font": "Noto+Sans+CJK+Symbols+and+Punctuation",
+            "sample": ""
+        },
+        {
+            "code": "Cjk",
+            "name_en": "CJK Strokes",
+            "name_id": "Aksara CJK Strokes",
+            "unicode": true,
+            "range": "31C0-31EF",
+            "ver": "1.0",
+            "font": "Noto+Sans+CJK+Strokes",
+            "sample": "㇀"
+        },
+        {
+            "code": "Encl",
+            "name_en": "Enclosed CJK Letters and Months",
+            "name_id": "Aksara Enclosed CJK Letters and Months",
+            "unicode": true,
+            "range": "3200-32FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Enclosed+CJK+Letters+and+Months",
+            "sample": "㈀"
+        },
+        {
+            "code": "Cjk",
+            "name_en": "CJK Compatibility",
+            "name_id": "Aksara CJK Compatibility",
+            "unicode": true,
+            "range": "3300-33FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+CJK+Compatibility",
+            "sample": "㌀"
+        },
+        {
+            "code": "Cjk",
+            "name_en": "CJK Unified Ideographs Extension A",
+            "name_id": "Aksara CJK Ideograf Bersatu Ekstensi A",
+            "unicode": true,
+            "range": "3400-4DBF",
+            "ver": "1.0",
+            "font": "Noto+Sans+CJK+Unified+Ideographs+Extension+A",
+            "sample": "㐀"
+        },
+        {
+            "code": "Yiji",
+            "name_en": "Yijing Hexagram Symbols",
+            "name_id": "Yijing Hexagram Simbol",
+            "unicode": true,
+            "range": "4DC0-4DFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Yijing+Hexagram+Symbols",
+            "sample": "䷀"
+        },
+        {
+            "code": "Cjk",
+            "name_en": "CJK Unified Ideographs",
+            "name_id": "Aksara CJK Ideograf Bersatu",
+            "unicode": true,
+            "range": "4E00-9FFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+CJK+Unified+Ideographs",
+            "sample": "一"
+        },
+        {
+            "code": "YiS",
+            "name_en": "Yi Syllables",
+            "name_id": "Aksara Yi Syllables",
+            "unicode": true,
+            "range": "A000-A48F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Yi+Syllables",
+            "sample": "ꀀ"
+        },
+        {
+            "code": "YiR",
+            "name_en": "Yi Radicals",
+            "name_id": "Aksara Yi Radicals",
+            "unicode": true,
+            "range": "A490-A4CF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Yi+Radicals",
+            "sample": "꒐"
+        },
+        {
+            "code": "Lisu",
+            "name_en": "Lisu",
+            "name_id": "Aksara Lisu",
+            "unicode": true,
+            "range": "A4D0-A4FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Lisu",
+            "sample": "ꓐ"
+        },
+        {
+            "code": "Cjk",
+            "name_en": "CJK Compatibility Ideographs",
+            "name_id": "Aksara CJK Compatibility Ideographs",
+            "unicode": true,
+            "range": "F900-FAFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+CJK+Compatibility+Ideographs",
+            "sample": "豈"
+        },
+        {
+            "code": "Cjk",
+            "name_en": "CJK Compatibility Forms",
+            "name_id": "Aksara CJK Compatibility Bentuk",
+            "unicode": true,
+            "range": "FE30-FE4F",
+            "ver": "1.0",
+            "font": "Noto+Sans+CJK+Compatibility+Forms",
+            "sample": "︰"
+        },
+        {
+            "code": "Old",
+            "name_en": "Old Uyghur",
+            "name_id": "Aksara Old Uyghur",
+            "unicode": true,
+            "range": "10F70-10FAF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Old+Uyghur",
+            "sample": "𐽰"
+        },
+        {
+            "code": "Marc",
+            "name_en": "Marchen",
+            "name_id": "Aksara Marchen",
+            "unicode": true,
+            "range": "11C70-11CBF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Marchen",
+            "sample": "𑱰"
+        },
+        {
+            "code": "Lisu",
+            "name_en": "Lisu Supplement",
+            "name_id": "Aksara Lisu Suplemen",
+            "unicode": true,
+            "range": "11FB0-11FBF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Lisu+Supplement",
+            "sample": "𑾰"
+        },
+        {
+            "code": "Paha",
+            "name_en": "Pahawh Hmong",
+            "name_id": "Aksara Pahawh Hmong",
+            "unicode": true,
+            "range": "16B00-16B8F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Pahawh+Hmong",
+            "sample": "𖬀"
+        },
+        {
+            "code": "Miao",
+            "name_en": "Miao",
+            "name_id": "Aksara Miao",
+            "unicode": true,
+            "range": "16F00-16F9F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Miao",
+            "sample": "𖼀"
+        },
+        {
+            "code": "Ideo",
+            "name_en": "Ideographic Symbols and Punctuation",
+            "name_id": "Ideographic Simbol and Punctuation",
+            "unicode": true,
+            "range": "16FE0-16FFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Ideographic+Symbols+and+Punctuation",
+            "sample": "𖿠"
+        },
+        {
+            "code": "Tang",
+            "name_en": "Tangut",
+            "name_id": "Aksara Tangut",
+            "unicode": true,
+            "range": "17000-187FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Tangut",
+            "sample": "𗀀"
+        },
+        {
+            "code": "Tang",
+            "name_en": "Tangut Components",
+            "name_id": "Aksara Tangut Components",
+            "unicode": true,
+            "range": "18800-18AFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Tangut+Components",
+            "sample": "𘠀"
+        },
+        {
+            "code": "Khit",
+            "name_en": "Khitan Small Script",
+            "name_id": "Aksara Khitan Small Aksara",
+            "unicode": true,
+            "range": "18B00-18CFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Khitan+Small+Script",
+            "sample": "𘬀"
+        },
+        {
+            "code": "Tang",
+            "name_en": "Tangut Supplement",
+            "name_id": "Aksara Tangut Suplemen",
+            "unicode": true,
+            "range": "18D00-18D7F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Tangut+Supplement",
+            "sample": "𘴀"
+        },
+        {
+            "code": "Tang",
+            "name_en": "Tangut Components Supplement",
+            "name_id": "Aksara Tangut Components Suplemen",
+            "unicode": true,
+            "range": "18D80-18DFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Tangut+Components+Supplement",
+            "sample": "𘶀"
+        },
+        {
+            "code": "Nush",
+            "name_en": "Nushu",
+            "name_id": "Aksara Nushu",
+            "unicode": true,
+            "range": "1B170-1B2FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Nushu",
+            "sample": "𛅰"
+        },
+        {
+            "code": "Tai",
+            "name_en": "Tai Xuan Jing Symbols",
+            "name_id": "Tai Xuan Jing Simbol",
+            "unicode": true,
+            "range": "1D300-1D35F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Tai+Xuan+Jing+Symbols",
+            "sample": "𝌀"
+        },
+        {
+            "code": "Coun",
+            "name_en": "Counting Rod Numerals",
+            "name_id": "Aksara Counting Rod Numerals",
+            "unicode": true,
+            "range": "1D360-1D37F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Counting+Rod+Numerals",
+            "sample": "𝍠"
+        },
+        {
+            "code": "Mahj",
+            "name_en": "Mahjong Tiles",
+            "name_id": "Aksara Mahjong Tiles",
+            "unicode": true,
+            "range": "1F000-1F02F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Mahjong+Tiles",
+            "sample": "🀀"
+        },
+        {
+            "code": "Domi",
+            "name_en": "Domino Tiles",
+            "name_id": "Aksara Domino Tiles",
+            "unicode": true,
+            "range": "1F030-1F09F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Domino+Tiles",
+            "sample": "🀰"
+        },
+        {
+            "code": "Encl",
+            "name_en": "Enclosed Ideographic Supplement",
+            "name_id": "Aksara Enclosed Ideographic Suplemen",
+            "unicode": true,
+            "range": "1F200-1F2FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Enclosed+Ideographic+Supplement",
+            "sample": "🈀"
+        },
+        {
+            "code": "Cjk",
+            "name_en": "CJK Unified Ideographs Extension B",
+            "name_id": "Aksara CJK Ideograf Bersatu Ekstensi B",
+            "unicode": true,
+            "range": "20000-2A6DF",
+            "ver": "1.0",
+            "font": "Noto+Sans+CJK+Unified+Ideographs+Extension+B",
+            "sample": "𠀀"
+        },
+        {
+            "code": "Cjk",
+            "name_en": "CJK Unified Ideographs Extension C",
+            "name_id": "Aksara CJK Ideograf Bersatu Ekstensi C",
+            "unicode": true,
+            "range": "2A700-2B73F",
+            "ver": "1.0",
+            "font": "Noto+Sans+CJK+Unified+Ideographs+Extension+C",
+            "sample": "𪜀"
+        },
+        {
+            "code": "Cjk",
+            "name_en": "CJK Unified Ideographs Extension D",
+            "name_id": "Aksara CJK Ideograf Bersatu Ekstensi D",
+            "unicode": true,
+            "range": "2B740-2B81F",
+            "ver": "1.0",
+            "font": "Noto+Sans+CJK+Unified+Ideographs+Extension+D",
+            "sample": "𫝀"
+        },
+        {
+            "code": "Cjk",
+            "name_en": "CJK Unified Ideographs Extension E",
+            "name_id": "Aksara CJK Ideograf Bersatu Ekstensi E",
+            "unicode": true,
+            "range": "2B820-2CEAF",
+            "ver": "1.0",
+            "font": "Noto+Sans+CJK+Unified+Ideographs+Extension+E",
+            "sample": "𫠠"
+        },
+        {
+            "code": "Cjk",
+            "name_en": "CJK Unified Ideographs Extension F",
+            "name_id": "Aksara CJK Ideograf Bersatu Ekstensi F",
+            "unicode": true,
+            "range": "2CEB0-2EBEF",
+            "ver": "1.0",
+            "font": "Noto+Sans+CJK+Unified+Ideographs+Extension+F",
+            "sample": "𬺰"
+        },
+        {
+            "code": "Cjk",
+            "name_en": "CJK Unified Ideographs Extension I",
+            "name_id": "Aksara CJK Ideograf Bersatu Ekstensi I",
+            "unicode": true,
+            "range": "2EBF0-2EE5F",
+            "ver": "1.0",
+            "font": "Noto+Sans+CJK+Unified+Ideographs+Extension+I",
+            "sample": "𮯰"
+        },
+        {
+            "code": "Cjk",
+            "name_en": "CJK Compatibility Ideographs Supplement",
+            "name_id": "Aksara CJK Compatibility Ideographs Suplemen",
+            "unicode": true,
+            "range": "2F800-2FA1F",
+            "ver": "1.0",
+            "font": "Noto+Sans+CJK+Compatibility+Ideographs+Supplement",
+            "sample": "丽"
+        },
+        {
+            "code": "Cjk",
+            "name_en": "CJK Unified Ideographs Extension G",
+            "name_id": "Aksara CJK Ideograf Bersatu Ekstensi G",
+            "unicode": true,
+            "range": "30000-3134F",
+            "ver": "1.0",
+            "font": "Noto+Sans+CJK+Unified+Ideographs+Extension+G",
+            "sample": "𰀀"
+        },
+        {
+            "code": "Cjk",
+            "name_en": "CJK Unified Ideographs Extension H",
+            "name_id": "Aksara CJK Ideograf Bersatu Ekstensi H",
+            "unicode": true,
+            "range": "31350-323AF",
+            "ver": "1.0",
+            "font": "Noto+Sans+CJK+Unified+Ideographs+Extension+H",
+            "sample": "𱍐"
+        },
+        {
+            "code": "Cjk",
+            "name_en": "CJK Unified Ideographs Extension J",
+            "name_id": "Aksara CJK Ideograf Bersatu Ekstensi J",
+            "unicode": true,
+            "range": "323B0-3347F",
+            "ver": "1.0",
+            "font": "Noto+Sans+CJK+Unified+Ideographs+Extension+J",
+            "sample": "𲎰"
+        }
+    ],
+    "MM": [
+        {
+            "code": "Myan",
+            "name_en": "Myanmar",
+            "name_id": "Aksara Myanmar",
+            "unicode": true,
+            "range": "1000-109F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Myanmar",
+            "sample": "က"
+        },
+        {
+            "code": "Kaya",
+            "name_en": "Kayah Li",
+            "name_id": "Aksara Kayah Li",
+            "unicode": true,
+            "range": "A900-A92F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Kayah+Li",
+            "sample": "꤀"
+        },
+        {
+            "code": "Myan",
+            "name_en": "Myanmar Extended-B",
+            "name_id": "Aksara Myanmar Perluasan-B",
+            "unicode": true,
+            "range": "A9E0-A9FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Myanmar+Extended-B",
+            "sample": "ꧠ"
+        },
+        {
+            "code": "Myan",
+            "name_en": "Myanmar Extended-A",
+            "name_id": "Aksara Myanmar Perluasan-A",
+            "unicode": true,
+            "range": "AA60-AA7F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Myanmar+Extended-A",
+            "sample": "ꩠ"
+        },
+        {
+            "code": "Hani",
+            "name_en": "Hanifi Rohingya",
+            "name_id": "Aksara Hanifi Rohingya",
+            "unicode": true,
+            "range": "10D00-10D3F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Hanifi+Rohingya",
+            "sample": "𐴀"
+        },
+        {
+            "code": "Myan",
+            "name_en": "Myanmar Extended-C",
+            "name_id": "Aksara Myanmar Perluasan-C",
+            "unicode": true,
+            "range": "116D0-116FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Myanmar+Extended-C",
+            "sample": "𑛐"
+        },
+        {
+            "code": "Pau",
+            "name_en": "Pau Cin Hau",
+            "name_id": "Aksara Pau Cin Hau",
+            "unicode": true,
+            "range": "11AC0-11AFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Pau+Cin+Hau",
+            "sample": "𑫀"
+        }
+    ],
+    "GE": [
+        {
+            "code": "Geor",
+            "name_en": "Georgian",
+            "name_id": "Aksara Georgian",
+            "unicode": true,
+            "range": "10A0-10FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Georgian",
+            "sample": "Ⴀ"
+        },
+        {
+            "code": "Geor",
+            "name_en": "Georgian Extended",
+            "name_id": "Aksara Georgian Perluasan",
+            "unicode": true,
+            "range": "1C90-1CBF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Georgian+Extended",
+            "sample": "Ა"
+        },
+        {
+            "code": "Geor",
+            "name_en": "Georgian Supplement",
+            "name_id": "Aksara Georgian Suplemen",
+            "unicode": true,
+            "range": "2D00-2D2F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Georgian+Supplement",
+            "sample": "ⴀ"
+        }
+    ],
+    "KR": [
+        {
+            "code": "Hang",
+            "name_en": "Hangul Jamo",
+            "name_id": "Aksara Hangul Jamo",
+            "unicode": true,
+            "range": "1100-11FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Hangul+Jamo",
+            "sample": "ᄀ"
+        },
+        {
+            "code": "Hang",
+            "name_en": "Hangul Compatibility Jamo",
+            "name_id": "Aksara Hangul Compatibility Jamo",
+            "unicode": true,
+            "range": "3130-318F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Hangul+Compatibility+Jamo",
+            "sample": "㄰"
+        },
+        {
+            "code": "Hang",
+            "name_en": "Hangul Jamo Extended-A",
+            "name_id": "Aksara Hangul Jamo Perluasan-A",
+            "unicode": true,
+            "range": "A960-A97F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Hangul+Jamo+Extended-A",
+            "sample": "ꥠ"
+        },
+        {
+            "code": "Hang",
+            "name_en": "Hangul Syllables",
+            "name_id": "Aksara Hangul Syllables",
+            "unicode": true,
+            "range": "AC00-D7AF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Hangul+Syllables",
+            "sample": "가"
+        },
+        {
+            "code": "Hang",
+            "name_en": "Hangul Jamo Extended-B",
+            "name_id": "Aksara Hangul Jamo Perluasan-B",
+            "unicode": true,
+            "range": "D7B0-D7FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Hangul+Jamo+Extended-B",
+            "sample": "ힰ"
+        }
+    ],
+    "ET": [
+        {
+            "code": "Ethi",
+            "name_en": "Ethiopic",
+            "name_id": "Aksara Ethiopic",
+            "unicode": true,
+            "range": "1200-137F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Ethiopic",
+            "sample": "ሀ"
+        },
+        {
+            "code": "Ethi",
+            "name_en": "Ethiopic Supplement",
+            "name_id": "Aksara Ethiopic Suplemen",
+            "unicode": true,
+            "range": "1380-139F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Ethiopic+Supplement",
+            "sample": "ᎀ"
+        },
+        {
+            "code": "Ethi",
+            "name_en": "Ethiopic Extended",
+            "name_id": "Aksara Ethiopic Perluasan",
+            "unicode": true,
+            "range": "2D80-2DDF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Ethiopic+Extended",
+            "sample": "ⶀ"
+        },
+        {
+            "code": "Ethi",
+            "name_en": "Ethiopic Extended-A",
+            "name_id": "Aksara Ethiopic Perluasan-A",
+            "unicode": true,
+            "range": "AB00-AB2F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Ethiopic+Extended-A",
+            "sample": "꬀"
+        },
+        {
+            "code": "Ethi",
+            "name_en": "Ethiopic Extended-B",
+            "name_id": "Aksara Ethiopic Perluasan-B",
+            "unicode": true,
+            "range": "1E7E0-1E7FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Ethiopic+Extended-B",
+            "sample": "𞟠"
+        }
+    ],
+    "US": [
+        {
+            "code": "Cher",
+            "name_en": "Cherokee",
+            "name_id": "Aksara Cherokee",
+            "unicode": true,
+            "range": "13A0-13FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Cherokee",
+            "sample": "Ꭰ"
+        },
+        {
+            "code": "Cher",
+            "name_en": "Cherokee Supplement",
+            "name_id": "Aksara Cherokee Suplemen",
+            "unicode": true,
+            "range": "AB70-ABBF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Cherokee+Supplement",
+            "sample": "ꭰ"
+        },
+        {
+            "code": "Dese",
+            "name_en": "Deseret",
+            "name_id": "Aksara Deseret",
+            "unicode": true,
+            "range": "10400-1044F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Deseret",
+            "sample": "𐐀"
+        },
+        {
+            "code": "Osag",
+            "name_en": "Osage",
+            "name_id": "Aksara Osage",
+            "unicode": true,
+            "range": "104B0-104FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Osage",
+            "sample": "𐒰"
+        },
+        {
+            "code": "Kakt",
+            "name_en": "Kaktovik Numerals",
+            "name_id": "Aksara Kaktovik Numerals",
+            "unicode": true,
+            "range": "1D2C0-1D2DF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Kaktovik+Numerals",
+            "sample": "𝋀"
+        },
+        {
+            "code": "Sutt",
+            "name_en": "Sutton SignWriting",
+            "name_id": "Aksara Sutton TandaWriting",
+            "unicode": true,
+            "range": "1D800-1DAAF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Sutton+SignWriting",
+            "sample": "𝠀"
+        }
+    ],
+    "CA": [
+        {
+            "code": "Unif",
+            "name_en": "Unified Canadian Aboriginal Syllabics",
+            "name_id": "Aksara Unified Canadian Aboriginal Syllabics",
+            "unicode": true,
+            "range": "1400-167F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Unified+Canadian+Aboriginal+Syllabics",
+            "sample": "᐀"
+        },
+        {
+            "code": "Unif",
+            "name_en": "Unified Canadian Aboriginal Syllabics Extended",
+            "name_id": "Aksara Unified Canadian Aboriginal Syllabics Perluasan",
+            "unicode": true,
+            "range": "18B0-18FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Unified+Canadian+Aboriginal+Syllabics+Extended",
+            "sample": "ᢰ"
+        },
+        {
+            "code": "Unif",
+            "name_en": "Unified Canadian Aboriginal Syllabics Extended-A",
+            "name_id": "Aksara Unified Canadian Aboriginal Syllabics Perluasan-A",
+            "unicode": true,
+            "range": "11AB0-11ABF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Unified+Canadian+Aboriginal+Syllabics+Extended-A",
+            "sample": "𑪰"
+        }
+    ],
+    "IE": [
+        {
+            "code": "Ogha",
+            "name_en": "Ogham",
+            "name_id": "Aksara Ogham",
+            "unicode": true,
+            "range": "1680-169F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Ogham",
+            "sample": ""
+        }
+    ],
+    "IS": [
+        {
+            "code": "Runi",
+            "name_en": "Runic",
+            "name_id": "Aksara Runic",
+            "unicode": true,
+            "range": "16A0-16FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Runic",
+            "sample": "ᚠ"
+        }
+    ],
+    "PH": [
+        {
+            "code": "Taga",
+            "name_en": "Tagalog",
+            "name_id": "Aksara Tagalog",
+            "unicode": true,
+            "range": "1700-171F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Tagalog",
+            "sample": "ᜀ"
+        },
+        {
+            "code": "Hanu",
+            "name_en": "Hanunoo",
+            "name_id": "Aksara Hanunoo",
+            "unicode": true,
+            "range": "1720-173F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Hanunoo",
+            "sample": "ᜠ"
+        },
+        {
+            "code": "Buhi",
+            "name_en": "Buhid",
+            "name_id": "Aksara Buhid",
+            "unicode": true,
+            "range": "1740-175F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Buhid",
+            "sample": "ᝀ"
+        },
+        {
+            "code": "Tagb",
+            "name_en": "Tagbanwa",
+            "name_id": "Aksara Tagbanwa",
+            "unicode": true,
+            "range": "1760-177F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Tagbanwa",
+            "sample": "ᝠ"
+        }
+    ],
+    "KH": [
+        {
+            "code": "Khme",
+            "name_en": "Khmer",
+            "name_id": "Aksara Khmer",
+            "unicode": true,
+            "range": "1780-17FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Khmer",
+            "sample": "ក"
+        },
+        {
+            "code": "Khme",
+            "name_en": "Khmer Symbols",
+            "name_id": "Khmer Simbol",
+            "unicode": true,
+            "range": "19E0-19FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Khmer+Symbols",
+            "sample": "᧠"
+        }
+    ],
+    "MN": [
+        {
+            "code": "Mong",
+            "name_en": "Mongolian",
+            "name_id": "Aksara Mongolian",
+            "unicode": true,
+            "range": "1800-18AF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Mongolian",
+            "sample": "᠀"
+        },
+        {
+            "code": "Phag",
+            "name_en": "Phags-pa",
+            "name_id": "Aksara Phags-pa",
+            "unicode": true,
+            "range": "A840-A87F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Phags-pa",
+            "sample": "ꡀ"
+        },
+        {
+            "code": "Old",
+            "name_en": "Old Turkic",
+            "name_id": "Aksara Old Turkic",
+            "unicode": true,
+            "range": "10C00-10C4F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Old+Turkic",
+            "sample": "𐰀"
+        },
+        {
+            "code": "Mong",
+            "name_en": "Mongolian Supplement",
+            "name_id": "Aksara Mongolian Suplemen",
+            "unicode": true,
+            "range": "11660-1167F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Mongolian+Supplement",
+            "sample": "𑙠"
+        },
+        {
+            "code": "Zana",
+            "name_en": "Zanabazar Square",
+            "name_id": "Aksara Zanabazar Square",
+            "unicode": true,
+            "range": "11A00-11A4F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Zanabazar+Square",
+            "sample": "𑨀"
+        },
+        {
+            "code": "Soyo",
+            "name_en": "Soyombo",
+            "name_id": "Aksara Soyombo",
+            "unicode": true,
+            "range": "11A50-11AAF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Soyombo",
+            "sample": "𑩐"
+        }
+    ],
+    "NP": [
+        {
+            "code": "Limb",
+            "name_en": "Limbu",
+            "name_id": "Aksara Limbu",
+            "unicode": true,
+            "range": "1900-194F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Limbu",
+            "sample": "ᤀ"
+        },
+        {
+            "code": "Newa",
+            "name_en": "Newa",
+            "name_id": "Aksara Newa",
+            "unicode": true,
+            "range": "11400-1147F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Newa",
+            "sample": "𑐀"
+        },
+        {
+            "code": "Sunu",
+            "name_en": "Sunuwar",
+            "name_id": "Aksara Sunuwar",
+            "unicode": true,
+            "range": "11BC0-11BFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Sunuwar",
+            "sample": "𑯀"
+        },
+        {
+            "code": "Guru",
+            "name_en": "Gurung Khema",
+            "name_id": "Aksara Gurung Khema",
+            "unicode": true,
+            "range": "16100-1613F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Gurung+Khema",
+            "sample": "𖄀"
+        },
+        {
+            "code": "Kira",
+            "name_en": "Kirat Rai",
+            "name_id": "Aksara Kirat Rai",
+            "unicode": true,
+            "range": "16D40-16D7F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Kirat+Rai",
+            "sample": "𖵀"
+        }
+    ],
+    "BG": [
+        {
+            "code": "Glag",
+            "name_en": "Glagolitic",
+            "name_id": "Aksara Glagolitic",
+            "unicode": true,
+            "range": "2C00-2C5F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Glagolitic",
+            "sample": "Ⰰ"
+        },
+        {
+            "code": "Glag",
+            "name_en": "Glagolitic Supplement",
+            "name_id": "Aksara Glagolitic Suplemen",
+            "unicode": true,
+            "range": "1E000-1E02F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Glagolitic+Supplement",
+            "sample": "𞀀"
+        }
+    ],
+    "EG": [
+        {
+            "code": "Copt",
+            "name_en": "Coptic",
+            "name_id": "Aksara Coptic",
+            "unicode": true,
+            "range": "2C80-2CFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Coptic",
+            "sample": "Ⲁ"
+        },
+        {
+            "code": "Copt",
+            "name_en": "Coptic Epact Numbers",
+            "name_id": "Aksara Coptic Epact Numbers",
+            "unicode": true,
+            "range": "102E0-102FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Coptic+Epact+Numbers",
+            "sample": "𐋠"
+        },
+        {
+            "code": "Egyp",
+            "name_en": "Egyptian Hieroglyphs",
+            "name_id": "Egyptian Hieroglyphs",
+            "unicode": true,
+            "range": "13000-1342F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Egyptian+Hieroglyphs",
+            "sample": "𓀀"
+        },
+        {
+            "code": "Egyp",
+            "name_en": "Egyptian Hieroglyph Format Controls",
+            "name_id": "Aksara Egyptian Hieroglyph Format Controls",
+            "unicode": true,
+            "range": "13430-1345F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Egyptian+Hieroglyph+Format+Controls",
+            "sample": "𓐰"
+        },
+        {
+            "code": "Egyp",
+            "name_en": "Egyptian Hieroglyphs Extended-A",
+            "name_id": "Egyptian Hieroglyphs Perluasan-A",
+            "unicode": true,
+            "range": "13460-143FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Egyptian+Hieroglyphs+Extended-A",
+            "sample": "𓑠"
+        }
+    ],
+    "MA": [
+        {
+            "code": "Tifi",
+            "name_en": "Tifinagh",
+            "name_id": "Aksara Tifinagh",
+            "unicode": true,
+            "range": "2D30-2D7F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Tifinagh",
+            "sample": "ⴰ"
+        }
+    ],
+    "JP": [
+        {
+            "code": "Hira",
+            "name_en": "Hiragana",
+            "name_id": "Aksara Hiragana",
+            "unicode": true,
+            "range": "3040-309F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Hiragana",
+            "sample": "぀"
+        },
+        {
+            "code": "Kata",
+            "name_en": "Katakana",
+            "name_id": "Aksara Katakana",
+            "unicode": true,
+            "range": "30A0-30FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Katakana",
+            "sample": "゠"
+        },
+        {
+            "code": "Kanb",
+            "name_en": "Kanbun",
+            "name_id": "Aksara Kanbun",
+            "unicode": true,
+            "range": "3190-319F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Kanbun",
+            "sample": "㆐"
+        },
+        {
+            "code": "Kata",
+            "name_en": "Katakana Phonetic Extensions",
+            "name_id": "Aksara Katakana Phonetic Ekstensis",
+            "unicode": true,
+            "range": "31F0-31FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Katakana+Phonetic+Extensions",
+            "sample": "ㇰ"
+        },
+        {
+            "code": "Kana",
+            "name_en": "Kana Extended-B",
+            "name_id": "Aksara Kana Perluasan-B",
+            "unicode": true,
+            "range": "1AFF0-1AFFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Kana+Extended-B",
+            "sample": "𚿰"
+        },
+        {
+            "code": "Kana",
+            "name_en": "Kana Supplement",
+            "name_id": "Aksara Kana Suplemen",
+            "unicode": true,
+            "range": "1B000-1B0FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Kana+Supplement",
+            "sample": "𛀀"
+        },
+        {
+            "code": "Kana",
+            "name_en": "Kana Extended-A",
+            "name_id": "Aksara Kana Perluasan-A",
+            "unicode": true,
+            "range": "1B100-1B12F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Kana+Extended-A",
+            "sample": "𛄀"
+        },
+        {
+            "code": "Smal",
+            "name_en": "Small Kana Extension",
+            "name_id": "Aksara Small Kana Ekstensi",
+            "unicode": true,
+            "range": "1B130-1B16F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Small+Kana+Extension",
+            "sample": "𛄰"
+        }
+    ],
+    "TW": [
+        {
+            "code": "Bopo",
+            "name_en": "Bopomofo",
+            "name_id": "Aksara Bopomofo",
+            "unicode": true,
+            "range": "3100-312F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Bopomofo",
+            "sample": "㄀"
+        },
+        {
+            "code": "Bopo",
+            "name_en": "Bopomofo Extended",
+            "name_id": "Aksara Bopomofo Perluasan",
+            "unicode": true,
+            "range": "31A0-31BF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Bopomofo+Extended",
+            "sample": "ㆠ"
+        }
+    ],
+    "LR": [
+        {
+            "code": "Vai",
+            "name_en": "Vai",
+            "name_id": "Aksara Vai",
+            "unicode": true,
+            "range": "A500-A63F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Vai",
+            "sample": "ꔀ"
+        },
+        {
+            "code": "Bass",
+            "name_en": "Bassa Vah",
+            "name_id": "Aksara Bassa Vah",
+            "unicode": true,
+            "range": "16AD0-16AFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Bassa+Vah",
+            "sample": "𖫐"
+        }
+    ],
+    "CM": [
+        {
+            "code": "Bamu",
+            "name_en": "Bamum",
+            "name_id": "Aksara Bamum",
+            "unicode": true,
+            "range": "A6A0-A6FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Bamum",
+            "sample": "ꚠ"
+        },
+        {
+            "code": "Bamu",
+            "name_en": "Bamum Supplement",
+            "name_id": "Aksara Bamum Suplemen",
+            "unicode": true,
+            "range": "16800-16A3F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Bamum+Supplement",
+            "sample": "𖠀"
+        }
+    ],
+    "VN": [
+        {
+            "code": "Cham",
+            "name_en": "Cham",
+            "name_id": "Aksara Cham",
+            "unicode": true,
+            "range": "AA00-AA5F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Cham",
+            "sample": "ꨀ"
+        },
+        {
+            "code": "Tai",
+            "name_en": "Tai Viet",
+            "name_id": "Aksara Tai Viet",
+            "unicode": true,
+            "range": "AA80-AADF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Tai+Viet",
+            "sample": "ꪀ"
+        },
+        {
+            "code": "Tai",
+            "name_en": "Tai Yo",
+            "name_id": "Aksara Tai Yo",
+            "unicode": true,
+            "range": "1E6C0-1E6FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Tai+Yo",
+            "sample": "𞛀"
+        }
+    ],
+    "??": [
+        {
+            "code": "Spec",
+            "name_en": "Specials",
+            "name_id": "Aksara Specials",
+            "unicode": true,
+            "range": "FFF0-FFFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Specials",
+            "sample": "￰"
+        }
+    ],
+    "TR": [
+        {
+            "code": "Lyci",
+            "name_en": "Lycian",
+            "name_id": "Aksara Lycian",
+            "unicode": true,
+            "range": "10280-1029F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Lycian",
+            "sample": "𐊀"
+        },
+        {
+            "code": "Cari",
+            "name_en": "Carian",
+            "name_id": "Aksara Carian",
+            "unicode": true,
+            "range": "102A0-102DF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Carian",
+            "sample": "𐊠"
+        },
+        {
+            "code": "Lydi",
+            "name_en": "Lydian",
+            "name_id": "Aksara Lydian",
+            "unicode": true,
+            "range": "10920-1093F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Lydian",
+            "sample": "𐤠"
+        },
+        {
+            "code": "Side",
+            "name_en": "Sidetic",
+            "name_id": "Aksara Sidetic",
+            "unicode": true,
+            "range": "10940-1095F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Sidetic",
+            "sample": "𐥀"
+        },
+        {
+            "code": "Anat",
+            "name_en": "Anatolian Hieroglyphs",
+            "name_id": "Anatolian Hieroglyphs",
+            "unicode": true,
+            "range": "14400-1467F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Anatolian+Hieroglyphs",
+            "sample": "𔐀"
+        },
+        {
+            "code": "Otto",
+            "name_en": "Ottoman Siyaq Numbers",
+            "name_id": "Aksara Ottoman Siyaq Numbers",
+            "unicode": true,
+            "range": "1ED00-1ED4F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Ottoman+Siyaq+Numbers",
+            "sample": "𞴀"
+        }
+    ],
+    "IT": [
+        {
+            "code": "Old",
+            "name_en": "Old Italic",
+            "name_id": "Aksara Old Italic",
+            "unicode": true,
+            "range": "10300-1032F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Old+Italic",
+            "sample": "𐌀"
+        }
+    ],
+    "UA": [
+        {
+            "code": "Goth",
+            "name_en": "Gothic",
+            "name_id": "Aksara Gothic",
+            "unicode": true,
+            "range": "10330-1034F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Gothic",
+            "sample": "𐌰"
+        }
+    ],
+    "IR": [
+        {
+            "code": "Old",
+            "name_en": "Old Persian",
+            "name_id": "Aksara Old Persian",
+            "unicode": true,
+            "range": "103A0-103DF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Old+Persian",
+            "sample": "𐎠"
+        },
+        {
+            "code": "Impe",
+            "name_en": "Imperial Aramaic",
+            "name_id": "Aksara Imperial Aramaic",
+            "unicode": true,
+            "range": "10840-1085F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Imperial+Aramaic",
+            "sample": "𐡀"
+        },
+        {
+            "code": "Mani",
+            "name_en": "Manichaean",
+            "name_id": "Aksara Manichaean",
+            "unicode": true,
+            "range": "10AC0-10AFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Manichaean",
+            "sample": "𐫀"
+        },
+        {
+            "code": "Aves",
+            "name_en": "Avestan",
+            "name_id": "Aksara Avestan",
+            "unicode": true,
+            "range": "10B00-10B3F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Avestan",
+            "sample": "𐬀"
+        },
+        {
+            "code": "Insc",
+            "name_en": "Inscriptional Parthian",
+            "name_id": "Aksara Inscriptional Parthian",
+            "unicode": true,
+            "range": "10B40-10B5F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Inscriptional+Parthian",
+            "sample": "𐭀"
+        },
+        {
+            "code": "Insc",
+            "name_en": "Inscriptional Pahlavi",
+            "name_id": "Aksara Inscriptional Pahlavi",
+            "unicode": true,
+            "range": "10B60-10B7F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Inscriptional+Pahlavi",
+            "sample": "𐭠"
+        },
+        {
+            "code": "Psal",
+            "name_en": "Psalter Pahlavi",
+            "name_id": "Aksara Psalter Pahlavi",
+            "unicode": true,
+            "range": "10B80-10BAF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Psalter+Pahlavi",
+            "sample": "𐮀"
+        },
+        {
+            "code": "Elym",
+            "name_en": "Elymaic",
+            "name_id": "Aksara Elymaic",
+            "unicode": true,
+            "range": "10FE0-10FFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Elymaic",
+            "sample": "𐿠"
+        }
+    ],
+    "GB": [
+        {
+            "code": "Shav",
+            "name_en": "Shavian",
+            "name_id": "Aksara Shavian",
+            "unicode": true,
+            "range": "10450-1047F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Shavian",
+            "sample": "𐑐"
+        }
+    ],
+    "SO": [
+        {
+            "code": "Osma",
+            "name_en": "Osmanya",
+            "name_id": "Aksara Osmanya",
+            "unicode": true,
+            "range": "10480-104AF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Osmanya",
+            "sample": "𐒀"
+        }
+    ],
+    "AL": [
+        {
+            "code": "Elba",
+            "name_en": "Elbasan",
+            "name_id": "Aksara Elbasan",
+            "unicode": true,
+            "range": "10500-1052F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Elbasan",
+            "sample": "𐔀"
+        },
+        {
+            "code": "Vith",
+            "name_en": "Vithkuqi",
+            "name_id": "Aksara Vithkuqi",
+            "unicode": true,
+            "range": "10570-105BF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Vithkuqi",
+            "sample": "𐕰"
+        },
+        {
+            "code": "Todh",
+            "name_en": "Todhri",
+            "name_id": "Aksara Todhri",
+            "unicode": true,
+            "range": "105C0-105FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Todhri",
+            "sample": "𐗀"
+        }
+    ],
+    "AZ": [
+        {
+            "code": "Cauc",
+            "name_en": "Caucasian Albanian",
+            "name_id": "Aksara Caucasian Albanian",
+            "unicode": true,
+            "range": "10530-1056F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Caucasian+Albanian",
+            "sample": "𐔰"
+        }
+    ],
+    "CY": [
+        {
+            "code": "Cypr",
+            "name_en": "Cypriot Syllabary",
+            "name_id": "Aksara Cypriot Syllabary",
+            "unicode": true,
+            "range": "10800-1083F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Cypriot+Syllabary",
+            "sample": "𐠀"
+        },
+        {
+            "code": "Cypr",
+            "name_en": "Cypro-Minoan",
+            "name_id": "Aksara Cypro-Minoan",
+            "unicode": true,
+            "range": "12F90-12FFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Cypro-Minoan",
+            "sample": "𒾐"
+        }
+    ],
+    "JO": [
+        {
+            "code": "Naba",
+            "name_en": "Nabataean",
+            "name_id": "Aksara Nabataean",
+            "unicode": true,
+            "range": "10880-108AF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Nabataean",
+            "sample": "𐢀"
+        }
+    ],
+    "LB": [
+        {
+            "code": "Phoe",
+            "name_en": "Phoenician",
+            "name_id": "Aksara Phoenician",
+            "unicode": true,
+            "range": "10900-1091F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Phoenician",
+            "sample": "𐤀"
+        }
+    ],
+    "SD": [
+        {
+            "code": "Mero",
+            "name_en": "Meroitic Hieroglyphs",
+            "name_id": "Meroitic Hieroglyphs",
+            "unicode": true,
+            "range": "10980-1099F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Meroitic+Hieroglyphs",
+            "sample": "𐦀"
+        },
+        {
+            "code": "Mero",
+            "name_en": "Meroitic Cursive",
+            "name_id": "Aksara Meroitic Cursive",
+            "unicode": true,
+            "range": "109A0-109FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Meroitic+Cursive",
+            "sample": "𐦠"
+        }
+    ],
+    "PK": [
+        {
+            "code": "Khar",
+            "name_en": "Kharoshthi",
+            "name_id": "Aksara Kharoshthi",
+            "unicode": true,
+            "range": "10A00-10A5F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Kharoshthi",
+            "sample": "𐨀"
+        }
+    ],
+    "YE": [
+        {
+            "code": "Old",
+            "name_en": "Old South Arabian",
+            "name_id": "Aksara Old South Arabian",
+            "unicode": true,
+            "range": "10A60-10A7F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Old+South+Arabian",
+            "sample": "𐩠"
+        }
+    ],
+    "HU": [
+        {
+            "code": "Old",
+            "name_en": "Old Hungarian",
+            "name_id": "Aksara Old Hungarian",
+            "unicode": true,
+            "range": "10C80-10CFF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Old+Hungarian",
+            "sample": "𐲀"
+        }
+    ],
+    "SN": [
+        {
+            "code": "Gara",
+            "name_en": "Garay",
+            "name_id": "Aksara Garay",
+            "unicode": true,
+            "range": "10D40-10D8F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Garay",
+            "sample": "𐵀"
+        }
+    ],
+    "UZ": [
+        {
+            "code": "Old",
+            "name_en": "Old Sogdian",
+            "name_id": "Aksara Old Sogdian",
+            "unicode": true,
+            "range": "10F00-10F2F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Old+Sogdian",
+            "sample": "𐼀"
+        },
+        {
+            "code": "Sogd",
+            "name_en": "Sogdian",
+            "name_id": "Aksara Sogdian",
+            "unicode": true,
+            "range": "10F30-10F6F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Sogdian",
+            "sample": "𐼰"
+        },
+        {
+            "code": "Chor",
+            "name_en": "Chorasmian",
+            "name_id": "Aksara Chorasmian",
+            "unicode": true,
+            "range": "10FB0-10FDF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Chorasmian",
+            "sample": "𐾰"
+        }
+    ],
+    "NG": [
+        {
+            "code": "Mede",
+            "name_en": "Medefaidrin",
+            "name_id": "Aksara Medefaidrin",
+            "unicode": true,
+            "range": "16E40-16E9F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Medefaidrin",
+            "sample": "𖹀"
+        }
+    ],
+    "TD": [
+        {
+            "code": "Beri",
+            "name_en": "Beria Erfe",
+            "name_id": "Aksara Beria Erfe",
+            "unicode": true,
+            "range": "16EA0-16EDF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Beria+Erfe",
+            "sample": "𖺠"
+        }
+    ],
+    "FR": [
+        {
+            "code": "Dupl",
+            "name_en": "Duployan",
+            "name_id": "Aksara Duployan",
+            "unicode": true,
+            "range": "1BC00-1BC9F",
+            "ver": "1.0",
+            "font": "Noto+Sans+Duployan",
+            "sample": "𛰀"
+        }
+    ],
+    "MX": [
+        {
+            "code": "Maya",
+            "name_en": "Mayan Numerals",
+            "name_id": "Aksara Mayan Numerals",
+            "unicode": true,
+            "range": "1D2E0-1D2FF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Mayan+Numerals",
+            "sample": "𝋠"
+        }
+    ],
+    "SL": [
+        {
+            "code": "Mend",
+            "name_en": "Mende Kikakui",
+            "name_id": "Aksara Mende Kikakui",
+            "unicode": true,
+            "range": "1E800-1E8DF",
+            "ver": "1.0",
+            "font": "Noto+Sans+Mende+Kikakui",
+            "sample": "𞠀"
+        }
+    ]
+};
         // --- MAP SETUP ---
         const map = L.map('map', { zoomControl: false, minZoom: 2, maxZoom: 8 }).setView([20, 0], 2);
         L.control.zoom({ position: 'bottomright' }).addTo(map);
