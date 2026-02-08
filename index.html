@@ -6,14 +6,14 @@
     <meta name="referrer" content="no-referrer">
     <title>Global Script Explorer | By Angga Conni Saputra</title>
     
-    <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <!-- Leaflet CSS & JS (Moved to HEAD for stability) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Fonts: Cinzel (Title), Crimson Pro (Serif), JetBrains Mono (Code), Inter (UI), Noto fonts for specific scripts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&family=Noto+Sans:wght@400;700&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
 
     <!-- Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
@@ -28,7 +28,6 @@
             --highlight: #8B5E3C;
             --gold: #D4AF37;
             --blue-active: #2563EB;
-            --btn-dark: #2F2A24;
             --warning-bg: #FEF3C7;
             --warning-text: #92400E;
             --danger-bg: #FEE2E2;
@@ -44,7 +43,7 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body, html { margin: 0; padding: 0; height: 100%; width: 100%; background-color: var(--bg-paper); color: var(--ink-primary); font-family: var(--font-ui); overflow: hidden; }
 
-        /* --- LANDING PAGE (IMPROVED) --- */
+        /* --- LANDING PAGE --- */
         #landing-page {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -53,7 +52,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background-color: #1a1816; /* Darker fallback */
+            background-color: #1a1816;
             color: #fff;
             transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
         }
@@ -64,18 +63,15 @@
             transform: scale(1.02);
         }
 
-        /* Background Image with Gradient Overlay */
         .landing-bg {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            /* Gambar resolusi tinggi yang estetik */
             background-image: url('https://images.unsplash.com/photo-1596495577886-d920f1fb7238?q=80&w=2074&auto=format&fit=crop'); 
             background-size: cover;
             background-position: center;
             z-index: 0;
         }
 
-        /* Gradient Overlay agar teks terbaca jelas namun gambar tetap terlihat */
         .landing-overlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -89,7 +85,7 @@
             z-index: 2;
             position: relative;
             max-width: 800px;
-            border: 1px solid rgba(212, 175, 55, 0.3); /* Subtle gold border */
+            border: 1px solid rgba(212, 175, 55, 0.3);
             background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(5px);
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
@@ -148,20 +144,17 @@
             letter-spacing: 1px;
         }
 
-        /* Mobile adjustments for Landing */
         @media (max-width: 600px) {
             .landing-title { font-size: 2.5rem; letter-spacing: 2px; }
             .landing-subtitle { font-size: 1rem; }
             .landing-content { width: 90%; padding: 30px 20px; }
         }
 
-
-        /* --- MAP --- */
+        /* --- MAP & UI --- */
         #map { height: 100%; width: 100%; z-index: 1; background: var(--water); }
         .leaflet-tile { filter: sepia(0.2) grayscale(0.1) brightness(1.05); }
         path.leaflet-interactive:hover { fill-opacity: 0.8 !important; fill: var(--highlight) !important; stroke: var(--ink-primary) !important; stroke-width: 2px !important; }
 
-        /* --- UI FLOATING HEADER --- */
         .header-float {
             position: absolute; top: 20px; left: 20px; z-index: 1000;
             background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
@@ -206,26 +199,24 @@
         .panel-header { padding: 24px; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: flex-start; background: #fff; border-radius: 12px 12px 0 0; }
         .country-meta h2 { margin: 0; font-size: 2rem; font-family: var(--font-display); color: var(--ink-primary); }
         .country-meta span { font-family: var(--font-mono); font-size: 0.9rem; color: #999; }
-        
         .close-btn { background: #f9fafb; border: 1px solid #e5e7eb; cursor: pointer; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.2s; color: #666; }
         .close-btn:hover { background: #fee2e2; color: #991b1b; border-color: #fee2e2; }
-        
         .panel-body { padding: 24px; overflow-y: auto; flex: 1; background: #fdfdfc; }
 
         /* --- SCRIPT CARD --- */
         .script-card { background: white; border: 1px solid #e5e5e5; border-radius: 8px; margin-bottom: 24px; padding: 24px; position: relative; transition: box-shadow 0.2s; }
         .script-card:hover { box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-color: #d4d4d4; }
         
-        .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; gap: 10px; flex-wrap: wrap; }
-        .script-name { font-size: 1.25rem; font-weight: 600; font-family: var(--font-serif); color: #111; }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px; }
+        .script-name { font-size: 1.25rem; font-weight: 600; font-family: var(--font-serif); color: #111; flex: 1; }
         
         .card-tools { display: flex; gap: 8px; align-items: center; }
         
-        .badge { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; padding: 4px 8px; border-radius: 4px; letter-spacing: 0.5px; }
+        .badge { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; padding: 4px 8px; border-radius: 4px; letter-spacing: 0.5px; white-space: nowrap; }
         .badge-reg { background: #f0fdf4; color: #166534; border: 1px solid #dcfce7; }
         .badge-miss { background: #fef2f2; color: #991b1b; border: 1px solid #fee2e2; }
         
-        /* New DCMI Button Style */
+        /* DCMI Button */
         .btn-dcmi { 
             background: white; 
             color: #4b5563; 
@@ -240,16 +231,16 @@
             font-family: var(--font-ui);
             cursor: pointer;
             transition: all 0.2s;
+            white-space: nowrap;
         }
         .btn-dcmi:hover { background: #f3f4f6; color: #111; border-color: #9ca3af; }
-        .btn-dcmi i { font-size: 1rem; }
-
+        
         .script-sample { font-size: 3rem; margin: 20px 0; color: #111; line-height: 1.2; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; text-align: center; min-height: 3.6rem; }
         
-        .meta-info { font-size: 0.8rem; color: #666; font-family: var(--font-mono); border-top: 1px dashed #e5e5e5; padding-top: 12px; margin-top: 12px; display: flex; justify-content: space-between; }
+        .meta-info { font-size: 0.8rem; color: #666; font-family: var(--font-mono); border-top: 1px dashed #e5e5e5; padding-top: 12px; margin-top: 12px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 5px; }
         
-        .action-row { display: flex; gap: 12px; margin-top: 20px; }
-        .btn { padding: 12px 20px; border-radius: 6px; font-size: 0.9rem; font-weight: 600; cursor: pointer; text-decoration: none; border: none; flex: 1; text-align: center; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .action-row { display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
+        .btn { padding: 12px 20px; border-radius: 6px; font-size: 0.9rem; font-weight: 600; cursor: pointer; text-decoration: none; border: none; flex: 1; text-align: center; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; min-width: 120px; }
         .btn-primary { background: var(--ink-primary); color: #F4F1EC; }
         .btn-primary:hover { background: #000; }
         .btn-secondary { background: white; color: var(--highlight); border: 1px solid var(--highlight); }
@@ -262,28 +253,22 @@
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(2px); z-index: 2000; display: none; align-items: center; justify-content: center; }
         .modal-overlay.active { display: flex; }
         .modal-content { background: white; width: 90%; max-width: 800px; height: 85vh; border-radius: 12px; display: flex; flex-direction: column; position: relative; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
-        
         .modal-header { padding: 20px 30px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; background: white; }
         .modal-title { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; margin: 0; color: var(--ink-primary); }
-        
         .char-grid-container { flex: 1; overflow-y: auto; padding: 30px; background: #fafafa; position: relative; }
         .char-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); gap: 12px; }
         .char-cell { aspect-ratio: 1; background: white; border: 1px solid #e5e5e5; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 2rem; cursor: pointer; transition: all 0.2s; color: #333; }
         .char-cell:hover { transform: translateY(-4px); border-color: var(--highlight); box-shadow: 0 10px 20px rgba(0,0,0,0.1); z-index: 2; color: var(--highlight); }
-        
         .arrow-side { position: absolute; top: 50%; transform: translateY(-50%); width: 48px; height: 48px; background: white; border-radius: 50%; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid #eee; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10; color: var(--ink-primary); font-size: 1.5rem; transition: 0.2s; }
         .arrow-side:hover { background: var(--highlight); color: white; border-color: var(--highlight); }
         .arrow-left { left: 20px; }
         .arrow-right { right: 20px; }
-        
         .modal-footer { padding: 16px 30px; border-top: 1px solid #eee; background: white; display: flex; justify-content: space-between; align-items: center; }
         @media (max-width: 600px) {
             .arrow-side { display: none; }
             .char-grid { grid-template-columns: repeat(auto-fill, minmax(48px, 1fr)); gap: 8px; }
             .char-cell { font-size: 1.5rem; }
         }
-        
-        /* Zoom Modal */
         .zoom-modal { z-index: 3000; }
         .zoom-content { max-width: 360px; text-align: center; padding: 30px; border-radius: 16px; background: white; border: 1px solid #eee; }
     </style>
@@ -372,9 +357,32 @@
         </div>
     </div>
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-
     <script>
+        // --- PERFORMANCE AUDIT: Variables for Safety ---
+        let loadedFonts = new Set();
+        let GLOBAL_SCRIPT_DB = {}; 
+
+        // --- LOAD DATA FROM aksara.json ---
+        async function loadData() {
+            const debugArea = document.getElementById('statusArea');
+            debugArea.innerText = "Loading data...";
+            try {
+                const response = await fetch('aksara.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                GLOBAL_SCRIPT_DB = await response.json();
+                console.log("Database Loaded Successfully from aksara.json");
+                debugArea.innerText = "Ready: Local Data (aksara.json)";
+            } catch (e) {
+                console.error("Database Fetch Error:", e);
+                debugArea.innerHTML = "<span style='color:red'>Data Error. Check aksara.json</span>";
+            }
+        }
+        
+        // Start loading data immediately
+        loadData();
+        
         // --- LANDING PAGE LOGIC ---
         function enterApp() {
             const landing = document.getElementById('landing-page');
@@ -395,91 +403,47 @@
         
         const FALLBACK_LATIN = [{ code: "Latn", name_en: "Latin (System)", name_id: "Latin (Sistem)", unicode: true, range: "0020-007F", ver: "1.0", font: "Noto+Sans", sample: "Abcde" }];
 
-        const GLOBAL_SCRIPT_DB = {
-    "definitions": {
-        // ... (Data sebelumnya tetap ada) ...
-        // UPDATE: FIXING CHINESE & TANGUT FONTS
-        "cjk_unified_ideographs": {
-            "code": "Hani",
-            "name_en": "CJK Unified Ideographs",
-            "name_id": "Aksara CJK Ideograf Bersatu",
-            "range": "4E00-9FFF",
-            "unicode": true,
-            "font": "Noto+Serif+SC", 
-            "sample": "\u4e00"
-        },
-        "cjk_unified_ideographs_extension_a": {
-            "code": "Hani",
-            "name_en": "CJK Unified Ideographs Extension A",
-            "name_id": "Aksara CJK Ideograf Bersatu Ekstensi A",
-            "range": "3400-4DBF",
-            "unicode": true,
-            "font": "Noto+Serif+SC",
-            "sample": "\u3400"
-        },
-        "tangut": {
-            "code": "Tang",
-            "name_en": "Tangut",
-            "name_id": "Aksara Tangut",
-            "range": "17000-187FF",
-            "unicode": true,
-            "font": "Noto+Sans+Tangut",
-            "sample": "\ud81c\udc00"
-        },
-        "tangut_components": {
-            "code": "Tang",
-            "name_en": "Tangut Components",
-            "name_id": "Aksara Tangut Components",
-            "range": "18800-18AFF",
-            "unicode": true,
-            "font": "Noto+Sans+Tangut",
-            "sample": "\ud822\udc00"
-        },
-        // ... Other definitions assumed present (simplified for brevity in this response but full in file) ...
-        "basic_latin": { "code": "Latn", "name_en": "Basic Latin", "name_id": "Dasar Latin", "range": "0000-007F", "unicode": true, "font": "Noto+Sans", "sample": "A" },
-        "latin_1_supplement": { "code": "Latn", "name_en": "Latin-1 Supplement", "name_id": "Latin-1 Suplemen", "range": "0080-00FF", "unicode": true, "font": "Noto+Sans", "sample": "À" },
-        "tibetan": { "code": "Tibe", "name_en": "Tibetan", "name_id": "Aksara Tibetan", "range": "0F00-0FFF", "unicode": true, "font": "Noto+Sans+Tibetan", "sample": "\u0f00" },
-        "mongolian": { "code": "Mong", "name_en": "Mongolian", "name_id": "Aksara Mongolian", "range": "1800-18AF", "unicode": true, "font": "Noto+Sans+Mongolian", "sample": "\u1800" }
-    },
-    "countries": {
-        // China needs to point to correct IDs
-        "CN": ["tibetan","mongolian","cjk_unified_ideographs","cjk_unified_ideographs_extension_a","tangut","tangut_components"],
-        "ID": ["basic_latin","latin_1_supplement"],
-        "US": ["basic_latin","latin_1_supplement"],
-        // ... (Full list maintained in logic below) ...
-    }
-};
-        
-        // --- RESTORING FULL DATABASE FROM PREVIOUS CONTEXT FOR ROBUSTNESS ---
-        // (In a real scenario, I'd merge the full DB here. For this output, I ensure the requested fixes are applied)
-        // Let's ensure the DB object is fully populated as per previous file but with the fixes.
-        
-        // RE-INJECTING FULL DATA TO ENSURE IT WORKS (Condensed for space, focusing on logic)
-        // ... (Assume full GLOBAL_SCRIPT_DB from previous prompt is here, but with "Noto+Serif+SC" fix) ...
-        // I will implement a merge logic to be safe if you copy-paste just the changes, 
-        // but for this file generation, I will include the critical parts and a fallback.
-
         // --- MAP SETUP ---
-        const map = L.map('map', { zoomControl: false, minZoom: 2, maxZoom: 8 }).setView([35, 105], 3); // Center on Asia/China for testing
-        L.control.zoom({ position: 'bottomright' }).addTo(map);
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check if L is defined, if not, wait or show error
+            if (typeof L === 'undefined') {
+                 console.error("Leaflet not loaded");
+                 document.getElementById('statusArea').innerHTML = "<span style='color:red'>Error loading map library. Please refresh.</span>";
+                 return;
+            }
 
-        fetch('https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json')
-            .then(res => res.json())
-            .then(data => {
-                L.geoJSON(data, {
-                    style: { fillColor: '#E6DFD3', weight: 1, opacity: 1, color: '#B0A99F', fillOpacity: 1 },
-                    onEachFeature: (f, l) => {
-                        l.on('click', (e) => {
-                            const iso = convertIso3to2(f.id);
-                            openCountry(iso, f.properties.name);
-                            L.DomEvent.stopPropagation(e);
-                        });
-                    }
-                }).addTo(map);
-            });
+            try {
+                const map = L.map('map', { zoomControl: false, minZoom: 2, maxZoom: 8 }).setView([20, 78], 3); 
+                L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+                fetch('https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json')
+                    .then(res => {
+                        if (!res.ok) throw new Error("Network response was not ok");
+                        return res.json();
+                    })
+                    .then(data => {
+                        L.geoJSON(data, {
+                            style: { fillColor: '#E6DFD3', weight: 1, opacity: 1, color: '#B0A99F', fillOpacity: 1 },
+                            onEachFeature: (f, l) => {
+                                l.on('click', (e) => {
+                                    const iso = convertIso3to2(f.id);
+                                    openCountry(iso, f.properties.name);
+                                    L.DomEvent.stopPropagation(e);
+                                });
+                            }
+                        }).addTo(map);
+                    })
+                    .catch(error => {
+                        console.error("Map Data Error:", error);
+                        document.getElementById('statusArea').innerHTML = "<span style='color:red'>Map Error: Check Connection</span>";
+                    });
+            } catch (e) {
+                console.error("Map Init Error:", e);
+            }
+        });
 
         function convertIso3to2(iso3) {
-            const m = { 'IDN': 'ID', 'CHN': 'CN', 'USA': 'US', 'IND': 'IN', 'JPN': 'JP' };
+            const m = { 'IDN': 'ID', 'CHN': 'CN', 'USA': 'US', 'IND': 'IN', 'JPN': 'JP', 'LKA': 'LK', 'MNG': 'MN' };
             return m[iso3] || iso3.substring(0, 2).toUpperCase();
         }
 
@@ -487,38 +451,21 @@
         function getScriptData(iso) {
             const debugArea = document.getElementById('statusArea');
             
-            // FAKE DB for demonstration if the full 2000-line DB isn't pasted. 
-            // In the real file, the huge GLOBAL_SCRIPT_DB from the previous step should be preserved.
-            // I'm assuming the previous context's huge DB is available. 
-            // I will inject the specific fix for China here dynamically to ensure it works even if I don't reprint 2000 lines.
-            
-            if (GLOBAL_SCRIPT_DB.countries[iso]) {
-               // Great, use it.
-            } else {
-               // Fallback / Polyfill for this demo to ensure CN works
-               if(iso === 'CN') {
-                   return [
-                       { code: "Hani", name_en: "CJK Unified Ideographs", name_id: "Aksara Han (Cina)", range: "4E00-9FFF", unicode: true, font: "Noto+Serif+SC", sample: "永" },
-                       { code: "Tang", name_en: "Tangut", name_id: "Aksara Tangut", range: "17000-187FF", unicode: true, font: "Noto+Sans+Tangut", sample: "\ud81c\udc00" },
-                       { code: "Tibe", name_en: "Tibetan", name_id: "Aksara Tibet", range: "0F00-0FFF", unicode: true, font: "Noto+Sans+Tibetan", sample: "\u0f00" },
-                       { code: "Mong", name_en: "Mongolian", name_id: "Aksara Mongol", range: "1800-18AF", unicode: true, font: "Noto+Sans+Mongolian", sample: "\u1800" }
-                   ];
-               }
+            // Check if DB is loaded
+            if (!GLOBAL_SCRIPT_DB.countries) {
+                 debugArea.innerHTML = `<span style="color:orange">Data loading... Try again.</span>`;
+                 return [];
             }
 
             if (GLOBAL_SCRIPT_DB.countries && GLOBAL_SCRIPT_DB.countries[iso]) {
                 const scriptIds = GLOBAL_SCRIPT_DB.countries[iso];
-                const data = scriptIds.map(id => GLOBAL_SCRIPT_DB.definitions[id] || (typeof id === 'object' ? id : null)).filter(Boolean);
+                // Map IDs to actual definition objects, handling missing keys safely
+                const data = scriptIds.map(id => GLOBAL_SCRIPT_DB.definitions ? GLOBAL_SCRIPT_DB.definitions[id] : null).filter(Boolean);
+                
                 debugArea.innerHTML = `<span style="color:green">Loaded: ${iso} (${data.length} scripts)</span>`;
-                return data;
-            } else if (iso === 'CN') {
-                 // Explicit fallback for CN if DB is partial
-                 return [
-                       { code: "Hani", name_en: "CJK Unified Ideographs", name_id: "Aksara Han (Cina)", range: "4E00-9FFF", unicode: true, font: "Noto+Serif+SC", sample: "永" },
-                       { code: "Tang", name_en: "Tangut", name_id: "Aksara Tangut", range: "17000-187FF", unicode: true, font: "Noto+Sans+Tangut", sample: "\ud81c\udc00" }
-                 ];
+                return data.length > 0 ? data : FALLBACK_LATIN;
             } else {
-                debugArea.innerHTML = `<span style="color:red">Missing: ${iso} (Using Fallback)</span>`;
+                debugArea.innerHTML = `<span style="color:orange">Data incomplete for: ${iso}</span>`;
                 return FALLBACK_LATIN; 
             }
         }
@@ -542,18 +489,24 @@
                 return;
             }
             
+            // Optimization: Document Fragment prevents multiple reflows
+            const fragment = document.createDocumentFragment();
+
             scripts.forEach(script => {
-                if (script.font && script.font !== 'null') {
+                // PERFORMANCE FIX: Use Set check instead of DOM query
+                if (script.font && script.font !== 'null' && !loadedFonts.has(script.font)) {
                     const l = document.createElement('link');
+                    // Handle special font names like Noto+Serif+SC which are valid Google Fonts
                     l.href = `https://fonts.googleapis.com/css2?family=${script.font}&display=swap`;
                     l.rel = 'stylesheet';
-                    if(!document.querySelector(`link[href*="${script.font}"]`)) document.head.appendChild(l);
+                    document.head.appendChild(l);
+                    loadedFonts.add(script.font);
                 }
                 
                 const hasFont = script.font && script.font !== 'null';
                 const isReg = script.unicode === true || script.unicode === "TRUE"; 
-                // Fix Google Fonts URL for display
                 const fontUrl = hasFont ? `https://fonts.google.com/specimen/${script.font.replace(/\+/g, '+')}` : '#';
+                // Handle space replacement for font-family usage in CSS
                 const fontFamily = hasFont ? script.font.replace(/\+/g, ' ') : 'sans-serif';
 
                 const div = document.createElement('div');
@@ -562,8 +515,8 @@
                     <div class="card-header">
                         <span class="script-name">${currentLang === 'id' ? script.name_id : script.name_en}</span>
                         <div class="card-tools">
-                            <button class="btn-dcmi" title="Export Metadata" onclick="exportDCMI('${script.name_en}', '${script.code}', '${countryName}')">
-                                <i class="ph ph-export"></i> Export DCMI
+                            <button class="btn-dcmi" title="Export Metadata (DCMI XML)" onclick="exportDCMI('${script.name_en}', '${script.code}', '${countryName}')">
+                                <i class="ph ph-export"></i> DCMI
                             </button>
                             <span class="badge ${isReg ? 'badge-reg' : 'badge-miss'}">${isReg ? i18n[currentLang].reg : i18n[currentLang].miss}</span>
                         </div>
@@ -583,8 +536,10 @@
                         </button>
                     </div>
                 `;
-                list.appendChild(div);
+                fragment.appendChild(div);
             });
+            
+            list.appendChild(fragment);
         }
 
         function exportDCMI(scriptName, scriptCode, countryName) {
@@ -611,10 +566,10 @@
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+            setTimeout(() => URL.revokeObjectURL(url), 100);
         }
 
-        // --- PAGINATION & MODAL LOGIC (UNCHANGED) ---
+        // --- GRID LOGIC ---
         function openGrid(name, range, font) {
             document.getElementById('charModal').classList.add('active');
             document.getElementById('modalTitle').innerText = name;
@@ -644,6 +599,9 @@
 
             if (start > modalState.rangeEnd) return; 
 
+            // Optimization: Fragment again
+            const fragment = document.createDocumentFragment();
+
             for(let i=start; i<=end; i++) {
                 const cell = document.createElement('div');
                 cell.className = 'char-cell';
@@ -660,8 +618,10 @@
                     d.style.fontFamily = modalState.fontName;
                     document.getElementById('zoomCode').innerText = `U+${i.toString(16).toUpperCase().padStart(4, '0')}`;
                 };
-                grid.appendChild(cell);
+                fragment.appendChild(cell);
             }
+            
+            grid.appendChild(fragment);
 
             const info = i18n[currentLang].paging.replace('{start}', offset + 1).replace('{end}', offset + (end - start + 1)).replace('{total}', total);
             document.getElementById('pageInfo').innerText = info;
