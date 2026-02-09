@@ -432,12 +432,17 @@ F0000..FFFFF; Supplementary Private Use Area-A
 
 # --- 2. COMPREHENSIVE ISO MAPPING (3-LETTER ISO 3166-1 ALPHA-3) ---
 
+
 # Base country groups
 LATIN_GLOBAL = ["IDN", "USA", "GBR", "FRA", "DEU", "ITA", "ESP", "BRA", "TUR", "VNM", "PHL", "MYS", "AUS", "NZL", "SGP", "UZB", "POL", "ROU", "NLD", "BEL", "SWE", "NOR", "DNK", "FIN", "ISL", "PRT", "MEX", "ARG", "CHL", "COL", "PER", "VEN", "CAN", "IRL", "CHE", "AUT", "HRV", "CZE", "SVK", "SVN", "HUN", "EST", "LVA", "LTU"]
 
 CYRILLIC_USER = ["RUS", "MNG", "BGR", "UKR", "KAZ", "KGZ", "TJK", "SRB", "MKD", "UZB", "BLR"]
 
 ARABIC_USER = ["SAU", "EGY", "IRN", "PAK", "AFG", "IRQ", "SYR", "JOR", "LBN", "KWT", "OMN", "YEM", "QAT", "ARE", "BHR", "SDN", "LBY", "TUN", "DZA", "MAR", "MRT", "SOM"]
+
+CJK_USER = ["CHN", "TWN", "JPN", "KOR", "VNM", "SGP", "HKG", "MAC"]
+
+INDIC_USER = ["IND", "NPL", "BGD", "LKA", "PAK"]
 
 # Comprehensive script-to-country mapping
 iso_mapping = {
@@ -450,6 +455,9 @@ iso_mapping = {
     
     # === ARABIC SCRIPTS ===
     "Arabic": ARABIC_USER,
+    "Presentation Forms-A": ARABIC_USER,  # Arabic Presentation Forms-A
+    "Presentation Forms-B": ARABIC_USER,  # Arabic Presentation Forms-B
+    "Arabic Mathematical": ARABIC_USER,
     "Syriac": ["SYR", "IRQ", "IRN", "TUR", "LBN"],
     "Mandaic": ["IRQ", "IRN"],
     "Samaritan": ["ISR", "PSE"],
@@ -459,6 +467,9 @@ iso_mapping = {
     
     # === GREEK & COPTIC ===
     "Greek": ["GRC", "CYP"],
+    "Ancient Greek": ["GRC"],
+    "Aegean": ["GRC"],
+    "Byzantine": ["GRC"],
     "Coptic": ["EGY"],
     
     # === ARMENIAN & GEORGIAN ===
@@ -467,6 +478,7 @@ iso_mapping = {
     
     # === HEBREW ===
     "Hebrew": ["ISR"],
+    "Alphabetic Presentation": ["ISR"] + ARABIC_USER,  # Hebrew + Arabic presentation forms
     
     # === ETHIOPIC SCRIPTS ===
     "Ethiopic": ["ETH", "ERI"],
@@ -481,6 +493,7 @@ iso_mapping = {
     "Medefaidrin": ["NGA"],
     "Beria Erfe": ["TCD", "SDN"],
     "Garay": ["SEN", "GMB"],
+    "Bassa Vah": ["LBR"],
     
     # === SOUTH ASIAN SCRIPTS ===
     "Devanagari": ["IND", "NPL"],
@@ -493,6 +506,7 @@ iso_mapping = {
     "Kannada": ["IND"],
     "Malayalam": ["IND"],
     "Sinhala": ["LKA"],
+    "Common Indic": INDIC_USER,
     
     # South Asian - Extended/Historical
     "Brahmi": ["IND"],
@@ -531,12 +545,14 @@ iso_mapping = {
     "Toto": ["IND", "BTN"],
     "Wancho": ["IND", "MMR"],
     "Vedic": ["IND"],
-    "Indic": ["IND", "NPL", "BGD", "LKA"],
+    "Indic": INDIC_USER,
+    "Mro": ["BGD", "IND"],
     
     # === SOUTHEAST ASIAN SCRIPTS ===
     "Thai": ["THA"],
     "Lao": ["LAO"],
     "Khmer": ["KHM"],
+    "Symbols": ["KHM"],  # Khmer Symbols
     "Myanmar": ["MMR"],
     "Burmese": ["MMR"],
     
@@ -578,11 +594,18 @@ iso_mapping = {
     "Dives Akuru": ["MDV"],
     
     # === EAST ASIAN SCRIPTS ===
-    "CJK": ["CHN", "TWN", "JPN", "KOR", "VNM", "SGP", "HKG", "MAC"],
-    "Han": ["CHN", "TWN", "JPN", "KOR", "VNM", "SGP", "HKG", "MAC"],
-    "Ideograph": ["CHN", "TWN", "JPN", "KOR", "VNM", "SGP", "HKG", "MAC"],
+    "CJK": CJK_USER,
+    "Han": CJK_USER,
+    "Ideograph": CJK_USER,
+    "Ideographic": CJK_USER,
     "Kangxi": ["CHN", "TWN", "JPN", "KOR"],
     "Radical": ["CHN", "TWN", "JPN", "KOR"],
+    "Enclosed CJK": CJK_USER,
+    "Enclosed Ideographic": CJK_USER,
+    "Halfwidth": CJK_USER,
+    "Fullwidth": CJK_USER,
+    "Vertical Form": ["CHN", "TWN", "JPN", "KOR"],
+    "Description Characters": ["CHN", "TWN", "JPN", "KOR"],
     
     # East Asian - Korean
     "Hangul": ["KOR", "PRK"],
@@ -603,6 +626,7 @@ iso_mapping = {
     "Tangsa": ["IND", "MMR"],
     "Khitan": ["CHN"],
     "Naxi": ["CHN"],
+    "Yijing": ["CHN"],
     
     # === CENTRAL ASIAN & MONGOLIC ===
     "Mongolian": ["MNG", "CHN"],
@@ -662,6 +686,7 @@ iso_mapping = {
     "Carian": ["TUR"],
     "Lydian": ["TUR"],
     "Sidetic": ["TUR"],
+    "Ancient Symbols": ["GRC"],
     
     # Anatolian
     "Anatolian Hieroglyph": ["TUR"],
@@ -696,27 +721,25 @@ iso_mapping = {
     # === ANCIENT NEAR EAST ===
     "Cuneiform": ["IRQ", "IRN", "SYR", "TUR"],
     
-    # === SIGN WRITING & SPECIALIZED ===
+    # === NUMBERS & MATHEMATICAL (Culture-specific) ===
+    "Rumi Numeral": ["TUR", "IRN"],
+    "Ottoman Siyaq": ["TUR"],
+    "Kaktovik": ["USA", "CAN"],
+    "Counting Rod": ["CHN"],
+    
+    # === MUSIC NOTATION (Culture-specific) ===
+    "Znamenny": ["RUS"],
+    
+    # === SIGN WRITING & SPECIALIZED (Universal) ===
     "SignWriting": ["XXX"],
     "Braille": ["XXX"],
     "Duployan": ["XXX"],
     "Shorthand": ["XXX"],
     
-    # === SYMBOLS & NOTATION ===
+    # === SYMBOLS & NOTATION (Universal) ===
     "Musical": ["XXX"],
-    "Byzantine Musical": ["GRC"],
-    "Znamenny": ["RUS"],
-    "Ancient Greek Musical": ["GRC"],
-    
-    # Mathematical & Technical
     "Mathematical": ["XXX"],
-    "Kaktovik": ["USA", "CAN"],
-    "Counting Rod": ["CHN"],
-    "Rumi Numeral": ["TUR", "IRN"],
-    "Ottoman Siyaq": ["TUR"],
-    
-    # Divination
-    "Yijing": ["CHN"],
+    "Yijing Hexagram": ["CHN"],
     "Mahjong": ["CHN"],
     "Domino": ["CHN"],
     "Playing Card": ["XXX"],
@@ -733,19 +756,18 @@ iso_mapping = {
     "Miscellaneous": ["XXX"],
     "Block Element": ["XXX"],
     "Box Drawing": ["XXX"],
+    "Transport and Map": ["XXX"],
+    "Legacy Computing": ["XXX"],
     
-    # Formatting & Technical
+    # Formatting & Technical (Universal)
     "Mark": ["XXX"],
     "Combining": ["XXX"],
     "Diacritical": ["XXX"],
     "Punctuation": ["XXX"],
     "Spacing Modifier": ["XXX"],
     "Modifier Tone": ["XXX"],
-    "Halfwidth": ["XXX"],
-    "Fullwidth": ["XXX"],
-    "Vertical Form": ["XXX"],
     "Small Form": ["XXX"],
-    "Enclosed": ["XXX"],
+    "Enclosed Alphanumeric": ["XXX"],
     "Letterlike": ["XXX"],
     "Number Form": ["XXX"],
     "Currency": ["XXX"],
@@ -753,13 +775,13 @@ iso_mapping = {
     "Optical Character": ["XXX"],
     "Specials": ["XXX"],
     "Format Control": ["XXX"],
-    "Description": ["XXX"],
-    "Presentation Form": ["XXX"],
-    "Alphabetic Presentation": ["XXX"],
     "Variation": ["XXX"],
     "Tag": ["XXX"],
+    "Phonetic": ["XXX"],
+    "Superscripts": ["XXX"],
+    "Subscripts": ["XXX"],
     
-    # Private Use & Surrogates
+    # Private Use & Surrogates (Technical)
     "Surrogates": ["XXX"],
     "Private Use": ["XXX"],
     "Supplementary Private": ["XXX"],
@@ -961,6 +983,17 @@ print("\n// Top 10 countries by script count:")
 sorted_countries = sorted(country_registry.items(), key=lambda x: len(x[1]), reverse=True)
 for i, (country, blocks) in enumerate(sorted_countries[:10]):
     print(f"// {i+1}. {country}: {len(blocks)} blocks")
+
+
+    # Add this after your main code to see XXX blocks
+print("\n\n// === BLOCKS IN XXX ===")
+xxx_blocks = country_registry.get('XXX', [])
+print(f"// Total XXX blocks: {len(xxx_blocks)}\n")
+
+for block_id in sorted(xxx_blocks):
+    if block_id in definitions:
+        name = definitions[block_id]['name_en']
+        print(f"// {name}")
 ```
 
 
