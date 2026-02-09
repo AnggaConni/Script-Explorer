@@ -432,7 +432,6 @@ F0000..FFFFF; Supplementary Private Use Area-A
 
 # --- 2. COMPREHENSIVE ISO MAPPING (3-LETTER ISO 3166-1 ALPHA-3) ---
 
-
 # Base country groups
 LATIN_GLOBAL = ["IDN", "USA", "GBR", "FRA", "DEU", "ITA", "ESP", "BRA", "TUR", "VNM", "PHL", "MYS", "AUS", "NZL", "SGP", "UZB", "POL", "ROU", "NLD", "BEL", "SWE", "NOR", "DNK", "FIN", "ISL", "PRT", "MEX", "ARG", "CHL", "COL", "PER", "VEN", "CAN", "IRL", "CHE", "AUT", "HRV", "CZE", "SVK", "SVN", "HUN", "EST", "LVA", "LTU"]
 
@@ -446,18 +445,83 @@ INDIC_USER = ["IND", "NPL", "BGD", "LKA", "PAK"]
 
 # Comprehensive script-to-country mapping
 iso_mapping = {
-    # === LATIN SCRIPTS ===
-    "Latin": LATIN_GLOBAL,
-    "IPA": LATIN_GLOBAL,
+    # === SPECIFIC SCRIPT MAPPINGS (MUST COME FIRST - HIGHER PRIORITY) ===
     
-    # === CYRILLIC SCRIPTS ===
+    # CJK-specific (before generic "Symbols")
+    "CJK Symbols": CJK_USER,
+    "CJK Radicals": CJK_USER,
+    "CJK Strokes": CJK_USER,
+    "CJK Compatibility": CJK_USER,
+    "Enclosed CJK": CJK_USER,
+    "Ideographic Symbols": CJK_USER,
+    "Ideographic Description": ["CHN", "TWN", "JPN", "KOR"],
+    
+    # Katakana-specific (before generic "Phonetic")
+    "Katakana Phonetic": ["JPN"],
+    
+    # Khmer-specific (before generic "Symbols")
+    "Khmer Symbols": ["KHM"],
+    
+    # Arabic-specific (before generic "Mathematical")
+    "Arabic Mathematical": ARABIC_USER,
+    "Arabic Presentation Forms-A": ARABIC_USER,
+    "Arabic Presentation Forms-B": ARABIC_USER,
+    
+    # Greek-specific
+    "Ancient Greek Musical": ["GRC"],
+    "Ancient Greek Numbers": ["GRC"],
+    "Ancient Symbols": ["GRC"],
+    "Aegean Numbers": ["GRC"],
+    "Byzantine Musical": ["GRC"],
+    
+    # Music-specific
+    "Znamenny Musical": ["RUS"],
+    
+    # Number systems (culture-specific before generic "Number")
+    "Cuneiform Numbers": ["IRQ", "IRN", "SYR", "TUR"],
+    "Rumi Numeral": ["TUR", "IRN"],
+    "Common Indic Number": INDIC_USER,
+    "Indic Siyaq Numbers": INDIC_USER,
+    "Ottoman Siyaq": ["TUR"],
+    "Kaktovik Numerals": ["USA", "CAN"],
+    "Mayan Numerals": ["MEX", "GTM", "BLZ", "HND", "SLV"],
+    "Counting Rod": ["CHN"],
+    
+    # Egyptian-specific
+    "Egyptian Hieroglyph Format": ["EGY"],
+    
+    # Chinese divination (before generic "Symbols")
+    "Yijing Hexagram": ["CHN"],
+    "Tai Xuan Jing": ["CHN"],
+    
+    # Hebrew+Arabic presentations
+    "Alphabetic Presentation": ["ISR"] + ARABIC_USER,
+    
+    # Enclosed alphanumerics (before generic "Enclosed")
+    "Enclosed Alphanumeric Supplement": ["XXX"],
+    "Enclosed Ideographic Supplement": CJK_USER,
+    
+    # Vertical forms (CJK-specific before generic "Forms")
+    "Vertical Forms": ["CHN", "TWN", "JPN", "KOR"],
+    
+    # Small forms (before generic "Small")
+    "Small Form Variants": ["XXX"],
+    "Small Kana": ["JPN"],
+    
+    # Halfwidth/Fullwidth (CJK-specific before generic)
+    "Halfwidth and Fullwidth": CJK_USER,
+    
+    # === BASE SCRIPT FAMILIES ===
+    
+    # Latin
+    "Latin": LATIN_GLOBAL,
+    "IPA Extensions": LATIN_GLOBAL,
+    
+    # Cyrillic
     "Cyrillic": CYRILLIC_USER,
     
-    # === ARABIC SCRIPTS ===
+    # Arabic
     "Arabic": ARABIC_USER,
-    "Presentation Forms-A": ARABIC_USER,  # Arabic Presentation Forms-A
-    "Presentation Forms-B": ARABIC_USER,  # Arabic Presentation Forms-B
-    "Arabic Mathematical": ARABIC_USER,
     "Syriac": ["SYR", "IRQ", "IRN", "TUR", "LBN"],
     "Mandaic": ["IRQ", "IRN"],
     "Samaritan": ["ISR", "PSE"],
@@ -465,22 +529,18 @@ iso_mapping = {
     "NKo": ["GIN", "MLI", "CIV", "SEN", "GNB", "GMB", "BFA", "NER"],
     "Yezidi": ["IRQ", "SYR", "ARM", "GEO", "TUR"],
     
-    # === GREEK & COPTIC ===
+    # Greek & Coptic
     "Greek": ["GRC", "CYP"],
-    "Ancient Greek": ["GRC"],
-    "Aegean": ["GRC"],
-    "Byzantine": ["GRC"],
     "Coptic": ["EGY"],
     
-    # === ARMENIAN & GEORGIAN ===
+    # Armenian & Georgian
     "Armenian": ["ARM"],
     "Georgian": ["GEO"],
     
-    # === HEBREW ===
+    # Hebrew
     "Hebrew": ["ISR"],
-    "Alphabetic Presentation": ["ISR"] + ARABIC_USER,  # Hebrew + Arabic presentation forms
     
-    # === ETHIOPIC SCRIPTS ===
+    # Ethiopic
     "Ethiopic": ["ETH", "ERI"],
     
     # === AFRICAN SCRIPTS ===
@@ -506,9 +566,8 @@ iso_mapping = {
     "Kannada": ["IND"],
     "Malayalam": ["IND"],
     "Sinhala": ["LKA"],
-    "Common Indic": INDIC_USER,
     
-    # South Asian - Extended/Historical
+    # South Asian - Extended
     "Brahmi": ["IND"],
     "Kaithi": ["IND"],
     "Sharada": ["IND", "PAK"],
@@ -528,7 +587,7 @@ iso_mapping = {
     "Dogra": ["IND"],
     "Sunuwar": ["NPL", "IND"],
     
-    # South Asian - Tribal/Regional
+    # South Asian - Tribal
     "Sora Sompeng": ["IND"],
     "Chakma": ["BGD", "IND"],
     "Lepcha": ["IND", "NPL", "BTN"],
@@ -545,18 +604,15 @@ iso_mapping = {
     "Toto": ["IND", "BTN"],
     "Wancho": ["IND", "MMR"],
     "Vedic": ["IND"],
-    "Indic": INDIC_USER,
     "Mro": ["BGD", "IND"],
     
-    # === SOUTHEAST ASIAN SCRIPTS ===
+    # === SOUTHEAST ASIAN ===
     "Thai": ["THA"],
     "Lao": ["LAO"],
     "Khmer": ["KHM"],
-    "Symbols": ["KHM"],  # Khmer Symbols
     "Myanmar": ["MMR"],
-    "Burmese": ["MMR"],
     
-    # Southeast Asian - Indonesia/Malaysia/Philippines
+    # Indonesia/Malaysia
     "Javanese": ["IDN"],
     "Balinese": ["IDN"],
     "Sundanese": ["IDN"],
@@ -566,58 +622,49 @@ iso_mapping = {
     "Makasar": ["IDN"],
     "Kawi": ["IDN"],
     
-    # Southeast Asian - Philippines
+    # Philippines
     "Tagalog": ["PHL"],
     "Hanunoo": ["PHL"],
     "Buhid": ["PHL"],
     "Tagbanwa": ["PHL"],
     
-    # Southeast Asian - Vietnam/Cham
+    # Vietnam/Cham
     "Cham": ["VNM", "KHM"],
     
-    # Southeast Asian - Tai scripts
+    # Tai scripts
     "Tai Le": ["CHN", "LAO", "THA", "VNM"],
     "New Tai Lue": ["CHN", "LAO", "THA", "MMR", "VNM"],
     "Tai Tham": ["THA", "LAO", "MMR"],
     "Tai Viet": ["VNM"],
     "Tai Yo": ["CHN", "THA"],
-    "Tai Xuan": ["CHN"],
     
-    # Southeast Asian - Hmong/Miao
+    # Hmong/Miao
     "Pahawh Hmong": ["CHN", "VNM", "LAO", "THA"],
     "Nyiakeng Puachue Hmong": ["CHN", "VNM", "LAO", "THA"],
     "Miao": ["CHN"],
     
-    # Southeast Asian - Other
+    # Other SEA
     "Kayah Li": ["MMR", "THA"],
     "Ahom": ["IND"],
     "Dives Akuru": ["MDV"],
     
-    # === EAST ASIAN SCRIPTS ===
+    # === EAST ASIAN ===
     "CJK": CJK_USER,
     "Han": CJK_USER,
-    "Ideograph": CJK_USER,
-    "Ideographic": CJK_USER,
+    "Unified Ideographs": CJK_USER,
     "Kangxi": ["CHN", "TWN", "JPN", "KOR"],
-    "Radical": ["CHN", "TWN", "JPN", "KOR"],
-    "Enclosed CJK": CJK_USER,
-    "Enclosed Ideographic": CJK_USER,
-    "Halfwidth": CJK_USER,
-    "Fullwidth": CJK_USER,
-    "Vertical Form": ["CHN", "TWN", "JPN", "KOR"],
-    "Description Characters": ["CHN", "TWN", "JPN", "KOR"],
     
-    # East Asian - Korean
+    # Korean
     "Hangul": ["KOR", "PRK"],
     "Jamo": ["KOR", "PRK"],
     
-    # East Asian - Japanese
+    # Japanese
     "Hiragana": ["JPN"],
     "Katakana": ["JPN"],
     "Kana": ["JPN"],
     "Kanbun": ["JPN"],
     
-    # East Asian - Chinese scripts
+    # Chinese
     "Bopomofo": ["TWN"],
     "Yi": ["CHN"],
     "Lisu": ["CHN", "MMR", "IND", "THA"],
@@ -625,10 +672,8 @@ iso_mapping = {
     "Tangut": ["CHN"],
     "Tangsa": ["IND", "MMR"],
     "Khitan": ["CHN"],
-    "Naxi": ["CHN"],
-    "Yijing": ["CHN"],
     
-    # === CENTRAL ASIAN & MONGOLIC ===
+    # === CENTRAL ASIAN ===
     "Mongolian": ["MNG", "CHN"],
     "Tibetan": ["CHN", "IND", "NPL", "BTN"],
     "Phags-pa": ["CHN", "MNG"],
@@ -651,7 +696,7 @@ iso_mapping = {
     "Old Uyghur": ["CHN"],
     "Old Turkic": ["MNG", "KAZ", "KGZ", "UZB", "TUR"],
     
-    # Middle Eastern - Semitic/Ancient
+    # Semitic/Ancient
     "Phoenician": ["LBN", "SYR"],
     "Ugaritic": ["SYR"],
     "Palmyrene": ["SYR"],
@@ -667,7 +712,7 @@ iso_mapping = {
     "Meroitic": ["SDN"],
     "Egyptian Hieroglyph": ["EGY"],
     
-    # === SOUTH ASIAN - HISTORICAL ===
+    # === HISTORICAL - OTHER ===
     "Kharoshthi": ["PAK", "IND", "AFG"],
     "Hanifi Rohingya": ["MMR", "BGD"],
     "Pau Cin Hau": ["MMR", "IND"],
@@ -686,7 +731,6 @@ iso_mapping = {
     "Carian": ["TUR"],
     "Lydian": ["TUR"],
     "Sidetic": ["TUR"],
-    "Ancient Symbols": ["GRC"],
     
     # Anatolian
     "Anatolian Hieroglyph": ["TUR"],
@@ -708,49 +752,28 @@ iso_mapping = {
     "Todhri": ["ALB"],
     "Elbasan": ["ALB"],
     
-    # === AMERICAN SCRIPTS ===
+    # === AMERICAN ===
     "Cherokee": ["USA"],
-    "Canadian": ["CAN"],
+    "Canadian Aboriginal": ["CAN"],
     "Deseret": ["USA"],
     "Shavian": ["GBR", "USA"],
     "Osage": ["USA"],
     
-    # Mesoamerican
-    "Mayan": ["MEX", "GTM", "BLZ", "HND", "SLV"],
-    
     # === ANCIENT NEAR EAST ===
     "Cuneiform": ["IRQ", "IRN", "SYR", "TUR"],
     
-    # === NUMBERS & MATHEMATICAL (Culture-specific) ===
-    "Rumi Numeral": ["TUR", "IRN"],
-    "Ottoman Siyaq": ["TUR"],
-    "Kaktovik": ["USA", "CAN"],
-    "Counting Rod": ["CHN"],
-    
-    # === MUSIC NOTATION (Culture-specific) ===
-    "Znamenny": ["RUS"],
-    
-    # === SIGN WRITING & SPECIALIZED (Universal) ===
-    "SignWriting": ["XXX"],
-    "Braille": ["XXX"],
-    "Duployan": ["XXX"],
-    "Shorthand": ["XXX"],
-    
-    # === SYMBOLS & NOTATION (Universal) ===
-    "Musical": ["XXX"],
-    "Mathematical": ["XXX"],
-    "Yijing Hexagram": ["CHN"],
+    # === GAMES & TILES ===
     "Mahjong": ["CHN"],
     "Domino": ["CHN"],
-    "Playing Card": ["XXX"],
     
-    # Symbols
+    # === UNIVERSAL/TECHNICAL (GENERIC - LOW PRIORITY) ===
     "Symbol": ["XXX"],
     "Emoticon": ["XXX"],
     "Pictograph": ["XXX"],
     "Dingbat": ["XXX"],
     "Alchemical": ["XXX"],
     "Chess": ["XXX"],
+    "Playing Card": ["XXX"],
     "Arrow": ["XXX"],
     "Geometric": ["XXX"],
     "Miscellaneous": ["XXX"],
@@ -758,30 +781,42 @@ iso_mapping = {
     "Box Drawing": ["XXX"],
     "Transport and Map": ["XXX"],
     "Legacy Computing": ["XXX"],
+    "Ornamental": ["XXX"],
     
-    # Formatting & Technical (Universal)
+    # Formatting & Technical
     "Mark": ["XXX"],
     "Combining": ["XXX"],
     "Diacritical": ["XXX"],
     "Punctuation": ["XXX"],
     "Spacing Modifier": ["XXX"],
     "Modifier Tone": ["XXX"],
-    "Small Form": ["XXX"],
-    "Enclosed Alphanumeric": ["XXX"],
     "Letterlike": ["XXX"],
-    "Number Form": ["XXX"],
+    "Number Forms": ["XXX"],
     "Currency": ["XXX"],
     "Control": ["XXX"],
     "Optical Character": ["XXX"],
     "Specials": ["XXX"],
     "Format Control": ["XXX"],
     "Variation": ["XXX"],
-    "Tag": ["XXX"],
+    "Tags": ["XXX"],
     "Phonetic": ["XXX"],
     "Superscripts": ["XXX"],
     "Subscripts": ["XXX"],
     
-    # Private Use & Surrogates (Technical)
+    # Music (generic)
+    "Musical": ["XXX"],
+    
+    # Math (generic)
+    "Mathematical": ["XXX"],
+    "Operators": ["XXX"],
+    
+    # Sign systems
+    "SignWriting": ["XXX"],
+    "Braille": ["XXX"],
+    "Duployan": ["XXX"],
+    "Shorthand": ["XXX"],
+    
+    # Private/Technical
     "Surrogates": ["XXX"],
     "Private Use": ["XXX"],
     "Supplementary Private": ["XXX"],
@@ -828,6 +863,19 @@ for clist in iso_mapping.values():
     all_countries.update(clist)
 for c in sorted(list(all_countries)):
     country_registry[c] = []
+
+# Define generic keywords (low priority)
+GENERIC_KEYWORDS = {
+    "Symbol", "Emoticon", "Pictograph", "Dingbat", "Alchemical", "Chess", 
+    "Playing Card", "Arrow", "Geometric", "Miscellaneous", "Block Element",
+    "Box Drawing", "Transport and Map", "Legacy Computing", "Ornamental",
+    "Mark", "Combining", "Diacritical", "Punctuation", "Spacing Modifier",
+    "Modifier Tone", "Letterlike", "Number Forms", "Currency", "Control",
+    "Optical Character", "Specials", "Format Control", "Variation", "Tags",
+    "Phonetic", "Superscripts", "Subscripts", "Musical", "Mathematical",
+    "Operators", "SignWriting", "Braille", "Duployan", "Shorthand",
+    "Surrogates", "Private Use", "Supplementary Private"
+}
 
 # Process each Unicode block
 for line in raw_data.strip().split('\n'):
@@ -928,30 +976,47 @@ for line in raw_data.strip().split('\n'):
             "sample": sample_char
         }
         
-        # Match to countries
+        # === IMPROVED MATCHING LOGIC ===
         target_countries = []
+        matched_keywords = []
         
-        # Check each keyword in iso_mapping
+        # First pass: collect all matching keywords
         for keyword, country_list in iso_mapping.items():
             if keyword in name_en:
-                # Special filtering for specific cases
-                if "Hangul" in name_en or "Jamo" in name_en:
-                    filtered_list = [c for c in country_list if c in ["KOR", "PRK"]]
-                    if filtered_list:
-                        target_countries.extend(filtered_list)
-                elif "Hanunoo" in name_en:
-                    if "PHL" in country_list:
-                        target_countries.append("PHL")
-                elif "Hanifi" in name_en:
-                    filtered_list = [c for c in country_list if c in ["MMR", "BGD"]]
+                matched_keywords.append((keyword, country_list))
+        
+        # Check if we have both generic and specific keywords
+        has_generic = any(kw in GENERIC_KEYWORDS for kw, _ in matched_keywords)
+        has_specific = any(kw not in GENERIC_KEYWORDS for kw, _ in matched_keywords)
+        
+        # If we have both, prioritize specific keywords (remove generic)
+        if has_generic and has_specific:
+            matched_keywords = [(kw, cl) for kw, cl in matched_keywords if kw not in GENERIC_KEYWORDS]
+        
+        # Collect countries from matched keywords
+        for keyword, country_list in matched_keywords:
+            # Special filtering for specific cases
+            if "Hangul" in name_en or "Jamo" in name_en:
+                filtered_list = [c for c in country_list if c in ["KOR", "PRK"]]
+                if filtered_list:
                     target_countries.extend(filtered_list)
-                else:
-                    target_countries.extend(country_list)
+            elif "Hanunoo" in name_en:
+                if "PHL" in country_list:
+                    target_countries.append("PHL")
+            elif "Hanifi" in name_en:
+                filtered_list = [c for c in country_list if c in ["MMR", "BGD"]]
+                target_countries.extend(filtered_list)
+            else:
+                target_countries.extend(country_list)
         
         # Remove duplicates and sort
         target_countries = sorted(list(set(target_countries)))
         
-        # Default to XXX if no match
+        # Final cleanup: If we have real countries AND XXX, remove XXX
+        if len(target_countries) > 1 and "XXX" in target_countries:
+            target_countries = [c for c in target_countries if c != "XXX"]
+        
+        # Default to XXX only if no match found
         if not target_countries:
             target_countries = ["XXX"]
         
@@ -984,8 +1049,7 @@ sorted_countries = sorted(country_registry.items(), key=lambda x: len(x[1]), rev
 for i, (country, blocks) in enumerate(sorted_countries[:10]):
     print(f"// {i+1}. {country}: {len(blocks)} blocks")
 
-
-    # Add this after your main code to see XXX blocks
+# --- 7. DETAILED XXX BLOCKS ---
 print("\n\n// === BLOCKS IN XXX ===")
 xxx_blocks = country_registry.get('XXX', [])
 print(f"// Total XXX blocks: {len(xxx_blocks)}\n")
