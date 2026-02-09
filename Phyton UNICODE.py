@@ -1,6 +1,6 @@
 import json
 
-# --- 1. DATA MENTAH DARI UNICODE (Blocks.txt) ---
+# --- 1. FULL UNICODE 17 DATA (Blocks.txt) ---
 raw_data = """
 0000..007F; Basic Latin
 0080..00FF; Latin-1 Supplement
@@ -350,108 +350,472 @@ F0000..FFFFF; Supplementary Private Use Area-A
 100000..10FFFF; Supplementary Private Use Area-B
 """
 
-# --- 2. CONFIG: DEFINISI GRUP NEGARA (MODIFIED TO 3 LETTERS) ---
-# Menambahkan UZB ke daftar pengguna Latin dan Cyrillic
-LATIN_GLOBAL  = ["IDN", "USA", "GBR", "FRA", "DEU", "ITA", "ESP", "BRA", "TUR", "VNM", "PHL", "MYS", "AUS", "NZL", "SGP", "UZB"]
-CYRILLIC_USER = ["RUS", "MNG", "BGR", "UKR", "KAZ", "KGZ", "TJK", "SRB", "MKD", "UZB"]
-ARABIC_USER   = ["SAU", "EGY", "IRN", "PAK", "AFG", "IRQ", "SYR", "JOR", "LBN", "KWT", "OMN", "YEM", "QAT", "ARE", "BHR", "SDN", "LBY", "TUN", "DZA", "MAR"]
+# --- 2. COMPREHENSIVE ISO MAPPING (3-LETTER ISO 3166-1 ALPHA-3) ---
 
-# --- 3. MAPPING NEGARA (3-LETTER ISO) ---
+# Base country groups
+LATIN_GLOBAL = ["IDN", "USA", "GBR", "FRA", "DEU", "ITA", "ESP", "BRA", "TUR", "VNM", "PHL", "MYS", "AUS", "NZL", "SGP", "UZB", "POL", "ROU", "NLD", "BEL", "SWE", "NOR", "DNK", "FIN", "ISL", "PRT", "MEX", "ARG", "CHL", "COL", "PER", "VEN", "CAN", "IRL", "CHE", "AUT", "HRV", "CZE", "SVK", "SVN", "HUN", "EST", "LVA", "LTU"]
+
+CYRILLIC_USER = ["RUS", "MNG", "BGR", "UKR", "KAZ", "KGZ", "TJK", "SRB", "MKD", "UZB", "BLR"]
+
+ARABIC_USER = ["SAU", "EGY", "IRN", "PAK", "AFG", "IRQ", "SYR", "JOR", "LBN", "KWT", "OMN", "YEM", "QAT", "ARE", "BHR", "SDN", "LBY", "TUN", "DZA", "MAR", "MRT", "SOM"]
+
+# Comprehensive script-to-country mapping
 iso_mapping = {
+    # === LATIN SCRIPTS ===
     "Latin": LATIN_GLOBAL,
+    "IPA": LATIN_GLOBAL,
+    
+    # === CYRILLIC SCRIPTS ===
     "Cyrillic": CYRILLIC_USER,
+    
+    # === ARABIC SCRIPTS ===
     "Arabic": ARABIC_USER,
-    "Javanese": ["IDN"], "Balinese": ["IDN"], "Sundanese": ["IDN"],
-    "Batak": ["IDN"], "Rejang": ["IDN"], "Buginese": ["IDN"], "Makasar": ["IDN"],
-    "Kawi": ["IDN"],
-    "Thai": ["THA"], "Lao": ["LAO"], "Khmer": ["KHM"], "Myanmar": ["MMR"],
-    "Tagalog": ["PHL"], "Hanunoo": ["PHL"], "Buhid": ["PHL"], "Tagbanwa": ["PHL"],
-    "Viet": ["VNM"], "Cham": ["VNM", "KHM"],
-    "Kayah Li": ["MMR", "THA"],
-    "Tai Tham": ["THA", "LAO", "MMR"],
-    "CJK": ["CHN", "TWN", "JPN", "KOR", "VNM", "SGP"],
-    "Hangul": ["KOR", "PRK"],
-    "Jamo": ["KOR", "PRK"],
-    "Hiragana": ["JPN"], "Katakana": ["JPN"], "Kana": ["JPN"],
-    "Bopomofo": ["TWN"],
-    "Yi": ["CHN"], "Lisu": ["CHN"], "Nushu": ["CHN"], "Tangut": ["CHN"],
-    "Mongolian": ["MNG", "CHN"], "Tibetan": ["CHN"],
+    "Syriac": ["SYR", "IRQ", "IRN", "TUR", "LBN"],
+    "Mandaic": ["IRQ", "IRN"],
+    "Samaritan": ["ISR", "PSE"],
+    "Thaana": ["MDV"],
+    "NKo": ["GIN", "MLI", "CIV", "SEN", "GNB", "GMB", "BFA", "NER"],
+    "Yezidi": ["IRQ", "SYR", "ARM", "GEO", "TUR"],
+    
+    # === GREEK & COPTIC ===
+    "Greek": ["GRC", "CYP"],
+    "Coptic": ["EGY"],
+    
+    # === ARMENIAN & GEORGIAN ===
+    "Armenian": ["ARM"],
+    "Georgian": ["GEO"],
+    
+    # === HEBREW ===
+    "Hebrew": ["ISR"],
+    
+    # === ETHIOPIC SCRIPTS ===
+    "Ethiopic": ["ETH", "ERI"],
+    
+    # === AFRICAN SCRIPTS ===
+    "Tifinagh": ["MAR", "DZA", "LBY", "NER", "MLI", "BFA"],
+    "Vai": ["LBR"],
+    "Bamum": ["CMR"],
+    "Osmanya": ["SOM"],
+    "Adlam": ["GIN", "NGA", "SEN", "GMB", "SLE", "MLI", "BFA", "MRT"],
+    "Mende Kikakui": ["SLE"],
+    "Medefaidrin": ["NGA"],
+    "Beria Erfe": ["TCD", "SDN"],
+    "Garay": ["SEN", "GMB"],
+    
+    # === SOUTH ASIAN SCRIPTS ===
     "Devanagari": ["IND", "NPL"],
     "Bengali": ["BGD", "IND"],
+    "Gurmukhi": ["IND"],
+    "Gujarati": ["IND"],
+    "Oriya": ["IND"],
     "Tamil": ["IND", "LKA", "SGP", "MYS"],
-    "Sinhala": ["LKA"], "Thaana": ["MDV"],
-    "Gurmukhi": ["IND"], "Gujarati": ["IND"], "Oriya": ["IND"],
-    "Telugu": ["IND"], "Kannada": ["IND"], "Malayalam": ["IND"],
-    "Hanifi": ["MMR", "BGD"],
-    "Hebrew": ["ISR"], "Syriac": ["SYR", "IRQ", "IRN", "TUR"],
-    "Ethiopic": ["ETH", "ERI"],
-    "Tifinagh": ["MAR", "DZA", "LBY"],
-    "Cherokee": ["USA"], "Canadian": ["CAN"],
-    "Greek": ["GRC", "CYP"], "Coptic": ["EGY"],
-    "Georgian": ["GEO"], "Armenian": ["ARM"],
-    "Symbol": ["XXX"], "Mark": ["XXX"], "Punctuation": ["XXX"],
-    "Surrogates": ["XXX"], "Private Use": ["XXX"], "Variation": ["XXX"],
-    "Braille": ["XXX"], "Music": ["XXX"], "Math": ["XXX"], "Forms": ["XXX"]
+    "Telugu": ["IND"],
+    "Kannada": ["IND"],
+    "Malayalam": ["IND"],
+    "Sinhala": ["LKA"],
+    
+    # South Asian - Extended/Historical
+    "Brahmi": ["IND"],
+    "Kaithi": ["IND"],
+    "Sharada": ["IND", "PAK"],
+    "Grantha": ["IND"],
+    "Modi": ["IND"],
+    "Mahajani": ["IND"],
+    "Khojki": ["IND"],
+    "Multani": ["IND"],
+    "Khudawadi": ["IND"],
+    "Tirhuta": ["IND", "NPL"],
+    "Siddham": ["IND", "NPL", "JPN"],
+    "Takri": ["IND"],
+    "Bhaiksuki": ["IND"],
+    "Newa": ["NPL"],
+    "Tulu-Tigalari": ["IND"],
+    "Nandinagari": ["IND"],
+    "Dogra": ["IND"],
+    "Sunuwar": ["NPL", "IND"],
+    
+    # South Asian - Tribal/Regional
+    "Sora Sompeng": ["IND"],
+    "Chakma": ["BGD", "IND"],
+    "Lepcha": ["IND", "NPL", "BTN"],
+    "Ol Chiki": ["IND"],
+    "Meetei Mayek": ["IND"],
+    "Limbu": ["IND", "NPL", "BTN"],
+    "Syloti Nagri": ["BGD", "IND"],
+    "Saurashtra": ["IND"],
+    "Warang Citi": ["IND"],
+    "Masaram Gondi": ["IND"],
+    "Gunjala Gondi": ["IND"],
+    "Nag Mundari": ["IND"],
+    "Ol Onal": ["IND"],
+    "Toto": ["IND", "BTN"],
+    "Wancho": ["IND", "MMR"],
+    "Vedic": ["IND"],
+    "Indic": ["IND", "NPL", "BGD", "LKA"],
+    
+    # === SOUTHEAST ASIAN SCRIPTS ===
+    "Thai": ["THA"],
+    "Lao": ["LAO"],
+    "Khmer": ["KHM"],
+    "Myanmar": ["MMR"],
+    "Burmese": ["MMR"],
+    
+    # Southeast Asian - Indonesia/Malaysia/Philippines
+    "Javanese": ["IDN"],
+    "Balinese": ["IDN"],
+    "Sundanese": ["IDN"],
+    "Batak": ["IDN"],
+    "Rejang": ["IDN"],
+    "Buginese": ["IDN"],
+    "Makasar": ["IDN"],
+    "Kawi": ["IDN"],
+    
+    # Southeast Asian - Philippines
+    "Tagalog": ["PHL"],
+    "Hanunoo": ["PHL"],
+    "Buhid": ["PHL"],
+    "Tagbanwa": ["PHL"],
+    
+    # Southeast Asian - Vietnam/Cham
+    "Cham": ["VNM", "KHM"],
+    
+    # Southeast Asian - Tai scripts
+    "Tai Le": ["CHN", "LAO", "THA", "VNM"],
+    "New Tai Lue": ["CHN", "LAO", "THA", "MMR", "VNM"],
+    "Tai Tham": ["THA", "LAO", "MMR"],
+    "Tai Viet": ["VNM"],
+    "Tai Yo": ["CHN", "THA"],
+    "Tai Xuan": ["CHN"],
+    
+    # Southeast Asian - Hmong/Miao
+    "Pahawh Hmong": ["CHN", "VNM", "LAO", "THA"],
+    "Nyiakeng Puachue Hmong": ["CHN", "VNM", "LAO", "THA"],
+    "Miao": ["CHN"],
+    
+    # Southeast Asian - Other
+    "Kayah Li": ["MMR", "THA"],
+    "Ahom": ["IND"],
+    "Dives Akuru": ["MDV"],
+    
+    # === EAST ASIAN SCRIPTS ===
+    "CJK": ["CHN", "TWN", "JPN", "KOR", "VNM", "SGP", "HKG", "MAC"],
+    "Han": ["CHN", "TWN", "JPN", "KOR", "VNM", "SGP", "HKG", "MAC"],
+    "Ideograph": ["CHN", "TWN", "JPN", "KOR", "VNM", "SGP", "HKG", "MAC"],
+    "Kangxi": ["CHN", "TWN", "JPN", "KOR"],
+    "Radical": ["CHN", "TWN", "JPN", "KOR"],
+    
+    # East Asian - Korean
+    "Hangul": ["KOR", "PRK"],
+    "Jamo": ["KOR", "PRK"],
+    
+    # East Asian - Japanese
+    "Hiragana": ["JPN"],
+    "Katakana": ["JPN"],
+    "Kana": ["JPN"],
+    "Kanbun": ["JPN"],
+    
+    # East Asian - Chinese scripts
+    "Bopomofo": ["TWN"],
+    "Yi": ["CHN"],
+    "Lisu": ["CHN", "MMR", "IND", "THA"],
+    "Nushu": ["CHN"],
+    "Tangut": ["CHN"],
+    "Tangsa": ["IND", "MMR"],
+    "Khitan": ["CHN"],
+    "Naxi": ["CHN"],
+    
+    # === CENTRAL ASIAN & MONGOLIC ===
+    "Mongolian": ["MNG", "CHN"],
+    "Tibetan": ["CHN", "IND", "NPL", "BTN"],
+    "Phags-pa": ["CHN", "MNG"],
+    "Zanabazar Square": ["MNG"],
+    "Soyombo": ["MNG"],
+    
+    # === MIDDLE EASTERN - HISTORICAL ===
+    "Old Persian": ["IRN"],
+    "Avestan": ["IRN"],
+    "Manichaean": ["IRN", "CHN"],
+    "Psalter Pahlavi": ["IRN"],
+    "Inscriptional Pahlavi": ["IRN"],
+    "Inscriptional Parthian": ["IRN"],
+    "Elymaic": ["IRN"],
+    
+    # Central Asian - Historical
+    "Old Sogdian": ["UZB", "TJK"],
+    "Sogdian": ["UZB", "TJK"],
+    "Chorasmian": ["UZB", "TKM"],
+    "Old Uyghur": ["CHN"],
+    "Old Turkic": ["MNG", "KAZ", "KGZ", "UZB", "TUR"],
+    
+    # Middle Eastern - Semitic/Ancient
+    "Phoenician": ["LBN", "SYR"],
+    "Ugaritic": ["SYR"],
+    "Palmyrene": ["SYR"],
+    "Nabataean": ["JOR", "SAU"],
+    "Hatran": ["IRQ"],
+    "Imperial Aramaic": ["SYR", "IRQ", "IRN"],
+    
+    # South Arabian
+    "Old South Arabian": ["YEM", "SAU", "OMN"],
+    "Old North Arabian": ["SAU", "JOR", "SYR"],
+    
+    # African - Ancient
+    "Meroitic": ["SDN"],
+    "Egyptian Hieroglyph": ["EGY"],
+    
+    # === SOUTH ASIAN - HISTORICAL ===
+    "Kharoshthi": ["PAK", "IND", "AFG"],
+    "Hanifi Rohingya": ["MMR", "BGD"],
+    "Pau Cin Hau": ["MMR", "IND"],
+    "Marchen": ["CHN"],
+    "Kirat Rai": ["NPL"],
+    "Gurung Khema": ["NPL"],
+    "Tolong Siki": ["IND"],
+    
+    # === EUROPEAN - HISTORICAL ===
+    "Linear A": ["GRC"],
+    "Linear B": ["GRC"],
+    "Cypriot": ["CYP"],
+    "Cypro-Minoan": ["CYP"],
+    "Phaistos": ["GRC"],
+    "Lycian": ["TUR"],
+    "Carian": ["TUR"],
+    "Lydian": ["TUR"],
+    "Sidetic": ["TUR"],
+    
+    # Anatolian
+    "Anatolian Hieroglyph": ["TUR"],
+    "Old Italic": ["ITA"],
+    "Gothic": ["SWE", "ESP", "UKR"],
+    "Old Hungarian": ["HUN"],
+    "Old Permic": ["RUS"],
+    
+    # Celtic/Germanic
+    "Runic": ["DNK", "NOR", "SWE", "ISL", "GBR"],
+    "Ogham": ["IRL", "GBR"],
+    
+    # Caucasian
+    "Caucasian Albanian": ["AZE"],
+    
+    # Balkan
+    "Glagolitic": ["HRV", "MKD", "BGR"],
+    "Vithkuqi": ["ALB"],
+    "Todhri": ["ALB"],
+    "Elbasan": ["ALB"],
+    
+    # === AMERICAN SCRIPTS ===
+    "Cherokee": ["USA"],
+    "Canadian": ["CAN"],
+    "Deseret": ["USA"],
+    "Shavian": ["GBR", "USA"],
+    "Osage": ["USA"],
+    
+    # Mesoamerican
+    "Mayan": ["MEX", "GTM", "BLZ", "HND", "SLV"],
+    
+    # === ANCIENT NEAR EAST ===
+    "Cuneiform": ["IRQ", "IRN", "SYR", "TUR"],
+    
+    # === SIGN WRITING & SPECIALIZED ===
+    "SignWriting": ["XXX"],
+    "Braille": ["XXX"],
+    "Duployan": ["XXX"],
+    "Shorthand": ["XXX"],
+    
+    # === SYMBOLS & NOTATION ===
+    "Musical": ["XXX"],
+    "Byzantine Musical": ["GRC"],
+    "Znamenny": ["RUS"],
+    "Ancient Greek Musical": ["GRC"],
+    
+    # Mathematical & Technical
+    "Mathematical": ["XXX"],
+    "Kaktovik": ["USA", "CAN"],
+    "Counting Rod": ["CHN"],
+    "Rumi Numeral": ["TUR", "IRN"],
+    "Ottoman Siyaq": ["TUR"],
+    
+    # Divination
+    "Yijing": ["CHN"],
+    "Mahjong": ["CHN"],
+    "Domino": ["CHN"],
+    "Playing Card": ["XXX"],
+    
+    # Symbols
+    "Symbol": ["XXX"],
+    "Emoticon": ["XXX"],
+    "Pictograph": ["XXX"],
+    "Dingbat": ["XXX"],
+    "Alchemical": ["XXX"],
+    "Chess": ["XXX"],
+    "Arrow": ["XXX"],
+    "Geometric": ["XXX"],
+    "Miscellaneous": ["XXX"],
+    "Block Element": ["XXX"],
+    "Box Drawing": ["XXX"],
+    
+    # Formatting & Technical
+    "Mark": ["XXX"],
+    "Combining": ["XXX"],
+    "Diacritical": ["XXX"],
+    "Punctuation": ["XXX"],
+    "Spacing Modifier": ["XXX"],
+    "Modifier Tone": ["XXX"],
+    "Halfwidth": ["XXX"],
+    "Fullwidth": ["XXX"],
+    "Vertical Form": ["XXX"],
+    "Small Form": ["XXX"],
+    "Enclosed": ["XXX"],
+    "Letterlike": ["XXX"],
+    "Number Form": ["XXX"],
+    "Currency": ["XXX"],
+    "Control": ["XXX"],
+    "Optical Character": ["XXX"],
+    "Specials": ["XXX"],
+    "Format Control": ["XXX"],
+    "Description": ["XXX"],
+    "Presentation Form": ["XXX"],
+    "Alphabetic Presentation": ["XXX"],
+    "Variation": ["XXX"],
+    "Tag": ["XXX"],
+    
+    # Private Use & Surrogates
+    "Surrogates": ["XXX"],
+    "Private Use": ["XXX"],
+    "Supplementary Private": ["XXX"],
 }
 
+# --- 3. INDONESIAN TRANSLATION MAPPING ---
 trans_mapping = {
-    "Script": "Aksara", "Sign": "Tanda", "Extension": "Ekstensi",
-    "Basic": "Dasar", "Supplement": "Suplemen", "Unified Ideographs": "Ideograf Bersatu",
-    "Private Use Area": "Area Penggunaan Pribadi", "Surrogates": "Surrogates (Teknis)",
-    "Symbols": "Simbol", "Forms": "Bentuk", "Operators": "Operator", "Extended": "Perluasan"
+    "Script": "Aksara",
+    "Sign": "Tanda",
+    "Extension": "Ekstensi",
+    "Extended": "Perluasan",
+    "Basic": "Dasar",
+    "Supplement": "Suplemen",
+    "Unified Ideographs": "Ideograf Bersatu",
+    "Private Use Area": "Area Penggunaan Pribadi",
+    "Surrogates": "Surrogates (Teknis)",
+    "Symbols": "Simbol",
+    "Forms": "Bentuk",
+    "Operators": "Operator",
+    "Mathematical": "Matematis",
+    "Numbers": "Angka",
+    "Letters": "Huruf",
+    "Compatibility": "Kompatibilitas",
+    "Presentation": "Presentasi",
+    "Combining": "Kombinasi",
+    "Diacritical": "Diakritik",
+    "Marks": "Tanda",
+    "Punctuation": "Tanda Baca",
+    "Ancient": "Kuno",
+    "Old": "Kuno",
+    "Syllabary": "Silabari",
+    "Ideograms": "Ideogram",
+    "Hieroglyphs": "Hieroglif",
+    "Pictographs": "Piktograf",
 }
 
-# --- 4. PROSES GENERATE JSON ---
+# --- 4. PROCESSING LOGIC ---
 definitions = {}
 country_registry = {}
 
+# Initialize country registry
 all_countries = set()
 for clist in iso_mapping.values():
     all_countries.update(clist)
 for c in sorted(list(all_countries)):
     country_registry[c] = []
 
+# Process each Unicode block
 for line in raw_data.strip().split('\n'):
-    if not line: continue
+    if not line:
+        continue
+    
     try:
         parts = line.split('; ')
         range_raw = parts[0].strip()
         name_en = parts[1].strip()
-
+        
+        # Generate block ID
         block_id = name_en.lower().replace(" ", "_").replace("-", "_")
+        
+        # Parse range
         start_hex, end_hex = range_raw.split('..')
         range_clean = f"{start_hex}-{end_hex}"
         start_int = int(start_hex, 16)
-
-        # Logic Filter untuk blok non-renderable (Surrogates & Private Use Area)
+        
+        # Determine if block is renderable
         is_unicode = True
         font_slug = "Noto+Sans+" + name_en.replace(" ", "+")
-
-        if (0xD800 <= start_int <= 0xDFFF) or (0xE000 <= start_int <= 0xF8FF) or (start_int >= 0xF0000):
+        
+        # Non-renderable blocks
+        if (0xD800 <= start_int <= 0xDFFF) or \
+           (0xE000 <= start_int <= 0xF8FF) or \
+           (start_int >= 0xF0000):
             is_unicode = False
             font_slug = None
             sample_char = ""
         else:
-            try: sample_char = chr(start_int)
+            try:
+                sample_char = chr(start_int)
             except:
                 sample_char = ""
                 is_unicode = False
-
-        if "Latin" in name_en: font_slug = "Noto+Sans"
-
-        # Script Code Logic
-        if "Latin" in name_en: script_code = "Latn"
-        elif "Arabic" in name_en: script_code = "Arab"
-        elif "Cyrillic" in name_en: script_code = "Cyrl"
-        elif "Han" in name_en or "Ideograph" in name_en: script_code = "Hani"
-        else: script_code = name_en[:4].title().replace(" ", "")
-
+        
+        # Special font handling
+        if "Latin" in name_en:
+            font_slug = "Noto+Sans"
+        elif "Arabic" in name_en:
+            font_slug = "Noto+Sans+Arabic"
+        elif "CJK" in name_en or "Han" in name_en or "Ideograph" in name_en:
+            font_slug = "Noto+Sans+SC"
+        elif "Devanagari" in name_en:
+            font_slug = "Noto+Sans+Devanagari"
+        elif "Tamil" in name_en:
+            font_slug = "Noto+Sans+Tamil"
+        elif "Thai" in name_en:
+            font_slug = "Noto+Sans+Thai"
+        
+        # Generate script code
+        if "Latin" in name_en:
+            script_code = "Latn"
+        elif "Arabic" in name_en:
+            script_code = "Arab"
+        elif "Cyrillic" in name_en:
+            script_code = "Cyrl"
+        elif "Greek" in name_en:
+            script_code = "Grek"
+        elif "Hebrew" in name_en:
+            script_code = "Hebr"
+        elif "Han" in name_en or "CJK" in name_en or "Ideograph" in name_en:
+            script_code = "Hani"
+        elif "Hangul" in name_en or "Jamo" in name_en:
+            script_code = "Hang"
+        elif "Hiragana" in name_en:
+            script_code = "Hira"
+        elif "Katakana" in name_en or "Kana" in name_en:
+            script_code = "Kana"
+        elif "Devanagari" in name_en:
+            script_code = "Deva"
+        elif "Thai" in name_en:
+            script_code = "Thai"
+        elif "Tamil" in name_en:
+            script_code = "Taml"
+        else:
+            script_code = name_en[:4].title().replace(" ", "")
+        
+        # Indonesian name translation
         name_id = name_en
-        if is_unicode and "Symbol" not in name_en and script_code not in ["Latn", "Arab", "Cyrl"]:
-             name_id = "Aksara " + name_id
+        if is_unicode and "Symbol" not in name_en and "Mark" not in name_en and \
+           script_code not in ["Latn", "Arab", "Cyrl"]:
+            if not name_id.startswith("Aksara"):
+                name_id = "Aksara " + name_id
+        
         for en, idn in trans_mapping.items():
             name_id = name_id.replace(en, idn)
-
+        
+        # Save definition
         definitions[block_id] = {
             "code": script_code,
             "name_en": name_en,
@@ -461,35 +825,59 @@ for line in raw_data.strip().split('\n'):
             "font": font_slug,
             "sample": sample_char
         }
-
-        # Logic Matching
+        
+        # Match to countries
         target_countries = []
+        
+        # Check each keyword in iso_mapping
         for keyword, country_list in iso_mapping.items():
             if keyword in name_en:
+                # Special filtering for specific cases
                 if "Hangul" in name_en or "Jamo" in name_en:
                     filtered_list = [c for c in country_list if c in ["KOR", "PRK"]]
-                    if filtered_list: target_countries.extend(filtered_list)
+                    if filtered_list:
+                        target_countries.extend(filtered_list)
                 elif "Hanunoo" in name_en:
-                     if "PHL" in country_list: target_countries.append("PHL")
+                    if "PHL" in country_list:
+                        target_countries.append("PHL")
                 elif "Hanifi" in name_en:
-                     filtered_list = [c for c in country_list if c in ["MMR", "BGD"]]
-                     target_countries.extend(filtered_list)
+                    filtered_list = [c for c in country_list if c in ["MMR", "BGD"]]
+                    target_countries.extend(filtered_list)
                 else:
                     target_countries.extend(country_list)
-
+        
+        # Remove duplicates and sort
         target_countries = sorted(list(set(target_countries)))
-        if not target_countries: target_countries = ["XXX"]
-
+        
+        # Default to XXX if no match
+        if not target_countries:
+            target_countries = ["XXX"]
+        
+        # Register to countries
         for iso in target_countries:
-            if iso not in country_registry: country_registry[iso] = []
+            if iso not in country_registry:
+                country_registry[iso] = []
             country_registry[iso].append(block_id)
+    
+    except Exception as e:
+        # Skip problematic lines
+        pass
 
-    except: pass
-
-# --- 5. OUTPUT ---
+# --- 5. OUTPUT JSON ---
 final_db = {
     "definitions": definitions,
     "countries": country_registry
 }
 
-print("const GLOBAL_SCRIPT_DB = " + json.dumps(final_db, indent=4) + ";")
+# Print as JavaScript constant
+print("const GLOBAL_SCRIPT_DB = " + json.dumps(final_db, indent=2, ensure_ascii=False) + ";")
+
+# --- 6. VERIFICATION STATS ---
+print("\n\n// === VERIFICATION STATISTICS ===")
+print(f"// Total blocks processed: {len(definitions)}")
+print(f"// Total countries: {len(country_registry)}")
+print(f"// Blocks in XXX (unmapped): {len(country_registry.get('XXX', []))}")
+print("\n// Top 10 countries by script count:")
+sorted_countries = sorted(country_registry.items(), key=lambda x: len(x[1]), reverse=True)
+for i, (country, blocks) in enumerate(sorted_countries[:10]):
+    print(f"// {i+1}. {country}: {len(blocks)} blocks")
