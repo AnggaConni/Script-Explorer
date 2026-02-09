@@ -72,7 +72,7 @@ Copy the Output (The Tab-Separated values generated at the bottom).
 Open index.html in this repository and replace the existing content of const GLOBAL_SCRIPT_DB with your new JSON data.
 
 
-🐍 Python Automation Script
+# 🐍 Python Automation Script
 
 You can embed this script in your local environment or Google Colab. This script automatically maps scripts to countries (ISO codes), generates sample characters from Hex codes, and assigns the correct Noto Font.
 
