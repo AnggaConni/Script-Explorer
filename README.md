@@ -2,7 +2,7 @@
   <img src="assets/world-script-map.png" width="700">
 </p>
 
-World Script Explorer 🌍
+# World Script Explorer 🌍
 
 World Script Explorer is an interactive, open-source visualization tool designed to map the world's writing systems (scripts) based on the Unicode Standard.
 
@@ -12,7 +12,7 @@ This project aims to help linguists, typography enthusiasts, and cultural preser
 <img src="assets/maps.png" width="700")
 </p>
 
-🚀 Features
+# 🚀 Features
 
 Interactive Map: Click on any country to see the scripts associated with it.
 
@@ -25,12 +25,12 @@ Font Integration: Automatically loads Google Noto Fonts for accurate rendering o
 Open Source: Fully customizable data pipeline.
 
 
-🛠️ Data Pipeline & Contribution Guide
+# 🛠️ Data Pipeline & Contribution Guide
 
 This project relies on data from the Unicode Consortium. Since the data is massive, we use a Python Automation Script to process raw Unicode blocks into a format our web app understands.
 
 
-Step 1: Get the Raw Data
+# Step 1: Get the Raw Data
 
 <p align="center">
 <img src="assets/unicodeblocks.png" width="700")
@@ -44,7 +44,7 @@ Action: Copy the entire content of the text file.
 (UNICODE will updated on every sept each year)
 
 
-Step 2: Process with Python (via Google Colab)
+# Step 2: Process with Python (via Google Colab)
 
 <p align="center">
 <img src="assets/gc.png" width="700")
@@ -67,7 +67,7 @@ Run the script (Play button).
 Copy the Output (The Tab-Separated values generated at the bottom).
 
 
-Step 3: Update the App
+# Step 3: Update the App
 
 Open index.html in this repository and replace the existing content of const GLOBAL_SCRIPT_DB with your new JSON data.
 
