@@ -3121,7 +3121,8 @@
       "range": "11DF0-11DFF",
       "unicode": true,
       "font": "Noto+Sans+Bengali",
-      "sample": "𑷰"
+      "sample": "𑷰",
+      "added_in_unicode": "18.0"
     },
     "archaic_cuneiform_numerals": {
       "code": "Cune",
@@ -3131,10 +3132,8 @@
       "unicode": true,
       "font": "Noto+Sans+Cuneiform",
       "sample": "𒕐",
-      "subscripts": [
-        "Xsux",
-        "Pcun"
-      ]
+      "script": "Cuneiform + Proto-Cuneiform",
+      "added_in_unicode": "18.0"
     },
     "jurchen": {
       "code": "Jurc",
@@ -3142,8 +3141,9 @@
       "name_id": "Aksara Jurchen",
       "range": "18E00-1919F",
       "unicode": true,
-      "font": "Noto+Sans-Jurchen",
-      "sample": "𘸀"
+      "font": null,
+      "sample": "𘸀",
+      "added_in_unicode": "18.0"
     },
     "jurchen_radicals": {
       "code": "Jurc",
@@ -3151,8 +3151,9 @@
       "name_id": "Radikal Jurchen",
       "range": "191A0-191DF",
       "unicode": true,
-      "font": "Noto+Sans-Jurchen",
-      "sample": "𙆠"
+      "font": null,
+      "sample": "𙆠",
+      "added_in_unicode": "18.0"
     },
     "musical_symbols_supplement": {
       "code": "Zyyy",
@@ -3160,8 +3161,9 @@
       "name_id": "Suplemen Simbol Musik",
       "range": "1D250-1D28F",
       "unicode": true,
-      "font": "Noto+Sans+Symbols",
-      "sample": "𝉐"
+      "font": "Noto+Music",
+      "sample": "𝉐",
+      "added_in_unicode": "18.0"
     },
     "miscellaneous_symbols_and_arrows_extended": {
       "code": "Zyyy",
@@ -3169,8 +3171,9 @@
       "name_id": "Perluasan Simbol dan Panah Lain-lain",
       "range": "1DB00-1DBFF",
       "unicode": true,
-      "font": "Noto+Sans+Symbols",
-      "sample": "𝬀"
+      "font": null,
+      "sample": "𝬀",
+      "added_in_unicode": "18.0"
     },
     "seal": {
       "code": "Seal",
@@ -3178,8 +3181,9 @@
       "name_id": "Aksara Seal (Small Seal)",
       "range": "3D000-3FC3F",
       "unicode": true,
-      "font": "Noto+Sans+Seal",
-      "sample": "𽀀"
+      "font": null,
+      "sample": "𽀀",
+      "added_in_unicode": "18.0"
     }
   },
   "countries": {
