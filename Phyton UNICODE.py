@@ -1,6 +1,7 @@
 import json
 
-# --- 1. FULL UNICODE 17 DATA (Blocks.txt) ---
+# --- 1. FULL UNICODE 18 DATA (Blocks.txt) ---
+# Source: https://www.unicode.org/Public/18.0.0/ucd/Blocks.txt
 raw_data = """
 0000..007F; Basic Latin
 0080..00FF; Latin-1 Supplement
@@ -256,6 +257,7 @@ FFF0..FFFF; Specials
 11D00..11D5F; Masaram Gondi
 11D60..11DAF; Gunjala Gondi
 11DB0..11DEF; Tolong Siki
+11DF0..11DFF; Bengali Supplement
 11EE0..11EFF; Makasar
 11F00..11F5F; Kawi
 11FB0..11FBF; Lisu Supplement
@@ -263,6 +265,7 @@ FFF0..FFFF; Specials
 12000..123FF; Cuneiform
 12400..1247F; Cuneiform Numbers and Punctuation
 12480..1254F; Early Dynastic Cuneiform
+12550..1268F; Archaic Cuneiform Numerals
 12F90..12FFF; Cypro-Minoan
 13000..1342F; Egyptian Hieroglyphs
 13430..1345F; Egyptian Hieroglyph Format Controls
@@ -284,6 +287,8 @@ FFF0..FFFF; Specials
 18B00..18CFF; Khitan Small Script
 18D00..18D7F; Tangut Supplement
 18D80..18DFF; Tangut Components Supplement
+18E00..1919F; Jurchen
+191A0..191DF; Jurchen Radicals
 1AFF0..1AFFF; Kana Extended-B
 1B000..1B0FF; Kana Supplement
 1B100..1B12F; Kana Extended-A
@@ -297,12 +302,14 @@ FFF0..FFFF; Specials
 1D000..1D0FF; Byzantine Musical Symbols
 1D100..1D1FF; Musical Symbols
 1D200..1D24F; Ancient Greek Musical Notation
+1D250..1D28F; Musical Symbols Supplement
 1D2C0..1D2DF; Kaktovik Numerals
 1D2E0..1D2FF; Mayan Numerals
 1D300..1D35F; Tai Xuan Jing Symbols
 1D360..1D37F; Counting Rod Numerals
 1D400..1D7FF; Mathematical Alphanumeric Symbols
 1D800..1DAAF; Sutton SignWriting
+1DB00..1DBFF; Miscellaneous Symbols and Arrows Extended
 1DF00..1DFFF; Latin Extended-G
 1E000..1E02F; Glagolitic Supplement
 1E030..1E08F; Cyrillic Extended-D
@@ -344,6 +351,7 @@ FFF0..FFFF; Specials
 30000..3134F; CJK Unified Ideographs Extension G
 31350..323AF; CJK Unified Ideographs Extension H
 323B0..3347F; CJK Unified Ideographs Extension J
+3D000..3FC3F; Seal
 E0000..E007F; Tags
 E0100..E01EF; Variation Selectors Supplement
 F0000..FFFFF; Supplementary Private Use Area-A
