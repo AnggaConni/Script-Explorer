@@ -16,7 +16,7 @@ This project aims to help linguists, typography enthusiasts, and cultural preser
 
 Interactive Map: Click on any country to see the scripts associated with it.
 
-Unicode 17.0 Ready: Supports the latest Unicode blocks including historical and minority scripts.
+Unicode 18.0 Ready: Supports the latest Unicode blocks including historical and minority scripts.
 
 Offline First: Runs entirely in the browser using local JSON data (no database server required).
 
@@ -38,7 +38,7 @@ This project relies on data from the Unicode Consortium. Since the data is massi
 
 Download the latest Blocks.txt file from the official Unicode FTP server. This file contains the ranges for every registered writing system.
 
-Source: Unicode 17.0.0 Blocks.txt https://www.unicode.org/Public/17.0.0/ucd/Blocks.txt (version 17 - sept 2025)
+Source: Unicode 18.0.0 Blocks.txt https://www.unicode.org/Public/17.0.0/ucd/Blocks.txt (version 17 - sept 2025)
 
 Action: Copy the entire content of the text file.
 (UNICODE will updated on every sept each year)
