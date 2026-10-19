@@ -36,6 +36,7 @@ The pipeline uses the Python standard library only. Source datasets are fetched 
 | data/languages.json | Language records returned by the public Wikidata query |
 | data/script_relationships.json | Matched, source-attributed country/language/script relationships |
 | data/source_manifest.json | Source URLs, licenses, source checksums, query metadata, and record counts |
+| data/UNICODE-LICENSE.txt | Unicode license notice distributed with the generated Unicode-derived dataset |
 
 ### Run locally
 
@@ -63,7 +64,7 @@ To force a refresh at any time:
 4. Use latest for the latest stable UCD, or enter an exact version such as 18.0.0.
 5. Start the workflow.
 
-The workflow requires no API token for the public sources and has write permission only to commit generated files to this repository. A failed download, invalid dataset, or failed public relationship query stops the run so it cannot publish a partial update. Re-run the workflow if a public endpoint is temporarily unavailable.
+The ISO alpha-3 to alpha-2 crosswalk is also generated from Wikidata, so the map does not rely on the old incomplete hardcoded country-code list. The workflow requires no API token for the public sources and has write permission only to commit generated files to this repository. A failed download, invalid dataset, or failed public relationship query stops the run so it cannot publish a partial update. Re-run the workflow if a public endpoint is temporarily unavailable.
 
 ## Interpretation and data quality
 
