@@ -407,7 +407,7 @@
         $('sequenceProgress').textContent = isInDeck
           ? (currentIndex + 1) + ' / ' + characterDeck.length
           : 'Custom text';
-        $('prevCharacterBtn').disabled = !hasDeck || (isInDeck && currentIndex <= 0);
+        $('prevCharacterBtn').disabled = !hasDeck || !isInDeck || currentIndex <= 0;
         $('nextCharacterBtn').disabled = !hasDeck || (isInDeck && currentIndex >= characterDeck.length - 1);
         $('prevCharacterBtn').classList.toggle('btn-disabled', $('prevCharacterBtn').disabled);
         $('nextCharacterBtn').classList.toggle('btn-disabled', $('nextCharacterBtn').disabled);
