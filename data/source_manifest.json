@@ -86,13 +86,6 @@
           "final_url": "https://query.wikidata.org/sparql",
           "rows_returned": 3558,
           "valid_relationship_rows": 3558
-        },
-        {
-          "country_language_source_property": "P17-language-country",
-          "query_endpoint": "https://query.wikidata.org/sparql",
-          "query": "SELECT DISTINCT\n  ?countryCode2 ?countryCode3 ?countryLabel\n  ?countryLanguageProperty\n  ?language ?languageLabel ?languageCode\n  ?script ?scriptLabel ?scriptDescription ?scriptCode\nWHERE {\n  ?country wdt:P297 ?countryCode2.\n  OPTIONAL { ?country wdt:P298 ?countryCode3. }\n  { ?language wdt:P17 ?country. BIND(\"P17-language-country\" AS ?countryLanguageProperty) }\n  ?language wdt:P282 ?script.\n  OPTIONAL { ?script wdt:P506 ?scriptCode. }\n  OPTIONAL { ?script schema:description ?scriptDescription. FILTER(LANG(?scriptDescription) = \"en\") }\n  OPTIONAL { ?language wdt:P220 ?languageCode. }\n  SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". }\n}\nLIMIT 10000",
-          "records": 0,
-          "error": "Could not download https://query.wikidata.org/sparql?query=SELECT+DISTINCT%0A++%3FcountryCode2+%3FcountryCode3+%3FcountryLabel%0A++%3FcountryLanguageProperty%0A++%3Flanguage+%3FlanguageLabel+%3FlanguageCode%0A++%3Fscript+%3FscriptLabel+%3FscriptDescription+%3FscriptCode%0AWHERE+%7B%0A++%3Fcountry+wdt%3AP297+%3FcountryCode2.%0A++OPTIONAL+%7B+%3Fcountry+wdt%3AP298+%3FcountryCode3.+%7D%0A++%7B+%3Flanguage+wdt%3AP17+%3Fcountry.+BIND%28%22P17-language-country%22+AS+%3FcountryLanguageProperty%29+%7D%0A++%3Flanguage+wdt%3AP282+%3Fscript.%0A++OPTIONAL+%7B+%3Fscript+wdt%3AP506+%3FscriptCode.+%7D%0A++OPTIONAL+%7B+%3Fscript+schema%3Adescription+%3FscriptDescription.+FILTER%28LANG%28%3FscriptDescription%29+%3D+%22en%22%29+%7D%0A++OPTIONAL+%7B+%3Flanguage+wdt%3AP220+%3FlanguageCode.+%7D%0A++SERVICE+wikibase%3Alabel+%7B+bd%3AserviceParam+wikibase%3Alanguage+%22en%22.+%7D%0A%7D%0ALIMIT+10000&format=json: The read operation timed out"
         }
       ],
       "license": "CC0 1.0",
@@ -110,9 +103,9 @@
       },
       "raw_rows_across_queries": 4510,
       "successful_query_routes": 2,
-      "failed_query_routes": 1,
+      "failed_query_routes": 0,
       "records": 3736,
-      "normalized_data_sha256": "8ec5b65dac24eac5bed063ecf61a9930d4849f82c85849f6d469789112da0485"
+      "normalized_data_sha256": "175be33342dc0a29e5eda25ce532d4c4f1b7a6b1325367fc4287d6790660dad4"
     },
     "merge_rule": "Country-language-script links from LinguaMeta and Wikidata are combined; source URL, license, properties, and script-code resolution are retained per record."
   },
