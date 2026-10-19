@@ -20,6 +20,7 @@ from urllib.request import Request, urlopen
 
 REPO_URL = "https://github.com/AnggaConni/Script-Explorer"
 UNICODE_LATEST_BASE = "https://www.unicode.org/Public/UCD/latest/ucd"
+UNICODE_LICENSE_URL = "https://www.unicode.org/license.txt"
 WIKIDATA_ENDPOINT = "https://query.wikidata.org/sparql"
 USER_AGENT = "WorldScriptExplorerDataPipeline/1.0 (public dataset build; " + REPO_URL + ")"
 UCD_FILES = (
@@ -421,10 +422,52 @@ def fetch_wikidata_relationships() -> tuple[list[dict[str, str]], dict[str, obje
     return results, manifest
 
 
+def fetch_country_code_crosswalk() -> tuple[dict[str, str], dict[str, object]]:
+    query = """
+SELECT DISTINCT ?countryCode2 ?countryCode3 WHERE {
+  ?country wdt:P297 ?countryCode2;
+           wdt:P298 ?countryCode3.
+}
+""".strip()
+    url = WIKIDATA_ENDPOINT + "?" + urlencode({"query": query, "format": "json"})
+    payload, final_url = fetch_text(
+        url,
+        headers={"Accept": "application/sparql-results+json"},
+        timeout=120,
+    )
+    try:
+        bindings = json.loads(payload)["results"]["bindings"]
+    except (json.JSONDecodeError, KeyError, TypeError) as exc:
+        raise RuntimeError("Wikidata returned an unreadable ISO country-code crosswalk.") from exc
+    crosswalk: dict[str, str] = {}
+    for row in bindings:
+        code2 = str(row.get("countryCode2", {}).get("value", "")).strip().upper()
+        code3 = str(row.get("countryCode3", {}).get("value", "")).strip().upper()
+        if re.fullmatch(r"[A-Z]{2}", code2) and re.fullmatch(r"[A-Z]{3}", code3):
+            if code3 in crosswalk and crosswalk[code3] != code2:
+                raise RuntimeError(f"Conflicting ISO country-code mapping from Wikidata: {code3}")
+            crosswalk[code3] = code2
+    if len(crosswalk) < 200:
+        raise RuntimeError(
+            f"Country-code crosswalk is unexpectedly small ({len(crosswalk)} records); refusing to publish it."
+        )
+    return dict(sorted(crosswalk.items())), {
+        "name": "Wikidata ISO country-code crosswalk",
+        "query_endpoint": WIKIDATA_ENDPOINT,
+        "query": query,
+        "final_url": final_url.split("?", 1)[0],
+        "license": "CC0 1.0",
+        "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "properties": {"P297": "ISO 3166-1 alpha-2", "P298": "ISO 3166-1 alpha-3"},
+        "records": len(crosswalk),
+    }
+
+
 def build_public_datasets(
     definitions: dict[str, dict[str, object]],
     relationships: list[dict[str, str]],
     unicode_version: str,
+    country_code_map: dict[str, str] | None = None,
 ) -> tuple[dict[str, list[str]], list[dict[str, object]], dict[str, object]]:
     blocks_by_code: dict[str, set[str]] = collections.defaultdict(set)
     for block_id, definition in definitions.items():
@@ -487,6 +530,14 @@ def build_public_datasets(
     normalized_languages.sort(key=lambda item: (str(item["name_en"]).casefold(), str(item["id"])))
 
     unmatched = len(relationships) - len(matched_relationships)
+    if country_code_map is None:
+        country_code_map = {
+            rel["country_iso3"]: rel["country_iso2"]
+            for rel in relationships
+            if re.fullmatch(r"[A-Z]{3}", rel["country_iso3"])
+            and re.fullmatch(r"[A-Z]{2}", rel["country_iso2"])
+        }
+    normalized_code_map = dict(sorted(country_code_map.items()))
     relationship_payload = {
         "metadata": {
             "dataset": "Wikidata language-writing-system-country relationships",
@@ -513,7 +564,11 @@ def build_public_datasets(
         "matched_relationship_count": len(matched_relationships),
         "unmatched_relationship_count": unmatched,
     }
-    return normalized_countries, normalized_languages, {"relationship_payload": relationship_payload, "stats": stats}
+    return normalized_countries, normalized_languages, {
+        "relationship_payload": relationship_payload,
+        "stats": stats,
+        "iso3_to_iso2": normalized_code_map,
+    }
 
 
 def write_json(path: Path, payload: object) -> None:
@@ -538,6 +593,7 @@ def main() -> int:
 
     try:
         unicode_version, ucd_base = resolve_unicode_version(args.unicode_version)
+        unicode_license_text, unicode_license_final_url = fetch_text(UNICODE_LICENSE_URL)
         ucd_texts, ucd_sources = download_ucd(unicode_version, ucd_base)
         blocks = parse_blocks(ucd_texts["Blocks.txt"])
         name_to_code, code_to_name = parse_script_aliases(ucd_texts["PropertyValueAliases.txt"])
@@ -549,8 +605,9 @@ def main() -> int:
         )
 
         relationships, wikidata_manifest = fetch_wikidata_relationships()
+        iso3_to_iso2, country_code_manifest = fetch_country_code_crosswalk()
         countries, languages, relationship_result = build_public_datasets(
-            definitions, relationships, unicode_version
+            definitions, relationships, unicode_version, iso3_to_iso2
         )
         relationship_payload = relationship_result["relationship_payload"]
         stats = relationship_result["stats"]
@@ -558,6 +615,7 @@ def main() -> int:
         aksara_payload = {
             "definitions": definitions,
             "countries": countries,
+            "iso3_to_iso2": relationship_result["iso3_to_iso2"],
             "metadata": {
                 "unicode_version": unicode_version,
                 "source": "Unicode Character Database (UCD)",
@@ -592,10 +650,12 @@ def main() -> int:
                 "name": "Unicode Character Database (UCD)",
                 "base_url": ucd_base,
                 "license": "Unicode License v3",
-                "license_url": "https://www.unicode.org/license.txt",
+                "license_url": unicode_license_final_url,
+                "license_sha256": hashlib.sha256(unicode_license_text.encode("utf-8")).hexdigest(),
                 "files": ucd_sources,
             },
             "relationship_source": wikidata_manifest,
+            "country_code_crosswalk": country_code_manifest,
             "counts": {
                 "unicode_blocks": len(definitions),
                 **stats,
@@ -611,6 +671,9 @@ def main() -> int:
         }
 
         write_json(output_dir / "aksara.json", aksara_payload)
+        license_path = output_dir / "data" / "UNICODE-LICENSE.txt"
+        license_path.parent.mkdir(parents=True, exist_ok=True)
+        license_path.write_text(unicode_license_text.rstrip() + "\n", encoding="utf-8")
         write_json(output_dir / "data" / "languages.json", languages_payload)
         write_json(output_dir / "data" / "script_relationships.json", relationship_payload)
         write_json(output_dir / "data" / "source_manifest.json", manifest)
