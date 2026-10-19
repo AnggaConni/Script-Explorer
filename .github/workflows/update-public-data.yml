@@ -65,8 +65,10 @@ jobs:
           assert "getScriptData(iso2 || iso3)" in index_html, "Country panel must fall back to the ISO-3 code when needed"
           assert "openWritingPractice(script, fontFamily)" in index_html, "Writing practice button must pass selected script metadata"
           practice_html = Path("writing-practice.html").read_text(encoding="utf-8")
-          for required in ("writingCanvas", "pointerdown", "pointermove", "Save PNG", "targetInput"):
-              assert required in practice_html, f"Writing practice page is missing {required}"
+          for required in ("writingCanvas", "pointerdown", "pointermove", "Save PNG", "targetInput",
+                           "sequenceMode", "characterPicker", "prevCharacterBtn", "nextCharacterBtn",
+                           "makeCharacterDeck", "initializeSequence", "formatCodepoint"):
+              assert required in practice_html, "Writing practice page is missing " + required
           PY
           node --check "$RUNNER_TEMP/index-inline.js"
           node --check "$RUNNER_TEMP/writing-practice-inline.js"
