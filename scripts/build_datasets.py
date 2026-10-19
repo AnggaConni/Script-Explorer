@@ -419,13 +419,14 @@ SELECT DISTINCT
   ?countryCode2 ?countryCode3 ?countryLabel
   ?countryLanguageProperty
   ?language ?languageLabel ?languageCode
-  ?script ?scriptLabel ?scriptCode
+  ?script ?scriptLabel ?scriptDescription ?scriptCode
 WHERE {{
   ?country wdt:P297 ?countryCode2.
   OPTIONAL {{ ?country wdt:P298 ?countryCode3. }}
   {source_clauses[source_property]}
   ?language wdt:P282 ?script.
   OPTIONAL {{ ?script wdt:P506 ?scriptCode. }}
+  OPTIONAL {{ ?script schema:description ?scriptDescription. FILTER(LANG(?scriptDescription) = "en") }}
   OPTIONAL {{ ?language wdt:P220 ?languageCode. }}
   SERVICE wikibase:label {{ bd:serviceParam wikibase:language "en". }}
 }}
@@ -517,7 +518,8 @@ def fetch_wikidata_relationships() -> tuple[list[dict[str, str]], dict[str, obje
                 "language_label_en": value("languageLabel"),
                 "language_iso639_3": value("languageCode").lower(),
                 "script_id": script_id,
-                "script_label_en": value("scriptLabel"),
+                "script_label_en": value("scriptLabel") or value("scriptDescription"),
+                "script_description_en": value("scriptDescription"),
                 "script_code": script_code,
                 "country_source_property": "P297",
                 "country_language_source_properties": source_route,
@@ -559,6 +561,7 @@ def fetch_wikidata_relationships() -> tuple[list[dict[str, str]], dict[str, obje
             "P17-language-country": "country statement on a language item",
             "P282": "writing system used by a language",
             "P506": "ISO 15924 script code",
+            "schema:description": "English public description used when a writing-system label is absent",
             "P297": "ISO 3166-1 alpha-2 country code",
             "P298": "ISO 3166-1 alpha-3 country code",
             "P220": "ISO 639-3 language code",
