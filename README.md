@@ -3,7 +3,8 @@
 An interactive, global explorer for Unicode writing-system blocks and publicly sourced language/script relationships.
 
 Live app: https://anggaconni.github.io/Script-Explorer/  
-Writing Practice Studio: https://anggaconni.github.io/Script-Explorer/writing-practice.html
+Writing Practice Studio: https://anggaconni.github.io/Script-Explorer/writing-practice.html  
+SVG favicon: [favicon.svg](https://github.com/AnggaConni/Script-Explorer/blob/main/favicon.svg)
 
 ## What it does
 
@@ -11,6 +12,8 @@ Writing Practice Studio: https://anggaconni.github.io/Script-Explorer/writing-pr
 - View country-to-script/block relationships backed by public structured data.
 - Browse generated metadata and public-data source records.
 - Open the Writing Practice Studio in a new tab with the selected block's name, code, range, sample character, and font passed from the explorer.
+- Use an SVG favicon showing a calligraphy pen writing Javanese script on a white canvas, with SEO and Open Graph/Twitter metadata on both pages.
+- Reference a root-level `thumbnail.png` for link previews; upload that image to the repository root when ready.
 - Practise with mouse, touch, or stylus using a trace guide, undo/clear, pen controls, and PNG export.
 - Keep the browser app static and lightweight: no private API keys or application server are required.
 
