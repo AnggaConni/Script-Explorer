@@ -567,11 +567,10 @@ LIMIT 10000
 
 
 def fetch_wikidata_relationships() -> tuple[list[dict[str, str]], dict[str, object]]:
-    # Prefer the compact official-language and language-country routes first.
-    # The broad P2936 route is last because it has the largest public result set.
-    # LinguaMeta is the primary bulk source; Wikidata remains supplemental.
-    # Keep the slow language-item P17 route last.
-    source_routes = ("P37", "P2936", "P17-language-country")
+    # LinguaMeta provides the primary bulk country/language/script snapshot.
+    # Wikidata enrichment uses only the two more practical country-level routes;
+    # the language-item P17 route repeatedly times out on the public SPARQL endpoint.
+    source_routes = ("P37", "P2936")
     relationships: dict[tuple[str, str, str], dict[str, str]] = {}
     query_runs: list[dict[str, object]] = []
     raw_row_count = 0
