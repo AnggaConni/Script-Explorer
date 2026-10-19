@@ -17,6 +17,7 @@ on:
     paths:
       - "scripts/**"
       - "tests/**"
+      - "index.html"
       - ".github/workflows/update-public-data.yml"
 
 permissions:
@@ -54,6 +55,8 @@ jobs:
               raise SystemExit("No inline JavaScript block was found in index.html")
           output = Path(os.environ["RUNNER_TEMP"]) / "index-inline.js"
           output.write_text(inline, encoding="utf-8")
+          assert "Accept either GeoJSON ISO-3 (e.g. RUS) or ISO-2 (e.g. RU)." in html, "Country lookup must accept ISO-2 and ISO-3 codes"
+          assert "getScriptData(iso2 || iso3)" in html, "Country panel must fall back to the ISO-3 code when needed"
           print(f"Extracted inline JavaScript to {output}")
           PY
           node --check "$RUNNER_TEMP/index-inline.js"
