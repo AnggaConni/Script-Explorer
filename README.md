@@ -15,7 +15,7 @@ SVG favicon: [favicon.svg](https://github.com/AnggaConni/Script-Explorer/blob/ma
 - Use an SVG favicon showing a calligraphy pen writing Javanese script on a white canvas, with SEO and Open Graph/Twitter metadata on both pages.
 - Reference a root-level `thumbnail.png` for link previews; upload that image to the repository root when ready.
 - Practise with mouse, touch, or stylus using a trace guide, undo/clear, pen controls, and PNG export.
-- Follow an Iqro-style character sequence for the selected Unicode block, with previous/next controls, a selectable character grid, progress, and filters for letters/marks or all printable assigned characters.
+- Follow an Iqro-style character sequence for the selected Unicode block, with previous/next controls, a selectable character grid, progress, and filters for letters/marks or all printable assigned characters. The practice list is generated from the same Unicode Character Database version as the main dataset.
 - Keep the browser app static and lightweight: no private API keys or application server are required.
 
 ## Automated public-data pipeline
@@ -45,6 +45,7 @@ Each script/block card has a **Practice Writing / Latihan Menulis** button. It o
 | --- | --- |
 | aksara.json | Website dataset: Unicode block definitions, country-code mappings, and source/version metadata |
 | data/languages.json | Language records returned by the public Wikidata query |
+| data/practice_character_index.json | Per-block Unicode codepoints for letters/marks and other printable characters, generated from UnicodeData.txt |
 | data/script_relationships.json | Matched, source-attributed country/language/script relationships |
 | data/source_manifest.json | Source URLs, licenses, source checksums, query metadata, and record counts |
 | data/UNICODE-LICENSE.txt | Unicode license notice distributed with the generated Unicode-derived dataset |
