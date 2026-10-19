@@ -15,6 +15,7 @@ SVG favicon: [favicon.svg](https://github.com/AnggaConni/Script-Explorer/blob/ma
 - Use an SVG favicon showing a calligraphy pen writing Javanese script on a white canvas, with SEO and Open Graph/Twitter metadata on both pages.
 - Reference a root-level `thumbnail.png` for link previews; upload that image to the repository root when ready.
 - Practise with mouse, touch, or stylus using a trace guide, undo/clear, pen controls, and PNG export.
+- Follow an Iqro-style character sequence for the selected Unicode block, with previous/next controls, a selectable character grid, progress, and filters for letters/marks or all printable assigned characters.
 - Keep the browser app static and lightweight: no private API keys or application server are required.
 
 ## Automated public-data pipeline
