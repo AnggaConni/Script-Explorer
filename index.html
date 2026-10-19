@@ -398,8 +398,8 @@
      
         // --- I18N & CONFIG ---
         const i18n = {
-            en: { app_title: "World Script Explorer", app_subtitle: "UNICODE DATA VIEWER", reg: "REGISTERED", miss: "PROPOSED", btn_dl: "Download Font", btn_view: "View Characters", btn_practice: "Practice Writing", font_missing: "Font not yet available in registry", paging: "{start}-{end} of {total}", stat: "Ready: Local Data" },
-            id: { app_title: "Penjelajah Aksara Dunia", app_subtitle: "DATA UNICODE VIEWER", reg: "TERDAFTAR", miss: "BELUM ADA", btn_dl: "Unduh Font", btn_view: "Lihat Karakter", btn_practice: "Latihan Menulis", font_missing: "Font belum tersedia di registry", paging: "{start}-{end} dari {total}", stat: "Siap: Data Lokal" }
+            en: { app_title: "World Script Explorer", app_subtitle: "UNICODE DATA VIEWER", reg: "REGISTERED", miss: "PROPOSED", btn_dl: "Download Font", btn_view: "View Characters", btn_practice: "Practice Writing", font_missing: "Font not yet available in registry", no_script_data: "No public-source writing-system links are listed for this country yet. This is a data coverage gap, not evidence that the country has no writing systems.", paging: "{start}-{end} of {total}", stat: "Ready: Local Data" },
+            id: { app_title: "Penjelajah Aksara Dunia", app_subtitle: "DATA UNICODE VIEWER", reg: "TERDAFTAR", miss: "BELUM ADA", btn_dl: "Unduh Font", btn_view: "Lihat Karakter", btn_practice: "Latihan Menulis", font_missing: "Font belum tersedia di registry", no_script_data: "Belum ada relasi sistem tulisan dari sumber publik untuk negara ini. Ini kekurangan cakupan data, bukan berarti negara tersebut tidak memiliki aksara.", paging: "{start}-{end} dari {total}", stat: "Siap: Data Lokal" }
         };
 
         let currentLang = 'en';
@@ -458,8 +458,8 @@
                 return data;
             }
 
-            // Do not label a country with a guessed Latin fallback when public source data is absent.
-            debugArea.textContent = `No sourced script relationship currently available for ${code || 'this country'}`;
+            // Missing source links are a data-coverage gap, not proof that a country has no scripts.
+            debugArea.textContent = `${i18n[currentLang].no_script_data} [${code || 'unknown country'}]`;
             return [];
         }
 
@@ -482,7 +482,10 @@
             list.innerHTML = '';
             
             if (!scripts || scripts.length === 0) {
-                list.innerHTML = '<div style="padding:20px; text-align:center; color:#999;">No script data available for this country.</div>';
+                const emptyMessage = document.createElement('div');
+                emptyMessage.style.cssText = 'padding:20px; text-align:center; color:#999; line-height:1.6;';
+                emptyMessage.textContent = i18n[currentLang].no_script_data;
+                list.replaceChildren(emptyMessage);
                 return;
             }
             
