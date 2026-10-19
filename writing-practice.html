@@ -253,6 +253,7 @@
     (() => {
       const params = new URLSearchParams(window.location.search);
       const scriptName = (params.get('name') || 'Character practice').slice(0, 180);
+      const blockId = (params.get('block') || '').slice(0, 180);
       const scriptCode = (params.get('code') || '—').slice(0, 32);
       const scriptRange = (params.get('range') || '—').slice(0, 40);
       const fontRaw = (params.get('font') || 'Noto Sans').slice(0, 120).replace(/\+/g, ' ');
@@ -270,6 +271,8 @@
       const pickerPageSize = 96;
       let deckMode = 'letters';
       let characterDeck = [];
+      let sourceCharacterBlock = null;
+      let sourceUnicodeVersion = '';
       let currentIndex = -1;
       let pickerPage = 0;
       let target = isPrintable(sampleParam) ? sampleParam : 'A';
@@ -333,16 +336,44 @@
         return deck;
       }
 
+      function deckFromPublicIndex(mode) {
+        if (!sourceCharacterBlock) return null;
+        const letters = Array.isArray(sourceCharacterBlock.letters) ? sourceCharacterBlock.letters : [];
+        const other = Array.isArray(sourceCharacterBlock.other_printable) ? sourceCharacterBlock.other_printable : [];
+        const codepoints = mode === 'letters' ? letters : letters.concat(other).sort((a, b) => a - b);
+        return codepoints.map(codepoint => ({ value: String.fromCodePoint(codepoint), codepoint }));
+      }
+
+      function makeDeck(mode) {
+        const sourced = deckFromPublicIndex(mode);
+        // Prefer the exact codepoint list generated from this repo's pinned UCD release.
+        // If opened without a block identifier or the index is unavailable, use browser fallback.
+        return sourced !== null ? sourced : makeCharacterDeck(mode);
+      }
+
       function formatCodepoint(codepoint) {
         return 'U+' + codepoint.toString(16).toUpperCase().padStart(4, '0');
       }
 
-      function initializeSequence() {
-        characterDeck = makeCharacterDeck(deckMode);
+      async function initializeSequence() {
+        if (blockId) {
+          try {
+            const response = await fetch('./data/practice_character_index.json', { cache: 'no-cache' });
+            if (response.ok) {
+              const indexData = await response.json();
+              sourceCharacterBlock = (indexData.blocks || {})[blockId] || null;
+              sourceUnicodeVersion = (indexData.metadata || {}).unicode_version || '';
+            }
+          } catch (error) {
+            console.warn('Could not load the generated character practice index; using browser fallback.', error);
+          }
+        }
+
+        characterDeck = makeDeck(deckMode);
         if (!characterDeck.length && deckMode === 'letters') {
           deckMode = 'all';
           $('sequenceMode').value = 'all';
-          characterDeck = makeCharacterDeck(deckMode);
+          characterDeck = makeDeck(deckMode);
         }
 
         let initialIndex = characterDeck.findIndex(item => item.value === sampleParam);
@@ -354,10 +385,14 @@
         $('targetInput').value = target;
         $('referenceGlyph').textContent = target;
         $('referenceGlyph').style.fontFamily = fontFamily;
+        const sourceLabel = sourceCharacterBlock && sourceUnicodeVersion
+          ? ' · Unicode ' + sourceUnicodeVersion + ' source list'
+          : ' · browser fallback';
         $('sequenceSummary').textContent = characterDeck.length
-          ? deckMode === 'letters'
-            ? characterDeck.length + ' letters and marks found in this Unicode block'
-            : characterDeck.length + ' printable characters found in this Unicode block'
+          ? (deckMode === 'letters'
+            ? characterDeck.length + ' letters and marks'
+            : characterDeck.length + ' printable characters') +
+              ' found in this Unicode block' + sourceLabel
           : 'No character sequence could be generated from this range; enter a character above to practise it.';
         $('guideDescription').textContent = characterDeck.length
           ? 'Choose any character in the list, then practise it on the canvas. Use Previous and Next to work through the set, Iqro-style.'
@@ -365,6 +400,7 @@
         pickerPage = currentIndex >= 0 ? Math.floor(currentIndex / pickerPageSize) : 0;
         renderCharacterPicker();
         updateSequenceControls();
+        redraw();
       }
 
       function renderCharacterPicker() {
@@ -441,7 +477,7 @@
       $('sequenceMode').addEventListener('change', () => {
         const previousCharacter = target;
         deckMode = $('sequenceMode').value;
-        characterDeck = makeCharacterDeck(deckMode);
+        characterDeck = makeDeck(deckMode);
         currentIndex = characterDeck.findIndex(item => item.value === previousCharacter);
         if (currentIndex < 0 && characterDeck.length) currentIndex = 0;
         if (currentIndex >= 0) target = characterDeck[currentIndex].value;
