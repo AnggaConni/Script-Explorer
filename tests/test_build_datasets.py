@@ -50,6 +50,22 @@ class DatasetBuilderTests(unittest.TestCase):
         self.assertEqual(build.normalize_script_label("Javanese script"), "javanese")
         self.assertEqual(build.normalize_script_label("Kawi writing system"), "kawi")
 
+    def test_linguameta_relations_map_indonesian_scripts_from_public_tsv(self):
+        sample = (
+            "bcp_47_code\\tiso_639_3_code\\tenglish_name\\twriting_systems\\tlocales\\n"
+            "jav\\tjav\\tJavanese\\tJava, Latn\\tID\\n"
+            "ban\\tban\\tBalinese\\tBali, Java, Latn\\tID\\n"
+            "sun\\tsun\\tSundanese\\tSund, Latn\\tID\\n"
+        )
+        code_to_name = {"Java": "Javanese", "Latn": "Latin", "Bali": "Balinese", "Sund": "Sundanese"}
+        relationships, manifest = build.parse_linguameta_tsv(sample, code_to_name)
+        links = {(row["country_iso2"], row["language_iso639_3"], row["script_code"]) for row in relationships}
+        self.assertIn(("ID", "jav", "Java"), links)
+        self.assertIn(("ID", "ban", "Bali"), links)
+        self.assertIn(("ID", "sun", "Sund"), links)
+        self.assertEqual(manifest["license"], "CC BY 4.0")
+        self.assertEqual(manifest["country_count"], 1)
+
     def test_wikidata_queries_cover_multiple_country_language_sources(self):
         query_p2936 = build.wikidata_query("P2936")
         query_p37 = build.wikidata_query("P37")
