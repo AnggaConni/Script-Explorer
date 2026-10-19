@@ -28,9 +28,14 @@ The generated files are **not intended to be edited manually**. The Python build
    - Latest stable data: https://www.unicode.org/Public/UCD/latest/ucd/
    - Version archive: https://www.unicode.org/Public/
    - Terms: https://www.unicode.org/license.txt
-2. **Wikidata SPARQL** — publicly available structured statements relating countries, languages, writing systems, and ISO 15924 script codes.
+2. **Google Research LinguaMeta** — public language records linking ISO 639-3 languages, writing systems, and country locales in one bulk TSV snapshot.
+   - Data: https://github.com/google-research/url-nlp/tree/main/linguameta
+   - TSV: https://raw.githubusercontent.com/google-research/url-nlp/main/linguameta/linguameta.tsv
+   - Fields used: `iso_639_3_code`, `english_name`, `writing_systems` (ISO 15924 script codes), and `locales` (ISO 3166-1 alpha-2 country codes).
+   - License: CC BY 4.0, https://creativecommons.org/licenses/by/4.0/. Attribution to Google Research LinguaMeta is retained in generated manifests.
+3. **Wikidata SPARQL** — supplemental public structured statements relating countries, languages, and writing systems.
    - Endpoint: https://query.wikidata.org/
-   - Query relationships from three public routes: country language-used statements (P2936), country official-language statements (P37), and country statements on language items (P17), then language writing system (P282) → script ISO 15924 code (P506). Country ISO alpha-2 (P297) / alpha-3 (P298) and language ISO 639-3 (P220) are retained where available.
+   - Country/language routes: country language-used statements (P2936), country official-language statements (P37), and country statements on language items (P17), followed by language writing-system links (P282) and ISO 15924 script codes (P506), when available.
    - Structured data license: CC0 1.0, https://creativecommons.org/publicdomain/zero/1.0/
 
 The pipeline uses the Python standard library only. Source datasets are fetched at run time; no source data needs to be pasted into a notebook.
@@ -44,7 +49,7 @@ Each script/block card has a **Practice Writing / Latihan Menulis** button. It o
 | File | Purpose |
 | --- | --- |
 | aksara.json | Website dataset: Unicode block definitions, country-code mappings, and source/version metadata |
-| data/languages.json | Language records returned by the public Wikidata query |
+| data/languages.json | Language records linked to writing systems and country locales from LinguaMeta, enriched by Wikidata where available |
 | data/practice_character_index.json | Per-block Unicode codepoints for letters/marks and other printable characters, generated from UnicodeData.txt |
 | data/script_relationships.json | Matched, source-attributed country/language/script relationships |
 | data/source_manifest.json | Source URLs, licenses, source checksums, query metadata, and record counts |
@@ -52,7 +57,7 @@ Each script/block card has a **Practice Writing / Latihan Menulis** button. It o
 
 ### Run locally
 
-Python 3.10+ is recommended. Internet access is required to retrieve official UCD files and query Wikidata.
+Python 3.10+ is recommended. Internet access is required to retrieve official UCD files, the public LinguaMeta TSV, and supplemental Wikidata relations.
 
     python scripts/build_datasets.py --unicode-version latest
 
@@ -76,7 +81,7 @@ To force a refresh at any time:
 4. Use latest for the latest stable UCD, or enter an exact version such as 18.0.0.
 5. Start the workflow.
 
-The ISO alpha-3 to alpha-2 crosswalk is also generated from Wikidata, so the map does not rely on the old incomplete hardcoded country-code list. The workflow requires no API token for the public sources. Its GitHub token has repository contents-write permission so it can publish updates, while the workflow explicitly stages only generated dataset files. A failed download, invalid dataset, or failed public relationship query stops the run so it cannot publish a partial update. Re-run the workflow if a public endpoint is temporarily unavailable.
+The ISO alpha-3 to alpha-2 crosswalk is also generated from public country-code mappings. LinguaMeta provides the primary country/language/script snapshot; Wikidata is supplemental so a slow SPARQL endpoint does not leave the entire map empty. The workflow requires no API token for the public sources. Its GitHub token has repository contents-write permission so it can publish updates, while the workflow explicitly stages only generated dataset files. A failed download, invalid dataset, or failed public relationship query stops the run so it cannot publish a partial update. Re-run the workflow if a public endpoint is temporarily unavailable.
 
 ## Interpretation and data quality
 
