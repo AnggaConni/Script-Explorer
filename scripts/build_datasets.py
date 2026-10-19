@@ -395,23 +395,32 @@ def build_practice_character_index(
 
 
 def wikidata_query() -> str:
-    # Country -> language used (P2936) -> writing system (P282) -> ISO 15924 (P506).
-    # Values remain explicitly source-attributed; absent relationships are not guessed.
+    # Combine three public country/language relations so that a missing P2936
+    # statement does not make a country appear to have no writing systems:
+    # country P2936 language; country P37 official language; language P17 country.
+    # Then follow language P282 writing system -> P506 ISO 15924 script code.
     return """
 SELECT DISTINCT
   ?countryCode2 ?countryCode3 ?countryLabel
+  ?countryLanguageProperty
   ?language ?languageLabel ?languageCode
   ?script ?scriptLabel ?scriptCode
 WHERE {
-  ?country wdt:P297 ?countryCode2;
-           wdt:P2936 ?language.
+  ?country wdt:P297 ?countryCode2.
   OPTIONAL { ?country wdt:P298 ?countryCode3. }
+  {
+    { ?country wdt:P2936 ?language. BIND("P2936" AS ?countryLanguageProperty) }
+    UNION
+    { ?country wdt:P37 ?language. BIND("P37" AS ?countryLanguageProperty) }
+    UNION
+    { ?language wdt:P17 ?country. BIND("P17-language-country" AS ?countryLanguageProperty) }
+  }
   ?language wdt:P282 ?script.
   ?script wdt:P506 ?scriptCode.
   OPTIONAL { ?language wdt:P220 ?languageCode. }
   SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
 }
-LIMIT 20000
+LIMIT 50000
 """.strip()
 
 
@@ -446,6 +455,12 @@ def fetch_wikidata_relationships() -> tuple[list[dict[str, str]], dict[str, obje
         if not language_id or not script_id or not script_code:
             continue
         key = (country2, language_id, script_code)
+        country_language_property = value("countryLanguageProperty") or "P2936"
+        if key in relationships:
+            props = set(relationships[key]["country_language_source_properties"].split("|"))
+            props.add(country_language_property)
+            relationships[key]["country_language_source_properties"] = "|".join(sorted(props))
+            continue
         relationships[key] = {
             "country_iso2": country2,
             "country_iso3": value("countryCode3").upper(),
@@ -457,7 +472,7 @@ def fetch_wikidata_relationships() -> tuple[list[dict[str, str]], dict[str, obje
             "script_label_en": value("scriptLabel"),
             "script_code": script_code,
             "country_source_property": "P297",
-            "language_source_property": "P2936",
+            "country_language_source_properties": country_language_property,
             "writing_system_source_property": "P282",
             "script_code_source_property": "P506",
             "source": "Wikidata",
@@ -477,6 +492,8 @@ def fetch_wikidata_relationships() -> tuple[list[dict[str, str]], dict[str, obje
         "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
         "properties": {
             "P2936": "language used in a place",
+            "P37": "official language",
+            "P17-language-country": "country statement on a language item",
             "P282": "writing system used by a language",
             "P506": "ISO 15924 script code",
             "P297": "ISO 3166-1 alpha-2 country code",
@@ -696,7 +713,7 @@ def main() -> int:
                 "source": "Unicode Character Database (UCD)",
                 "source_url": f"https://www.unicode.org/Public/{unicode_version}/ucd/",
                 "generated_by": "scripts/build_datasets.py",
-                "country_mapping_source": "Wikidata SPARQL (P2936 → P282 → P506; country code P297)",
+                "country_mapping_source": "Wikidata SPARQL (country P2936/P37 or language P17 → language P282 → script P506; country code P297)",
                 "country_mapping_note": (
                     "Mappings are evidence-backed links from public Wikidata statements and Unicode "
                     "Script properties. They are incomplete where source statements are missing; "
@@ -739,6 +756,8 @@ def main() -> int:
             },
             "notes": [
                 "Generated from public source datasets; no country/script links are manually inferred.",
+                "Country/language associations combine Wikidata P2936, P37, and language-item P17 statements, with source properties preserved per relation.",
+                "A language may be used in several countries and several writing systems; country associations are not exclusive ownership claims.",
                 "Unicode blocks are codepoint ranges, not synonyms for writing systems or languages.",
                 "Script-to-block relationships are derived from Unicode Script and ScriptExtensions data.",
                 "A missing Wikidata relationship does not prove a script is absent from a country or language.",
