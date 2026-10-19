@@ -65,6 +65,25 @@
     .script-chip { border: 1px solid #d8c8b8; background: #fffaf4; border-radius: 10px; padding: 10px 14px; min-width: 170px; }
     .script-chip small { display: block; color: var(--muted); font-size: .68rem; text-transform: uppercase; letter-spacing: .09em; }
     .script-chip strong { display: block; margin-top: 4px; font-family: "Crimson Pro", Georgia, serif; font-size: 1.22rem; overflow-wrap: anywhere; }
+    .practice-browser { margin-bottom: 18px; padding: 15px 16px; }
+    .browser-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+    .browser-title { display: flex; flex-direction: column; gap: 4px; }
+    .browser-title strong { font: 700 1.12rem "Crimson Pro", Georgia, serif; }
+    .browser-title span { color: var(--muted); font-size: .78rem; }
+    .browser-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+    .browser-actions select { max-width: 230px; border: 1px solid var(--line); background: var(--soft); color: var(--ink); padding: 9px 10px; border-radius: 8px; font-size: .8rem; }
+    .sequence-nav { display: flex; align-items: center; gap: 7px; }
+    .sequence-nav .btn { padding: 9px 11px; }
+    #sequenceProgress { min-width: 100px; color: var(--muted); text-align: center; font-size: .77rem; font-variant-numeric: tabular-nums; }
+    .character-picker { display: grid; grid-template-columns: repeat(auto-fill, minmax(46px, 1fr)); gap: 7px; margin-top: 14px; max-height: 164px; overflow: auto; padding: 1px 3px 5px 1px; }
+    .character-option { min-width: 0; min-height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; border: 1px solid var(--line); border-radius: 9px; background: #fff; color: var(--ink); padding: 4px; }
+    .character-option .glyph { font-size: 1.55rem; line-height: 1.25; overflow: hidden; max-width: 100%; }
+    .character-option .code { font-size: .55rem; color: var(--muted); }
+    .character-option:hover { border-color: var(--accent); background: #fffaf4; }
+    .character-option.active { border: 2px solid var(--accent); background: #f8efe4; box-shadow: inset 0 0 0 1px #f8efe4; }
+    .picker-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 10px; color: var(--muted); font-size: .73rem; }
+    .picker-page { display: flex; gap: 6px; }
+    .picker-page .btn { padding: 6px 9px; }
     .workspace { display: grid; grid-template-columns: minmax(0, 1fr) 270px; gap: 18px; align-items: start; }
     .canvas-card, .side-card { border: 1px solid var(--line); background: var(--card); border-radius: 16px; box-shadow: var(--shadow); overflow: hidden; }
     .canvas-head { padding: 17px 20px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; gap: 12px; }
@@ -111,6 +130,13 @@
       .back-link { padding: 8px 9px; font-size: .75rem; }
       .intro { align-items: stretch; flex-direction: column; }
       .script-chip { min-width: 0; }
+      .browser-top { align-items: stretch; flex-direction: column; }
+      .browser-actions { align-items: stretch; }
+      .browser-actions select { width: 100%; max-width: none; }
+      .sequence-nav { display: grid; grid-template-columns: auto minmax(76px, 1fr) auto; }
+      #sequenceProgress { min-width: 0; }
+      .character-picker { grid-template-columns: repeat(auto-fill, minmax(42px, 1fr)); max-height: 190px; }
+      .picker-foot { align-items: flex-start; flex-direction: column; }
       .canvas-head { align-items: flex-start; flex-direction: column; }
       .input-row { width: 100%; }
       .input-row input { width: 100%; min-width: 0; }
@@ -141,6 +167,34 @@
       <div class="script-chip">
         <small>Selected writing system</small>
         <strong id="scriptTitle">Character practice</strong>
+      </div>
+    </section>
+
+    <section class="side-card practice-browser" aria-labelledby="sequenceHeading">
+      <div class="browser-top">
+        <div class="browser-title">
+          <strong id="sequenceHeading">Character sequence · Iqro-style practice</strong>
+          <span id="sequenceSummary">Loading assigned characters from this Unicode range…</span>
+        </div>
+        <div class="browser-actions">
+          <select id="sequenceMode" aria-label="Character practice set">
+            <option value="letters">Letters and marks · recommended</option>
+            <option value="all">All printable characters</option>
+          </select>
+          <div class="sequence-nav">
+            <button id="prevCharacterBtn" class="btn" type="button" aria-label="Previous character">← Previous</button>
+            <span id="sequenceProgress" aria-live="polite">—</span>
+            <button id="nextCharacterBtn" class="btn primary" type="button" aria-label="Next character">Next →</button>
+          </div>
+        </div>
+      </div>
+      <div id="characterPicker" class="character-picker" role="listbox" aria-label="Select a character to practise"></div>
+      <div class="picker-foot">
+        <span id="pickerHint">Choose a character, then trace it on the canvas below. Use Next to continue like a practice book.</span>
+        <div class="picker-page">
+          <button id="prevPickerPage" class="btn" type="button">← Character list</button>
+          <button id="nextPickerPage" class="btn" type="button">More characters →</button>
+        </div>
       </div>
     </section>
 
