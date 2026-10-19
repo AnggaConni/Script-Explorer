@@ -425,7 +425,7 @@ WHERE {{
   OPTIONAL {{ ?country wdt:P298 ?countryCode3. }}
   {source_clauses[source_property]}
   ?language wdt:P282 ?script.
-  ?script wdt:P506 ?scriptCode.
+  OPTIONAL { ?script wdt:P506 ?scriptCode. }
   OPTIONAL {{ ?language wdt:P220 ?languageCode. }}
   SERVICE wikibase:label {{ bd:serviceParam wikibase:language "en". }}
 }}
@@ -497,10 +497,12 @@ def fetch_wikidata_relationships() -> tuple[list[dict[str, str]], dict[str, obje
             language_id = language_uri.rsplit("/", 1)[-1] if language_uri else ""
             script_id = script_uri.rsplit("/", 1)[-1] if script_uri else ""
             script_code = value("scriptCode")
-            if not language_id or not script_id or not script_code:
+            if not language_id or not script_id:
                 continue
             valid_rows += 1
-            key = (country2, language_id, script_code)
+            # Some writing-system items have no ISO 15924 P506 statement yet.
+            # Keep the relationship so it can be resolved conservatively by its public label.
+            key = (country2, language_id, script_code or script_id)
             if key in relationships:
                 props = set(relationships[key]["country_language_source_properties"].split("|"))
                 props.add(source_route)
@@ -616,6 +618,13 @@ SELECT DISTINCT ?countryCode2 ?countryCode3 WHERE {
     }
 
 
+def normalize_script_label(label: str) -> str:
+    """Normalize a public English writing-system label for conservative UCD matching."""
+    value = label.casefold().strip()
+    value = re.sub(r"\b(script|writing system|writing|system|alphabet|syllabary)\b", " ", value)
+    return re.sub(r"[^a-z0-9]+", "", value)
+
+
 def build_public_datasets(
     definitions: dict[str, dict[str, object]],
     relationships: list[dict[str, str]],
@@ -630,17 +639,43 @@ def build_public_datasets(
                 if script_code and script_code not in GENERIC_SCRIPT_CODES:
                     blocks_by_code[str(script_code)].add(block_id)
 
+    script_codes_by_normalized_name: dict[str, set[str]] = collections.defaultdict(set)
+    for definition in definitions.values():
+        script_codes = definition.get("script_codes", [])
+        script_names = definition.get("script_names", [])
+        if isinstance(script_codes, list) and isinstance(script_names, list):
+            for code, name in zip(script_codes, script_names):
+                normalized_name = normalize_script_label(str(name))
+                if normalized_name:
+                    script_codes_by_normalized_name[normalized_name].add(str(code))
+
     countries: dict[str, set[str]] = collections.defaultdict(set)
     language_map: dict[str, dict[str, object]] = {}
-    matched_relationships: list[dict[str, str]] = []
+    matched_relationships: list[dict[str, object]] = []
     for relationship in relationships:
-        country_code = relationship["country_iso2"]
-        language_id = relationship["language_id"]
-        script_code = relationship["script_code"]
+        country_code = str(relationship["country_iso2"])
+        language_id = str(relationship["language_id"])
+        source_script_code = str(relationship.get("script_code", "")).strip()
+        script_label = str(relationship.get("script_label_en", "")).strip()
+        script_code = source_script_code
+        resolution = "ISO 15924 P506"
+        if not script_code or script_code not in blocks_by_code:
+            normalized_label = normalize_script_label(script_label)
+            candidates = script_codes_by_normalized_name.get(normalized_label, set())
+            if len(candidates) == 1:
+                script_code = next(iter(candidates))
+                resolution = "unique normalized English label matched to Unicode Script property"
+            else:
+                # Ambiguous or missing labels are not guessed.
+                continue
+
         block_ids = blocks_by_code.get(script_code, set())
         if block_ids:
             countries[country_code].update(block_ids)
-            matched_relationships.append(relationship)
+            matched_relationship = dict(relationship)
+            matched_relationship["resolved_script_code"] = script_code
+            matched_relationship["script_code_resolution"] = resolution
+            matched_relationships.append(matched_relationship)
 
         language = language_map.setdefault(language_id, {
             "id": language_id,
@@ -652,9 +687,9 @@ def build_public_datasets(
             "country_codes": set(),
             "source": "Wikidata",
         })
-        if relationship["script_code"]:
+        if script_code:
             language["script_codes"].add(script_code)
-            language["script_names"].add(relationship["script_label_en"] or script_code)
+            language["script_names"].add(script_label or script_code)
         language["country_codes"].add(country_code)
         if not language.get("name_en") and relationship["language_label_en"]:
             language["name_en"] = relationship["language_label_en"]
@@ -663,7 +698,7 @@ def build_public_datasets(
 
     if not countries:
         raise RuntimeError(
-            "No country-to-block relationships could be derived from Wikidata ISO 15924 codes. "
+            "No country-to-block relationships could be resolved from Wikidata ISO 15924 codes or unique public script labels. "
             "The existing published datasets were left untouched."
         )
 
@@ -699,10 +734,11 @@ def build_public_datasets(
             "license": "CC0 1.0",
             "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
             "matching_note": (
-                "A country-to-block link is generated only when a Wikidata language/country "
-                "relationship includes a script ISO 15924 code that matches a Unicode Script "
-                "property observed in a block. Absence of a link is not evidence that a script "
-                "is not used in that country."
+                "A country-to-block link is generated when a Wikidata language/country relationship "
+                "provides an ISO 15924 code matching a Unicode Script property, or when the public "
+                "English script label uniquely matches a Unicode Script name after generic wording "
+                "is normalized. Resolution method is recorded for each relation. Ambiguous labels "
+                "are not guessed. Absence of a link is not evidence that a script is not used."
             ),
             "records_from_source": len(relationships),
             "records_matched_to_unicode_blocks": len(matched_relationships),
@@ -824,6 +860,7 @@ def main() -> int:
                 "A language may be used in several countries and several writing systems; country associations are not exclusive ownership claims.",
                 "Unicode blocks are codepoint ranges, not synonyms for writing systems or languages.",
                 "Script-to-block relationships are derived from Unicode Script and ScriptExtensions data.",
+                "When Wikidata omits ISO 15924 P506, a unique normalized public English script label may be matched to a Unicode Script name; the resolution is recorded in data/script_relationships.json.",
                 "A missing Wikidata relationship does not prove a script is absent from a country or language.",
                 "Script font family values are best-effort Noto Sans family names; font availability varies.",
                 "The data builder uses only Python's standard library.",
