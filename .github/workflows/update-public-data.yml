@@ -104,6 +104,9 @@ jobs:
           assert len(crosswalk) >= 200, f"Unexpectedly small ISO country-code crosswalk: {len(crosswalk)}"
           assert all(re.fullmatch(r"[A-Z]{2}", code) for code in countries), "Non-ISO-2 country key found"
           assert all(block_id in definitions for ids in countries.values() for block_id in ids), "Country mapping references an absent block"
+          assert "ID" in countries, "Indonesia has no public-source writing-system links; check country-language sources"
+          assert "basic_latin" in countries["ID"], "Indonesia should include the public-source Latin script relation"
+          assert "javanese" in countries["ID"], "Indonesia should include its public-source Javanese script relation"
           assert languages.get("languages"), "Language dataset is empty"
           assert relationships.get("relationships"), "Script relationship dataset is empty"
           practice_blocks = practice_index.get("blocks", {})
