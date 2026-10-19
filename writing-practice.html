@@ -196,7 +196,16 @@
       const $ = id => document.getElementById(id);
       const canvas = $('writingCanvas');
       const ctx = canvas.getContext('2d');
-      const fontFamily = fontRaw.includes(' ') ? '"' + fontRaw.replace(/"/g, '') + '", "Noto Sans", sans-serif' : '"' + fontRaw.replace(/"/g, '') + '", "Noto Sans", sans-serif';
+      const fontFamily = '"' + fontRaw.replace(/"/g, '') + '", "Noto Sans", sans-serif';
+      if (fontRaw && fontRaw !== 'Noto Sans') {
+        const fontUrl = new URL('https://fonts.googleapis.com/css2');
+        fontUrl.searchParams.set('family', fontRaw);
+        fontUrl.searchParams.set('display', 'swap');
+        const fontLink = document.createElement('link');
+        fontLink.rel = 'stylesheet';
+        fontLink.href = fontUrl.href;
+        document.head.appendChild(fontLink);
+      }
 
       $('scriptTitle').textContent = scriptName;
       $('targetInput').value = target;
