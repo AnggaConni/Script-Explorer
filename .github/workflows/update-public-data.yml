@@ -52,7 +52,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add aksara.json data/languages.json data/script_relationships.json data/source_manifest.json
+          git add aksara.json data/
           if git diff --cached --quiet; then
             echo "Generated datasets are unchanged; nothing to commit."
           else
