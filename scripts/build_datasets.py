@@ -39,7 +39,13 @@ def utc_now() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
 
 
-def fetch_text(url: str, *, headers: dict[str, str] | None = None, timeout: int = 120) -> tuple[str, str]:
+def fetch_text(
+    url: str,
+    *,
+    headers: dict[str, str] | None = None,
+    timeout: int = 120,
+    max_attempts: int = 3,
+) -> tuple[str, str]:
     request_headers = {
         "User-Agent": USER_AGENT,
         "Accept": "text/plain, application/json;q=0.9, */*;q=0.8",
@@ -48,18 +54,18 @@ def fetch_text(url: str, *, headers: dict[str, str] | None = None, timeout: int 
         request_headers.update(headers)
     request = Request(url, headers=request_headers)
     last_error: Exception | None = None
-    for attempt in range(3):
+    for attempt in range(max(1, max_attempts)):
         try:
             with urlopen(request, timeout=timeout) as response:
                 payload = response.read().decode("utf-8-sig")
                 return payload, response.geturl()
         except HTTPError as exc:
             last_error = exc
-            if exc.code not in RETRYABLE_HTTP_CODES or attempt == 2:
+            if exc.code not in RETRYABLE_HTTP_CODES or attempt == max(1, max_attempts) - 1:
                 raise RuntimeError(f"HTTP {exc.code} while downloading {url}") from exc
         except (URLError, TimeoutError) as exc:
             last_error = exc
-            if attempt == 2:
+            if attempt == max(1, max_attempts) - 1:
                 raise RuntimeError(f"Could not download {url}: {exc}") from exc
         time.sleep(2 ** attempt)
     raise RuntimeError(f"Could not download {url}: {last_error}")
@@ -428,7 +434,9 @@ LIMIT 10000
 
 
 def fetch_wikidata_relationships() -> tuple[list[dict[str, str]], dict[str, object]]:
-    source_routes = ("P2936", "P37", "P17-language-country")
+    # Prefer the compact official-language and language-country routes first.
+    # The broad P2936 route is last because it has the largest public result set.
+    source_routes = ("P37", "P17-language-country", "P2936")
     relationships: dict[tuple[str, str, str], dict[str, str]] = {}
     query_runs: list[dict[str, object]] = []
     raw_row_count = 0
@@ -436,24 +444,44 @@ def fetch_wikidata_relationships() -> tuple[list[dict[str, str]], dict[str, obje
     for source_route in source_routes:
         query = wikidata_query(source_route)
         url = WIKIDATA_ENDPOINT + "?" + urlencode({"query": query, "format": "json"})
-        payload, final_url = fetch_text(
-            url,
-            headers={"Accept": "application/sparql-results+json"},
-            timeout=120,
-        )
         try:
+            payload, final_url = fetch_text(
+                url,
+                headers={"Accept": "application/sparql-results+json"},
+                timeout=90,
+                max_attempts=1,
+            )
             response = json.loads(payload)
             bindings = response["results"]["bindings"]
-        except (json.JSONDecodeError, KeyError, TypeError) as exc:
-            raise RuntimeError(
-                f"Wikidata SPARQL returned an unreadable response for {source_route}."
-            ) from exc
+        except (RuntimeError, json.JSONDecodeError, KeyError, TypeError) as exc:
+            print(
+                f"WARNING: skipping unavailable Wikidata route {source_route}: {exc}",
+                file=sys.stderr,
+            )
+            query_runs.append({
+                "country_language_source_property": source_route,
+                "query_endpoint": WIKIDATA_ENDPOINT,
+                "query": query,
+                "records": 0,
+                "error": str(exc),
+            })
+            continue
 
         if len(bindings) >= 10000:
-            raise RuntimeError(
-                f"Wikidata query for {source_route} reached its 10,000-row limit; "
-                "increase or page this source before publishing to avoid silent truncation."
+            message = (
+                f"Query for {source_route} reached its 10,000-row cap; "
+                "this route is skipped to avoid publishing silently truncated results."
             )
+            print("WARNING: " + message, file=sys.stderr)
+            query_runs.append({
+                "country_language_source_property": source_route,
+                "query_endpoint": WIKIDATA_ENDPOINT,
+                "query": query,
+                "records": len(bindings),
+                "error": message,
+            })
+            continue
+
         raw_row_count += len(bindings)
         valid_rows = 0
 
@@ -510,7 +538,13 @@ def fetch_wikidata_relationships() -> tuple[list[dict[str, str]], dict[str, obje
         item["country_iso2"], item["language_id"], item["script_code"]
     ))
     if not results:
-        raise RuntimeError("Wikidata queries returned no valid language/script/country relationships.")
+        raise RuntimeError(
+            "All Wikidata routes failed or returned no valid language/script/country relationships; "
+            "existing published datasets were left untouched."
+        )
+    successful_routes = sum(1 for item in query_runs if "error" not in item and item.get("records", 0) > 0)
+    if successful_routes == 0:
+        raise RuntimeError("No Wikidata country/language route returned any usable records.")
 
     manifest = {
         "name": "Wikidata language, writing-system and country relationships",
@@ -528,6 +562,8 @@ def fetch_wikidata_relationships() -> tuple[list[dict[str, str]], dict[str, obje
             "P220": "ISO 639-3 language code",
         },
         "raw_rows_across_queries": raw_row_count,
+        "successful_query_routes": successful_routes,
+        "failed_query_routes": sum(1 for item in query_runs if "error" in item),
         "records": len(results),
         "normalized_data_sha256": hashlib.sha256(
             json.dumps(results, sort_keys=True, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
