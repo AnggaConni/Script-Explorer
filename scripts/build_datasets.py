@@ -394,100 +394,127 @@ def build_practice_character_index(
     }
 
 
-def wikidata_query() -> str:
-    # Combine three public country/language relations so that a missing P2936
-    # statement does not make a country appear to have no writing systems:
-    # country P2936 language; country P37 official language; language P17 country.
-    # Then follow language P282 writing system -> P506 ISO 15924 script code.
-    return """
+def wikidata_query(source_property: str = "P2936") -> str:
+    """Return one bounded query per country/language source route.
+
+    Splitting the three routes avoids an expensive high-cardinality UNION query
+    and makes public-endpoint failures easier to diagnose/retry.
+    """
+    source_clauses = {
+        "P2936": '{ ?country wdt:P2936 ?language. BIND("P2936" AS ?countryLanguageProperty) }',
+        "P37": '{ ?country wdt:P37 ?language. BIND("P37" AS ?countryLanguageProperty) }',
+        "P17-language-country": '{ ?language wdt:P17 ?country. BIND("P17-language-country" AS ?countryLanguageProperty) }',
+    }
+    if source_property not in source_clauses:
+        raise ValueError(f"Unsupported Wikidata country/language source route: {source_property}")
+
+    return f"""
 SELECT DISTINCT
   ?countryCode2 ?countryCode3 ?countryLabel
   ?countryLanguageProperty
   ?language ?languageLabel ?languageCode
   ?script ?scriptLabel ?scriptCode
-WHERE {
+WHERE {{
   ?country wdt:P297 ?countryCode2.
-  OPTIONAL { ?country wdt:P298 ?countryCode3. }
-  {
-    { ?country wdt:P2936 ?language. BIND("P2936" AS ?countryLanguageProperty) }
-    UNION
-    { ?country wdt:P37 ?language. BIND("P37" AS ?countryLanguageProperty) }
-    UNION
-    { ?language wdt:P17 ?country. BIND("P17-language-country" AS ?countryLanguageProperty) }
-  }
+  OPTIONAL {{ ?country wdt:P298 ?countryCode3. }}
+  {source_clauses[source_property]}
   ?language wdt:P282 ?script.
   ?script wdt:P506 ?scriptCode.
-  OPTIONAL { ?language wdt:P220 ?languageCode. }
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
-}
-LIMIT 50000
+  OPTIONAL {{ ?language wdt:P220 ?languageCode. }}
+  SERVICE wikibase:label {{ bd:serviceParam wikibase:language "en". }}
+}}
+LIMIT 10000
 """.strip()
 
 
 def fetch_wikidata_relationships() -> tuple[list[dict[str, str]], dict[str, object]]:
-    query = wikidata_query()
-    url = WIKIDATA_ENDPOINT + "?" + urlencode({"query": query, "format": "json"})
-    payload, final_url = fetch_text(
-        url,
-        headers={"Accept": "application/sparql-results+json"},
-        timeout=180,
-    )
-    try:
-        response = json.loads(payload)
-        bindings = response["results"]["bindings"]
-    except (json.JSONDecodeError, KeyError, TypeError) as exc:
-        raise RuntimeError("Wikidata SPARQL returned an unreadable response.") from exc
-    if not bindings:
-        raise RuntimeError("Wikidata SPARQL returned no language/script/country relationships.")
+    source_routes = ("P2936", "P37", "P17-language-country")
     relationships: dict[tuple[str, str, str], dict[str, str]] = {}
-    for row in bindings:
-        def value(key: str) -> str:
-            return str(row.get(key, {}).get("value", "")).strip()
+    query_runs: list[dict[str, object]] = []
+    raw_row_count = 0
 
-        country2 = value("countryCode2").upper()
-        if not re.fullmatch(r"[A-Z]{2}", country2):
-            continue
-        language_uri = value("language")
-        script_uri = value("script")
-        language_id = language_uri.rsplit("/", 1)[-1] if language_uri else ""
-        script_id = script_uri.rsplit("/", 1)[-1] if script_uri else ""
-        script_code = value("scriptCode")
-        if not language_id or not script_id or not script_code:
-            continue
-        key = (country2, language_id, script_code)
-        country_language_property = value("countryLanguageProperty") or "P2936"
-        if key in relationships:
-            props = set(relationships[key]["country_language_source_properties"].split("|"))
-            props.add(country_language_property)
-            relationships[key]["country_language_source_properties"] = "|".join(sorted(props))
-            continue
-        relationships[key] = {
-            "country_iso2": country2,
-            "country_iso3": value("countryCode3").upper(),
-            "country_label_en": value("countryLabel"),
-            "language_id": language_id,
-            "language_label_en": value("languageLabel"),
-            "language_iso639_3": value("languageCode").lower(),
-            "script_id": script_id,
-            "script_label_en": value("scriptLabel"),
-            "script_code": script_code,
-            "country_source_property": "P297",
-            "country_language_source_properties": country_language_property,
-            "writing_system_source_property": "P282",
-            "script_code_source_property": "P506",
-            "source": "Wikidata",
-            "source_url": f"https://www.wikidata.org/wiki/{language_id}",
-        }
+    for source_route in source_routes:
+        query = wikidata_query(source_route)
+        url = WIKIDATA_ENDPOINT + "?" + urlencode({"query": query, "format": "json"})
+        payload, final_url = fetch_text(
+            url,
+            headers={"Accept": "application/sparql-results+json"},
+            timeout=120,
+        )
+        try:
+            response = json.loads(payload)
+            bindings = response["results"]["bindings"]
+        except (json.JSONDecodeError, KeyError, TypeError) as exc:
+            raise RuntimeError(
+                f"Wikidata SPARQL returned an unreadable response for {source_route}."
+            ) from exc
+
+        if len(bindings) >= 10000:
+            raise RuntimeError(
+                f"Wikidata query for {source_route} reached its 10,000-row limit; "
+                "increase or page this source before publishing to avoid silent truncation."
+            )
+        raw_row_count += len(bindings)
+        valid_rows = 0
+
+        for row in bindings:
+            def value(key: str) -> str:
+                return str(row.get(key, {}).get("value", "")).strip()
+
+            country2 = value("countryCode2").upper()
+            if not re.fullmatch(r"[A-Z]{2}", country2):
+                continue
+            language_uri = value("language")
+            script_uri = value("script")
+            language_id = language_uri.rsplit("/", 1)[-1] if language_uri else ""
+            script_id = script_uri.rsplit("/", 1)[-1] if script_uri else ""
+            script_code = value("scriptCode")
+            if not language_id or not script_id or not script_code:
+                continue
+            valid_rows += 1
+            key = (country2, language_id, script_code)
+            if key in relationships:
+                props = set(relationships[key]["country_language_source_properties"].split("|"))
+                props.add(source_route)
+                relationships[key]["country_language_source_properties"] = "|".join(sorted(props))
+                continue
+
+            relationships[key] = {
+                "country_iso2": country2,
+                "country_iso3": value("countryCode3").upper(),
+                "country_label_en": value("countryLabel"),
+                "language_id": language_id,
+                "language_label_en": value("languageLabel"),
+                "language_iso639_3": value("languageCode").lower(),
+                "script_id": script_id,
+                "script_label_en": value("scriptLabel"),
+                "script_code": script_code,
+                "country_source_property": "P297",
+                "country_language_source_properties": source_route,
+                "writing_system_source_property": "P282",
+                "script_code_source_property": "P506",
+                "source": "Wikidata",
+                "source_url": f"https://www.wikidata.org/wiki/{language_id}",
+            }
+
+        query_runs.append({
+            "country_language_source_property": source_route,
+            "query_endpoint": WIKIDATA_ENDPOINT,
+            "query": query,
+            "final_url": final_url.split("?", 1)[0],
+            "rows_returned": len(bindings),
+            "valid_relationship_rows": valid_rows,
+        })
+
     results = sorted(relationships.values(), key=lambda item: (
         item["country_iso2"], item["language_id"], item["script_code"]
     ))
     if not results:
-        raise RuntimeError("Wikidata results did not contain valid country/language/script records.")
+        raise RuntimeError("Wikidata queries returned no valid language/script/country relationships.")
+
     manifest = {
         "name": "Wikidata language, writing-system and country relationships",
-        "query_endpoint": WIKIDATA_ENDPOINT,
-        "query": query,
-        "final_url": final_url.split("?", 1)[0],
+        "queries": query_runs,
         "license": "CC0 1.0",
         "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
         "properties": {
@@ -500,6 +527,7 @@ def fetch_wikidata_relationships() -> tuple[list[dict[str, str]], dict[str, obje
             "P298": "ISO 3166-1 alpha-3 country code",
             "P220": "ISO 639-3 language code",
         },
+        "raw_rows_across_queries": raw_row_count,
         "records": len(results),
         "normalized_data_sha256": hashlib.sha256(
             json.dumps(results, sort_keys=True, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
