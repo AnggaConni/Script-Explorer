@@ -257,10 +257,21 @@
       const scriptRange = (params.get('range') || '—').slice(0, 40);
       const fontRaw = (params.get('font') || 'Noto Sans').slice(0, 120).replace(/\+/g, ' ');
       const sampleParam = params.get('sample') || '';
+      const rangeMatch = scriptRange.match(/^([0-9A-F]{1,6})\\s*-\\s*([0-9A-F]{1,6})$/i);
+      const codepointRange = rangeMatch
+        ? { start: parseInt(rangeMatch[1], 16), end: parseInt(rangeMatch[2], 16) }
+        : null;
       const isPrintable = value => Array.from(value).some(char => {
         const cp = char.codePointAt(0);
         return cp > 0x20 && !(cp >= 0x7F && cp <= 0x9F);
       });
+      const letterOrMark = /[\\p{L}\\p{M}]/u;
+      const nonPrintableCategory = /[\\p{C}\\p{Z}]/u;
+      const pickerPageSize = 96;
+      let deckMode = 'letters';
+      let characterDeck = [];
+      let currentIndex = -1;
+      let pickerPage = 0;
       let target = isPrintable(sampleParam) ? sampleParam : 'A';
       let guideVisible = true;
       let drawing = false;
@@ -293,6 +304,179 @@
         ? 'The sample character from the selected Unicode block is loaded as your guide. You can replace it with any character or short text.'
         : 'No visible sample was supplied for this block, so a Latin placeholder is loaded. Enter the character you want to practise.';
       $('referenceGlyph').textContent = target;
+
+      function isUnicodeNoncharacter(codepoint) {
+        return (codepoint >= 0xFDD0 && codepoint <= 0xFDEF) ||
+          ((codepoint & 0xFFFF) === 0xFFFE) ||
+          ((codepoint & 0xFFFF) === 0xFFFF);
+      }
+
+      function makeCharacterDeck(mode) {
+        if (!codepointRange || codepointRange.start > codepointRange.end ||
+            codepointRange.end > 0x10FFFF ||
+            codepointRange.end - codepointRange.start > 150000) {
+          return isPrintable(sampleParam)
+            ? Array.from(sampleParam).map(char => ({ value: char, codepoint: char.codePointAt(0) }))
+            : [];
+        }
+
+        const deck = [];
+        for (let cp = codepointRange.start; cp <= codepointRange.end; cp++) {
+          if ((cp >= 0xD800 && cp <= 0xDFFF) || isUnicodeNoncharacter(cp)) continue;
+          const glyph = String.fromCodePoint(cp);
+          // General Category C (controls, unassigned, format and private-use) and
+          // separators are skipped because they are not useful standalone tracing targets.
+          if (nonPrintableCategory.test(glyph)) continue;
+          if (mode === 'letters' && !letterOrMark.test(glyph)) continue;
+          deck.push({ value: glyph, codepoint: cp });
+        }
+        return deck;
+      }
+
+      function formatCodepoint(codepoint) {
+        return 'U+' + codepoint.toString(16).toUpperCase().padStart(4, '0');
+      }
+
+      function initializeSequence() {
+        characterDeck = makeCharacterDeck(deckMode);
+        if (!characterDeck.length && deckMode === 'letters') {
+          deckMode = 'all';
+          $('sequenceMode').value = 'all';
+          characterDeck = makeCharacterDeck(deckMode);
+        }
+
+        let initialIndex = characterDeck.findIndex(item => item.value === sampleParam);
+        if (initialIndex < 0 && characterDeck.length) initialIndex = 0;
+        if (initialIndex >= 0) {
+          currentIndex = initialIndex;
+          target = characterDeck[currentIndex].value;
+        }
+        $('targetInput').value = target;
+        $('referenceGlyph').textContent = target;
+        $('referenceGlyph').style.fontFamily = fontFamily;
+        $('sequenceSummary').textContent = characterDeck.length
+          ? deckMode === 'letters'
+            ? characterDeck.length + ' letters and marks found in this Unicode block'
+            : characterDeck.length + ' printable characters found in this Unicode block'
+          : 'No character sequence could be generated from this range; enter a character above to practise it.';
+        $('guideDescription').textContent = characterDeck.length
+          ? 'Choose any character in the list, then practise it on the canvas. Use Previous and Next to work through the set, Iqro-style.'
+          : 'This block has no printable character sequence to show. Enter a character or short text to use as your guide.';
+        pickerPage = currentIndex >= 0 ? Math.floor(currentIndex / pickerPageSize) : 0;
+        renderCharacterPicker();
+        updateSequenceControls();
+      }
+
+      function renderCharacterPicker() {
+        const picker = $('characterPicker');
+        picker.replaceChildren();
+        const pageCount = Math.max(1, Math.ceil(characterDeck.length / pickerPageSize));
+        pickerPage = Math.max(0, Math.min(pickerPage, pageCount - 1));
+        const start = pickerPage * pickerPageSize;
+        const visible = characterDeck.slice(start, start + pickerPageSize);
+
+        visible.forEach((item, localIndex) => {
+          const absoluteIndex = start + localIndex;
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.className = 'character-option' + (absoluteIndex === currentIndex ? ' active' : '');
+          button.setAttribute('role', 'option');
+          button.setAttribute('aria-selected', String(absoluteIndex === currentIndex));
+          button.title = item.value + ' · ' + formatCodepoint(item.codepoint);
+          const glyph = document.createElement('span');
+          glyph.className = 'glyph';
+          glyph.style.fontFamily = fontFamily;
+          glyph.textContent = item.value;
+          const code = document.createElement('span');
+          code.className = 'code';
+          code.textContent = formatCodepoint(item.codepoint);
+          button.append(glyph, code);
+          button.addEventListener('click', () => selectCharacter(absoluteIndex));
+          picker.appendChild(button);
+        });
+
+        $('prevPickerPage').disabled = pickerPage <= 0;
+        $('nextPickerPage').disabled = pickerPage >= pageCount - 1;
+        $('prevPickerPage').classList.toggle('btn-disabled', pickerPage <= 0);
+        $('nextPickerPage').classList.toggle('btn-disabled', pickerPage >= pageCount - 1);
+      }
+
+      function updateSequenceControls() {
+        const hasDeck = characterDeck.length > 0;
+        const isInDeck = currentIndex >= 0 && currentIndex < characterDeck.length;
+        $('sequenceProgress').textContent = isInDeck
+          ? (currentIndex + 1) + ' / ' + characterDeck.length
+          : 'Custom text';
+        $('prevCharacterBtn').disabled = !hasDeck || (isInDeck && currentIndex <= 0);
+        $('nextCharacterBtn').disabled = !hasDeck || (isInDeck && currentIndex >= characterDeck.length - 1);
+        $('prevCharacterBtn').classList.toggle('btn-disabled', $('prevCharacterBtn').disabled);
+        $('nextCharacterBtn').classList.toggle('btn-disabled', $('nextCharacterBtn').disabled);
+        if (isInDeck) {
+          const item = characterDeck[currentIndex];
+          $('pickerHint').textContent = 'Selected ' + formatCodepoint(item.codepoint) +
+            '. Practise this character, then move to the next one.';
+        } else {
+          $('pickerHint').textContent = 'You are practising custom text. Choose a character above to return to the sequence.';
+        }
+      }
+
+      function selectCharacter(index) {
+        if (index < 0 || index >= characterDeck.length) return;
+        currentIndex = index;
+        pickerPage = Math.floor(currentIndex / pickerPageSize);
+        target = characterDeck[currentIndex].value;
+        $('targetInput').value = target;
+        $('referenceGlyph').textContent = target;
+        $('referenceGlyph').style.fontFamily = fontFamily;
+        $('guideDescription').textContent = 'Trace this character on the canvas. Continue through the sequence using Previous and Next.';
+        strokes = [];
+        currentStroke = null;
+        drawing = false;
+        renderCharacterPicker();
+        updateSequenceControls();
+        redraw();
+        $('strokeStatus').textContent = 'Ready to practise ' + formatCodepoint(characterDeck[currentIndex].codepoint);
+      }
+
+      $('sequenceMode').addEventListener('change', () => {
+        const previousCharacter = target;
+        deckMode = $('sequenceMode').value;
+        characterDeck = makeCharacterDeck(deckMode);
+        currentIndex = characterDeck.findIndex(item => item.value === previousCharacter);
+        if (currentIndex < 0 && characterDeck.length) currentIndex = 0;
+        if (currentIndex >= 0) target = characterDeck[currentIndex].value;
+        pickerPage = currentIndex >= 0 ? Math.floor(currentIndex / pickerPageSize) : 0;
+        $('targetInput').value = target;
+        $('referenceGlyph').textContent = target;
+        $('sequenceSummary').textContent = characterDeck.length
+          ? (deckMode === 'letters' ? 'Letters and marks' : 'Printable characters') +
+            ': ' + characterDeck.length + ' in this Unicode block'
+          : 'No printable characters were found in this range.';
+        strokes = [];
+        renderCharacterPicker();
+        updateSequenceControls();
+        redraw();
+      });
+
+      $('prevCharacterBtn').addEventListener('click', () => {
+        if (currentIndex > 0) selectCharacter(currentIndex - 1);
+      });
+      $('nextCharacterBtn').addEventListener('click', () => {
+        if (currentIndex >= 0 && currentIndex < characterDeck.length - 1) selectCharacter(currentIndex + 1);
+        else if (currentIndex < 0 && characterDeck.length) selectCharacter(0);
+      });
+      $('prevPickerPage').addEventListener('click', () => {
+        if (pickerPage > 0) {
+          pickerPage--;
+          renderCharacterPicker();
+        }
+      });
+      $('nextPickerPage').addEventListener('click', () => {
+        if ((pickerPage + 1) * pickerPageSize < characterDeck.length) {
+          pickerPage++;
+          renderCharacterPicker();
+        }
+      });
 
       function getCanvasSize() {
         const rect = canvas.getBoundingClientRect();
@@ -427,10 +611,21 @@
           return;
         }
         target = value;
+        currentIndex = characterDeck.findIndex(item => item.value === target);
+        if (currentIndex >= 0) pickerPage = Math.floor(currentIndex / pickerPageSize);
         $('targetInput').value = target;
         $('referenceGlyph').textContent = target;
-        $('guideDescription').textContent = 'Your selected character or text is now the practice guide.';
+        $('referenceGlyph').style.fontFamily = fontFamily;
+        $('guideDescription').textContent = currentIndex >= 0
+          ? 'This character is part of the current practice sequence.'
+          : 'Your custom character or text is now the practice guide.';
+        strokes = [];
+        currentStroke = null;
+        drawing = false;
+        renderCharacterPicker();
+        updateSequenceControls();
         redraw();
+        $('strokeStatus').textContent = 'Practice guide updated';
       }
 
       $('applyTarget').addEventListener('click', applyTarget);
@@ -481,6 +676,7 @@
         document.fonts.ready.then(() => redraw()).catch(() => {});
       }
       window.addEventListener('resize', resizeCanvas);
+      initializeSequence();
       resizeCanvas();
     })();
   </script>
