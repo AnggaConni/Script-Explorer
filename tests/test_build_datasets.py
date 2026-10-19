@@ -46,6 +46,22 @@ class DatasetBuilderTests(unittest.TestCase):
         self.assertEqual(entries[0x41], ("Lu", "LATIN CAPITAL LETTER A"))
         self.assertEqual(entries[0x3401], ("Lo", "CJK Ideograph-3401"))
 
+    def test_practice_index_separates_letters_from_other_printables(self):
+        definitions = {
+            "basic_latin": {"range": "0020-0042"},
+        }
+        character_data = {
+            0x20: ("Zs", "SPACE"),
+            0x21: ("Po", "EXCLAMATION MARK"),
+            0x31: ("Nd", "DIGIT ONE"),
+            0x41: ("Lu", "LATIN CAPITAL LETTER A"),
+            0x42: ("Lu", "LATIN CAPITAL LETTER B"),
+        }
+        index = build.build_practice_character_index(definitions, character_data, "18.0.0")
+        self.assertEqual(index["blocks"]["basic_latin"]["letters"], [0x41, 0x42])
+        self.assertEqual(index["blocks"]["basic_latin"]["other_printable"], [0x21, 0x31])
+        self.assertEqual(index["metadata"]["unicode_version"], "18.0.0")
+
     def test_country_mapping_uses_sourced_script_code(self):
         definitions = {
             "basic_latin": {"script_codes": ["Latn"]},
