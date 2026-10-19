@@ -31,22 +31,90 @@
     }
   },
   "relationship_source": {
-    "name": "Wikidata language, writing-system and country relationships",
-    "query_endpoint": "https://query.wikidata.org/sparql",
-    "query": "SELECT DISTINCT\n  ?countryCode2 ?countryCode3 ?countryLabel\n  ?language ?languageLabel ?languageCode\n  ?script ?scriptLabel ?scriptCode\nWHERE {\n  ?country wdt:P297 ?countryCode2;\n           wdt:P2936 ?language.\n  OPTIONAL { ?country wdt:P298 ?countryCode3. }\n  ?language wdt:P282 ?script.\n  ?script wdt:P506 ?scriptCode.\n  OPTIONAL { ?language wdt:P220 ?languageCode. }\n  SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". }\n}\nLIMIT 20000",
-    "final_url": "https://query.wikidata.org/sparql",
-    "license": "CC0 1.0",
-    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
-    "properties": {
-      "P2936": "language used in a place",
-      "P282": "writing system used by a language",
-      "P506": "ISO 15924 script code",
-      "P297": "ISO 3166-1 alpha-2 country code",
-      "P298": "ISO 3166-1 alpha-3 country code",
-      "P220": "ISO 639-3 language code"
+    "primary": "Google Research LinguaMeta",
+    "supplemental": "Wikidata SPARQL"
+  },
+  "relationship_sources": {
+    "linguameta": {
+      "name": "Google Research LinguaMeta language writing systems and locales",
+      "url": "https://raw.githubusercontent.com/google-research/url-nlp/main/linguameta/linguameta.tsv",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "attribution": "Google Research LinguaMeta",
+      "fields": {
+        "iso_639_3_code": "language identifier",
+        "english_name": "English language label",
+        "writing_systems": "comma-separated ISO 15924 script codes",
+        "locales": "comma-separated ISO 3166-1 alpha-2 country codes"
+      },
+      "input_rows": 7511,
+      "language_count": 6469,
+      "country_count": 250,
+      "relationship_count": 8079,
+      "unknown_script_codes": {
+        "Geok": 1,
+        "Hans": 11,
+        "Hant": 6,
+        "Jpan": 13,
+        "Kpel": 1,
+        "Latg": 1,
+        "Shui": 1,
+        "Syre": 1,
+        "Syrn": 3,
+        "Tulu": 1
+      },
+      "normalized_data_sha256": "d03508b100844ae0bf35ef48ee803dea00670eaca2089c8fe2f03261683803bf",
+      "resolved_url": "https://raw.githubusercontent.com/google-research/url-nlp/main/linguameta/linguameta.tsv",
+      "sha256": "dfd9e3c05be012ecdb42852fa9fd198649a8f61e4dde3927c3d78c770c57ad07",
+      "snapshot_note": "Country/script associations are taken from LinguaMeta writing_systems and locales. They may be incomplete and do not imply exclusive script ownership by a country."
     },
-    "records": 2331,
-    "normalized_data_sha256": "aa4f08876e4ff29df909475d61403b19e4180cc4ecb88b96ce35cd8cbb53ad52"
+    "wikidata": {
+      "name": "Wikidata language, writing-system and country relationships",
+      "queries": [
+        {
+          "country_language_source_property": "P37",
+          "query_endpoint": "https://query.wikidata.org/sparql",
+          "query": "SELECT DISTINCT\n  ?countryCode2 ?countryCode3 ?countryLabel\n  ?countryLanguageProperty\n  ?language ?languageLabel ?languageCode\n  ?script ?scriptLabel ?scriptDescription ?scriptCode\nWHERE {\n  ?country wdt:P297 ?countryCode2.\n  OPTIONAL { ?country wdt:P298 ?countryCode3. }\n  { ?country wdt:P37 ?language. BIND(\"P37\" AS ?countryLanguageProperty) }\n  ?language wdt:P282 ?script.\n  OPTIONAL { ?script wdt:P506 ?scriptCode. }\n  OPTIONAL { ?script schema:description ?scriptDescription. FILTER(LANG(?scriptDescription) = \"en\") }\n  OPTIONAL { ?language wdt:P220 ?languageCode. }\n  SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". }\n}\nLIMIT 10000",
+          "final_url": "https://query.wikidata.org/sparql",
+          "rows_returned": 952,
+          "valid_relationship_rows": 952
+        },
+        {
+          "country_language_source_property": "P2936",
+          "query_endpoint": "https://query.wikidata.org/sparql",
+          "query": "SELECT DISTINCT\n  ?countryCode2 ?countryCode3 ?countryLabel\n  ?countryLanguageProperty\n  ?language ?languageLabel ?languageCode\n  ?script ?scriptLabel ?scriptDescription ?scriptCode\nWHERE {\n  ?country wdt:P297 ?countryCode2.\n  OPTIONAL { ?country wdt:P298 ?countryCode3. }\n  { ?country wdt:P2936 ?language. BIND(\"P2936\" AS ?countryLanguageProperty) }\n  ?language wdt:P282 ?script.\n  OPTIONAL { ?script wdt:P506 ?scriptCode. }\n  OPTIONAL { ?script schema:description ?scriptDescription. FILTER(LANG(?scriptDescription) = \"en\") }\n  OPTIONAL { ?language wdt:P220 ?languageCode. }\n  SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". }\n}\nLIMIT 10000",
+          "final_url": "https://query.wikidata.org/sparql",
+          "rows_returned": 3558,
+          "valid_relationship_rows": 3558
+        },
+        {
+          "country_language_source_property": "P17-language-country",
+          "query_endpoint": "https://query.wikidata.org/sparql",
+          "query": "SELECT DISTINCT\n  ?countryCode2 ?countryCode3 ?countryLabel\n  ?countryLanguageProperty\n  ?language ?languageLabel ?languageCode\n  ?script ?scriptLabel ?scriptDescription ?scriptCode\nWHERE {\n  ?country wdt:P297 ?countryCode2.\n  OPTIONAL { ?country wdt:P298 ?countryCode3. }\n  { ?language wdt:P17 ?country. BIND(\"P17-language-country\" AS ?countryLanguageProperty) }\n  ?language wdt:P282 ?script.\n  OPTIONAL { ?script wdt:P506 ?scriptCode. }\n  OPTIONAL { ?script schema:description ?scriptDescription. FILTER(LANG(?scriptDescription) = \"en\") }\n  OPTIONAL { ?language wdt:P220 ?languageCode. }\n  SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". }\n}\nLIMIT 10000",
+          "records": 0,
+          "error": "Could not download https://query.wikidata.org/sparql?query=SELECT+DISTINCT%0A++%3FcountryCode2+%3FcountryCode3+%3FcountryLabel%0A++%3FcountryLanguageProperty%0A++%3Flanguage+%3FlanguageLabel+%3FlanguageCode%0A++%3Fscript+%3FscriptLabel+%3FscriptDescription+%3FscriptCode%0AWHERE+%7B%0A++%3Fcountry+wdt%3AP297+%3FcountryCode2.%0A++OPTIONAL+%7B+%3Fcountry+wdt%3AP298+%3FcountryCode3.+%7D%0A++%7B+%3Flanguage+wdt%3AP17+%3Fcountry.+BIND%28%22P17-language-country%22+AS+%3FcountryLanguageProperty%29+%7D%0A++%3Flanguage+wdt%3AP282+%3Fscript.%0A++OPTIONAL+%7B+%3Fscript+wdt%3AP506+%3FscriptCode.+%7D%0A++OPTIONAL+%7B+%3Fscript+schema%3Adescription+%3FscriptDescription.+FILTER%28LANG%28%3FscriptDescription%29+%3D+%22en%22%29+%7D%0A++OPTIONAL+%7B+%3Flanguage+wdt%3AP220+%3FlanguageCode.+%7D%0A++SERVICE+wikibase%3Alabel+%7B+bd%3AserviceParam+wikibase%3Alanguage+%22en%22.+%7D%0A%7D%0ALIMIT+10000&format=json: The read operation timed out"
+        }
+      ],
+      "license": "CC0 1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "properties": {
+        "P2936": "language used in a place",
+        "P37": "official language",
+        "P17-language-country": "country statement on a language item",
+        "P282": "writing system used by a language",
+        "P506": "ISO 15924 script code",
+        "schema:description": "English public description used when a writing-system label is absent",
+        "P297": "ISO 3166-1 alpha-2 country code",
+        "P298": "ISO 3166-1 alpha-3 country code",
+        "P220": "ISO 639-3 language code"
+      },
+      "raw_rows_across_queries": 4510,
+      "successful_query_routes": 2,
+      "failed_query_routes": 1,
+      "records": 3736,
+      "normalized_data_sha256": "8ec5b65dac24eac5bed063ecf61a9930d4849f82c85849f6d469789112da0485"
+    },
+    "merge_rule": "Country-language-script links from LinguaMeta and Wikidata are combined; source URL, license, properties, and script-code resolution are retained per record."
   },
   "country_code_crosswalk": {
     "name": "Wikidata ISO country-code crosswalk",
@@ -66,17 +134,23 @@
     "unicode_blocks": 353,
     "practice_letter_and_mark_codepoints": 160752,
     "practice_other_printable_codepoints": 11867,
-    "country_count": 232,
-    "language_count": 1132,
-    "wikidata_relationship_count": 2331,
-    "matched_relationship_count": 2307,
-    "unmatched_relationship_count": 24
+    "country_count": 254,
+    "language_count": 7647,
+    "relationship_input_count": 11815,
+    "linguameta_relationship_count": 8079,
+    "wikidata_relationship_count": 3736,
+    "matched_relationship_count": 10629,
+    "unmatched_relationship_count": 1186
   },
   "notes": [
     "Generated from public source datasets; no country/script links are manually inferred.",
+    "LinguaMeta supplies per-language writing_systems and locales under CC BY 4.0; its required attribution is recorded in source_manifest.json.",
+    "Wikidata P2936, P37, and language-item P17 routes enrich the LinguaMeta country-language-script snapshot where available.",
+    "A language may be used in several countries and several writing systems; country associations are not exclusive ownership claims.",
     "Unicode blocks are codepoint ranges, not synonyms for writing systems or languages.",
     "Script-to-block relationships are derived from Unicode Script and ScriptExtensions data.",
-    "A missing Wikidata relationship does not prove a script is absent from a country or language.",
+    "When Wikidata omits ISO 15924 P506, a unique normalized public English script label may be matched to a Unicode Script name; the resolution is recorded in data/script_relationships.json.",
+    "A missing source relationship does not prove a script is absent from a country or language.",
     "Script font family values are best-effort Noto Sans family names; font availability varies.",
     "The data builder uses only Python's standard library."
   ]
