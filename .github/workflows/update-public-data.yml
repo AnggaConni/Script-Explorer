@@ -119,6 +119,8 @@ jobs:
           assert practice_blocks.get("basic_latin", {}).get("letters") == list(range(0x41, 0x5B)) + list(range(0x61, 0x7B)), "Basic Latin practice deck must include A-Z and a-z"
           assert Path("data/UNICODE-LICENSE.txt").is_file(), "Unicode license notice is missing"
           assert manifest.get("unicode_source", {}).get("files"), "Unicode source checksums are missing"
+          assert manifest.get("relationship_sources", {}).get("linguameta", {}).get("attribution") == "Google Research LinguaMeta", "LinguaMeta attribution is missing"
+          assert manifest.get("counts", {}).get("linguameta_relationship_count", 0) > 0, "No LinguaMeta country/script links were generated"
           print(f"Validated {len(definitions)} blocks, {len(countries)} countries, {len(crosswalk)} ISO codes, and {len(languages['languages'])} languages.")
           PY
 
