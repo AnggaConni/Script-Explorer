@@ -46,6 +46,15 @@ class DatasetBuilderTests(unittest.TestCase):
         self.assertEqual(entries[0x41], ("Lu", "LATIN CAPITAL LETTER A"))
         self.assertEqual(entries[0x3401], ("Lo", "CJK Ideograph-3401"))
 
+    def test_wikidata_query_uses_multiple_country_language_sources(self):
+        query = build.wikidata_query()
+        self.assertIn("wdt:P2936", query)
+        self.assertIn("wdt:P37", query)
+        self.assertIn("wdt:P17", query)
+        self.assertIn("wdt:P282", query)
+        self.assertIn("wdt:P506", query)
+        self.assertIn("LIMIT 50000", query)
+
     def test_practice_index_separates_letters_from_other_printables(self):
         definitions = {
             "basic_latin": {"range": "0020-0042"},
