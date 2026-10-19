@@ -413,22 +413,28 @@
             });
 
         // --- CORE FUNCTIONALITY ---
-        function getScriptData(iso2Code) {
+        function getScriptData(countryCode) {
             const debugArea = document.getElementById('statusArea');
             const countries = GLOBAL_SCRIPT_DB.countries || {};
             const definitions = GLOBAL_SCRIPT_DB.definitions || {};
+            const code = String(countryCode || '').trim().toUpperCase();
+            const iso3ToIso2 = GLOBAL_SCRIPT_DB.iso3_to_iso2 || {};
 
-            // Dataset keys use ISO 3166-1 alpha-2 because the public data builder
-            // generates country relationships from Wikidata P297.
-            if (Object.prototype.hasOwnProperty.call(countries, iso2Code)) {
+            // Accept either GeoJSON ISO-3 (e.g. RUS) or ISO-2 (e.g. RU).
+            // The generated country dataset is keyed by ISO-3166-1 alpha-2.
+            const iso2Code = Object.prototype.hasOwnProperty.call(countries, code)
+                ? code
+                : (iso3ToIso2[code] || '');
+
+            if (iso2Code && Object.prototype.hasOwnProperty.call(countries, iso2Code)) {
                 const scriptIds = countries[iso2Code];
                 const data = scriptIds.map(id => definitions[id]).filter(Boolean);
-                debugArea.textContent = `Loaded ${iso2Code}: ${data.length} Unicode blocks with sourced script links`;
+                debugArea.textContent = `Loaded ${iso2Code} (${code}): ${data.length} Unicode blocks with sourced script links`;
                 return data;
             }
 
-            // Do not label a country with a guessed Latin fallback when source data is absent.
-            debugArea.textContent = `No sourced script relationship currently available for ${iso2Code}`;
+            // Do not label a country with a guessed Latin fallback when public source data is absent.
+            debugArea.textContent = `No sourced script relationship currently available for ${code || 'this country'}`;
             return [];
         }
 
@@ -442,7 +448,7 @@
             document.getElementById('countryCode').innerText = iso2 ? `${iso2} (${iso3})` : `${iso3} (ISO-2 unavailable)`;
             document.getElementById('infoPanel').classList.add('open');
             
-            const scripts = getScriptData(iso2);
+            const scripts = getScriptData(iso2 || iso3);
             renderScripts(scripts, name);
         }
 
