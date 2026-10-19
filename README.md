@@ -2,13 +2,16 @@
 
 An interactive, global explorer for Unicode writing-system blocks and publicly sourced language/script relationships.
 
-Live app: https://anggaconni.github.io/Script-Explorer/
+Live app: https://anggaconni.github.io/Script-Explorer/  
+Writing Practice Studio: https://anggaconni.github.io/Script-Explorer/writing-practice.html
 
 ## What it does
 
 - Explore Unicode blocks and sample characters.
 - View country-to-script/block relationships backed by public structured data.
 - Browse generated metadata and public-data source records.
+- Open the Writing Practice Studio in a new tab with the selected block's name, code, range, sample character, and font passed from the explorer.
+- Practise with mouse, touch, or stylus using a trace guide, undo/clear, pen controls, and PNG export.
 - Keep the browser app static and lightweight: no private API keys or application server are required.
 
 ## Automated public-data pipeline
@@ -27,6 +30,10 @@ The generated files are **not intended to be edited manually**. The Python build
    - Structured data license: CC0 1.0, https://creativecommons.org/publicdomain/zero/1.0/
 
 The pipeline uses the Python standard library only. Source datasets are fetched at run time; no source data needs to be pasted into a notebook.
+
+### Writing Practice Studio
+
+Each script/block card has a **Practice Writing / Latihan Menulis** button. It opens `writing-practice.html` in a separate tab and passes the selected metadata through URL parameters, without a backend. The canvas uses Pointer Events for mouse, touchscreen, and stylus input. Users can change the guide character/text, toggle the faint guide, undo the last stroke, clear the canvas, adjust ink and pen size, and export the canvas as a PNG image. The drawing stays in the browser unless the user exports it; no drawing data is uploaded.
 
 ### Generated files
 
