@@ -46,7 +46,7 @@
       "P220": "ISO 639-3 language code"
     },
     "records": 2331,
-    "normalized_data_sha256": "0f7b163539a7aa606e925ba7862425f2e9d7961bd63931e65d780d4699dbd9e8"
+    "normalized_data_sha256": "aa4f08876e4ff29df909475d61403b19e4180cc4ecb88b96ce35cd8cbb53ad52"
   },
   "country_code_crosswalk": {
     "name": "Wikidata ISO country-code crosswalk",
@@ -64,6 +64,8 @@
   },
   "counts": {
     "unicode_blocks": 353,
+    "practice_letter_and_mark_codepoints": 160752,
+    "practice_other_printable_codepoints": 11867,
     "country_count": 232,
     "language_count": 1132,
     "wikidata_relationship_count": 2331,
