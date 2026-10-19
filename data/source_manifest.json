@@ -1,0 +1,65 @@
+{
+  "generated_by": "scripts/build_datasets.py",
+  "unicode_version": "18.0.0",
+  "unicode_source": {
+    "name": "Unicode Character Database (UCD)",
+    "base_url": "https://www.unicode.org/Public/18.0.0/ucd",
+    "license": "Unicode License v3",
+    "license_url": "https://www.unicode.org/license.txt",
+    "files": {
+      "Blocks.txt": {
+        "url": "https://www.unicode.org/Public/18.0.0/ucd/Blocks.txt",
+        "sha256": "a58f8d322f3c5e254f9f97b1cbf76a454a7e02de6ac35619a5e4f27aaabfd553"
+      },
+      "Scripts.txt": {
+        "url": "https://www.unicode.org/Public/18.0.0/ucd/Scripts.txt",
+        "sha256": "0071fd81b6aeae25f6e8bce8efec3066a6476a91b49bdb2f52dc76e817862a6a"
+      },
+      "ScriptExtensions.txt": {
+        "url": "https://www.unicode.org/Public/18.0.0/ucd/ScriptExtensions.txt",
+        "sha256": "5c9d34a922f687726f2a8bcf57d49f905987e51f1b21b58c95a00fbe255cec23"
+      },
+      "UnicodeData.txt": {
+        "url": "https://www.unicode.org/Public/18.0.0/ucd/UnicodeData.txt",
+        "sha256": "0736451de439ae7baf1425136617da495e09ee5afbe6e394374db7009ea08950"
+      },
+      "PropertyValueAliases.txt": {
+        "url": "https://www.unicode.org/Public/18.0.0/ucd/PropertyValueAliases.txt",
+        "sha256": "06c4c8eaf7b0bf34abe73b113da1215bd784ac254d4c223600b90267caa4bbbd"
+      }
+    }
+  },
+  "relationship_source": {
+    "name": "Wikidata language, writing-system and country relationships",
+    "query_endpoint": "https://query.wikidata.org/sparql",
+    "query": "SELECT DISTINCT\n  ?countryCode2 ?countryCode3 ?countryLabel\n  ?language ?languageLabel ?languageCode\n  ?script ?scriptLabel ?scriptCode\nWHERE {\n  ?country wdt:P297 ?countryCode2;\n           wdt:P2936 ?language.\n  OPTIONAL { ?country wdt:P298 ?countryCode3. }\n  ?language wdt:P282 ?script.\n  ?script wdt:P506 ?scriptCode.\n  OPTIONAL { ?language wdt:P220 ?languageCode. }\n  SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". }\n}\nLIMIT 20000",
+    "final_url": "https://query.wikidata.org/sparql",
+    "license": "CC0 1.0",
+    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "properties": {
+      "P2936": "language used in a place",
+      "P282": "writing system used by a language",
+      "P506": "ISO 15924 script code",
+      "P297": "ISO 3166-1 alpha-2 country code",
+      "P298": "ISO 3166-1 alpha-3 country code",
+      "P220": "ISO 639-3 language code"
+    },
+    "records": 2331
+  },
+  "counts": {
+    "unicode_blocks": 353,
+    "country_count": 232,
+    "language_count": 1132,
+    "wikidata_relationship_count": 2331,
+    "matched_relationship_count": 2307,
+    "unmatched_relationship_count": 24
+  },
+  "notes": [
+    "Generated from public source datasets; no country/script links are manually inferred.",
+    "Unicode blocks are codepoint ranges, not synonyms for writing systems or languages.",
+    "Script-to-block relationships are derived from Unicode Script and ScriptExtensions data.",
+    "A missing Wikidata relationship does not prove a script is absent from a country or language.",
+    "Script font family values are best-effort Noto Sans family names; font availability varies.",
+    "The data builder uses only Python's standard library."
+  ]
+}
