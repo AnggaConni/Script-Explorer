@@ -542,7 +542,7 @@ def fetch_wikidata_relationships() -> tuple[list[dict[str, str]], dict[str, obje
             "All Wikidata routes failed or returned no valid language/script/country relationships; "
             "existing published datasets were left untouched."
         )
-    successful_routes = sum(1 for item in query_runs if "error" not in item and item.get("records", 0) > 0)
+    successful_routes = sum(1 for item in query_runs if "error" not in item and item.get("rows_returned", 0) > 0)
     if successful_routes == 0:
         raise RuntimeError("No Wikidata country/language route returned any usable records.")
 
