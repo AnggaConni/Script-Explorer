@@ -962,7 +962,22 @@ def main() -> int:
             }
 
         relationships = linguameta_relationships + wikidata_relationships
-        iso3_to_iso2, country_code_manifest = fetch_country_code_crosswalk()
+        try:
+            iso3_to_iso2, country_code_manifest = fetch_country_code_crosswalk()
+        except (RuntimeError, ValueError, json.JSONDecodeError) as exc:
+            iso3_to_iso2 = {
+                row["country_iso3"]: row["country_iso2"]
+                for row in relationships
+                if re.fullmatch(r"[A-Z]{3}", row.get("country_iso3", ""))
+                and re.fullmatch(r"[A-Z]{2}", row.get("country_iso2", ""))
+            }
+            country_code_manifest = {
+                "name": "ISO 3166 alpha-3 to alpha-2 crosswalk",
+                "source": "Relationship source fallback",
+                "license": "CC BY 4.0 / CC0 1.0 according to relation provenance",
+                "warning": str(exc),
+                "records": len(iso3_to_iso2),
+            }
         iso2_to_iso3 = {iso2: iso3 for iso3, iso2 in iso3_to_iso2.items()}
         for relationship in relationships:
             if not relationship.get("country_iso3"):
@@ -983,11 +998,11 @@ def main() -> int:
                 "source": "Unicode Character Database (UCD)",
                 "source_url": f"https://www.unicode.org/Public/{unicode_version}/ucd/",
                 "generated_by": "scripts/build_datasets.py",
-                "country_mapping_source": "Wikidata SPARQL (country P2936/P37 or language P17 → language P282 → script P506; country code P297)",
+                "country_mapping_source": "Google Research LinguaMeta writing_systems + locales, supplemented by Wikidata SPARQL",
                 "country_mapping_note": (
-                    "Mappings are evidence-backed links from public Wikidata statements and Unicode "
-                    "Script properties. They are incomplete where source statements are missing; "
-                    "they must not be interpreted as exclusive geographic ownership of a script."
+                    "Mappings combine public LinguaMeta country/language/script associations with Wikidata statements "
+                    "and Unicode Script properties. Coverage is source-dependent and links must not be "
+                    "interpreted as exclusive geographic ownership of a script."
                 ),
                 "licenses": {
                     "unicode": "Unicode License v3; retain attribution and license notice",
@@ -1020,7 +1035,7 @@ def main() -> int:
                 "license_sha256": hashlib.sha256(unicode_license_text.encode("utf-8")).hexdigest(),
                 "files": ucd_sources,
             },
-            "relationship_source": wikidata_manifest,
+            "relationship_source": {"primary": "Google Research LinguaMeta", "supplemental": "Wikidata SPARQL"},
             "relationship_sources": {
                 "linguameta": linguameta_manifest,
                 "wikidata": wikidata_manifest,
@@ -1044,7 +1059,7 @@ def main() -> int:
                 "Unicode blocks are codepoint ranges, not synonyms for writing systems or languages.",
                 "Script-to-block relationships are derived from Unicode Script and ScriptExtensions data.",
                 "When Wikidata omits ISO 15924 P506, a unique normalized public English script label may be matched to a Unicode Script name; the resolution is recorded in data/script_relationships.json.",
-                "A missing Wikidata relationship does not prove a script is absent from a country or language.",
+                "A missing source relationship does not prove a script is absent from a country or language.",
                 "Script font family values are best-effort Noto Sans family names; font availability varies.",
                 "The data builder uses only Python's standard library.",
             ],
