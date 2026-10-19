@@ -328,6 +328,72 @@ def build_definitions(
     return definitions
 
 
+def build_practice_character_index(
+    definitions: dict[str, dict[str, object]],
+    character_data: dict[int, tuple[str, str]],
+    unicode_version: str,
+) -> dict[str, object]:
+    """Build block-scoped character decks from the same UCD version as the app.
+
+    The compact index stores codepoints only. The browser reconstructs glyphs with
+    String.fromCodePoint, so the generated file stays small and is not tied to fonts.
+    """
+    blocks: dict[str, dict[str, list[int]]] = {}
+    letter_count = 0
+    other_count = 0
+
+    for block_id, definition in definitions.items():
+        range_text = str(definition.get("range", ""))
+        match = re.fullmatch(r"([0-9A-Fa-f]+)-([0-9A-Fa-f]+)", range_text)
+        if not match:
+            raise ValueError(f"Invalid range for practice index block {block_id}: {range_text}")
+        first, last = int(match.group(1), 16), int(match.group(2), 16)
+        letters_and_marks: list[int] = []
+        other_printable: list[int] = []
+
+        for codepoint in range(first, last + 1):
+            record = character_data.get(codepoint)
+            if record is None:
+                continue
+            category, _name = record
+            # L/M are useful for alphabet-like practice. N/P/S make up the
+            # additional printable set. C/Z categories are deliberately excluded.
+            if category.startswith(("L", "M")):
+                letters_and_marks.append(codepoint)
+            elif category.startswith(("N", "P", "S")):
+                other_printable.append(codepoint)
+
+        blocks[block_id] = {
+            "letters": letters_and_marks,
+            "other_printable": other_printable,
+        }
+        letter_count += len(letters_and_marks)
+        other_count += len(other_printable)
+
+    if not blocks:
+        raise ValueError("Practice character index contains no Unicode blocks.")
+
+    return {
+        "metadata": {
+            "dataset": "Unicode block character practice index",
+            "unicode_version": unicode_version,
+            "source": "Unicode Character Database (UCD) UnicodeData.txt",
+            "source_url": f"https://www.unicode.org/Public/{unicode_version}/ucd/UnicodeData.txt",
+            "license": "Unicode License v3",
+            "license_url": "https://www.unicode.org/license.txt",
+            "block_count": len(blocks),
+            "letter_and_mark_codepoints": letter_count,
+            "other_printable_codepoints": other_count,
+            "category_note": (
+                "Letters and marks are listed separately from numbers, punctuation, and symbols. "
+                "Unassigned codepoints, controls, format characters, private-use codepoints, "
+                "surrogates, and separators are not included as standalone writing targets."
+            ),
+        },
+        "blocks": blocks,
+    }
+
+
 def wikidata_query() -> str:
     # Country -> language used (P2936) -> writing system (P282) -> ISO 15924 (P506).
     # Values remain explicitly source-attributed; absent relationships are not guessed.
@@ -609,6 +675,9 @@ def main() -> int:
         definitions = build_definitions(
             blocks, script_ranges, extension_ranges, name_to_code, code_to_name, character_data
         )
+        practice_character_index = build_practice_character_index(
+            definitions, character_data, unicode_version
+        )
 
         relationships, wikidata_manifest = fetch_wikidata_relationships()
         iso3_to_iso2, country_code_manifest = fetch_country_code_crosswalk()
@@ -664,6 +733,8 @@ def main() -> int:
             "country_code_crosswalk": country_code_manifest,
             "counts": {
                 "unicode_blocks": len(definitions),
+                "practice_letter_and_mark_codepoints": practice_character_index["metadata"]["letter_and_mark_codepoints"],
+                "practice_other_printable_codepoints": practice_character_index["metadata"]["other_printable_codepoints"],
                 **stats,
             },
             "notes": [
@@ -677,6 +748,7 @@ def main() -> int:
         }
 
         write_json(output_dir / "aksara.json", aksara_payload)
+        write_json(output_dir / "data" / "practice_character_index.json", practice_character_index)
         license_path = output_dir / "data" / "UNICODE-LICENSE.txt"
         license_path.parent.mkdir(parents=True, exist_ok=True)
         license_path.write_text(unicode_license_text.rstrip() + "\n", encoding="utf-8")
@@ -689,7 +761,15 @@ def main() -> int:
         print(f"Countries with sourced script/block links: {stats['country_count']}")
         print(f"Languages linked in Wikidata results: {stats['language_count']}")
         print(f"Public relationships matched to Unicode blocks: {stats['matched_relationship_count']}")
-        print("Generated: aksara.json, data/languages.json, data/script_relationships.json, data/source_manifest.json")
+        print(
+            "Generated: aksara.json, data/languages.json, data/script_relationships.json, "
+            "data/source_manifest.json, data/practice_character_index.json"
+        )
+        print(
+            "Practice codepoints: "
+            f"{practice_character_index['metadata']['letter_and_mark_codepoints']} letters/marks, "
+            f"{practice_character_index['metadata']['other_printable_codepoints']} other printable"
+        )
         return 0
     except Exception as exc:  # noqa: BLE001 - print actionable message in CI as well.
         print(f"ERROR: dataset generation failed: {exc}", file=sys.stderr)
