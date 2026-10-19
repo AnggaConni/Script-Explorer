@@ -383,28 +383,6 @@
         const FALLBACK_LATIN = [{ code: "Latn", name_en: "Latin (System)", name_id: "Latin (Sistem)", unicode: true, range: "0020-007F", ver: "1.0", font: "Noto+Sans", sample: "Abcde" }];
 
         // ISO-3 to ISO-2 conversion mapping (comprehensive)
-        const ISO3_TO_ISO2 = {
-            'AFG': 'AF', 'ARE': 'AE', 'ARM': 'AM', 'AUS': 'AU', 'BGD': 'BD', 
-            'BGR': 'BG', 'BHR': 'BH', 'BRA': 'BR', 'CAN': 'CA', 'CHN': 'CN',
-            'CYP': 'CY', 'DEU': 'DE', 'DZA': 'DZ', 'EGY': 'EG', 'ERI': 'ER',
-            'ESP': 'ES', 'ETH': 'ET', 'FRA': 'FR', 'GBR': 'GB', 'GEO': 'GE',
-            'GRC': 'GR', 'IDN': 'ID', 'IND': 'IN', 'IRN': 'IR', 'IRQ': 'IQ',
-            'ISR': 'IL', 'ITA': 'IT', 'JOR': 'JO', 'JPN': 'JP', 'KAZ': 'KZ',
-            'KGZ': 'KG', 'KHM': 'KH', 'KOR': 'KR', 'KWT': 'KW', 'LAO': 'LA',
-            'LBN': 'LB', 'LBY': 'LY', 'LKA': 'LK', 'MAR': 'MA', 'MDV': 'MV',
-            'MKD': 'MK', 'MMR': 'MM', 'MNG': 'MN', 'MYS': 'MY', 'NPL': 'NP',
-            'NZL': 'NZ', 'OMN': 'OM', 'PAK': 'PK', 'PHL': 'PH', 'PRK': 'KP',
-            'QAT': 'QA', 'RUS': 'RU', 'SAU': 'SA', 'SDN': 'SD', 'SGP': 'SG',
-            'SRB': 'RS', 'SYR': 'SY', 'THA': 'TH', 'TJK': 'TJ', 'TUN': 'TN',
-            'TUR': 'TR', 'TWN': 'TW', 'UKR': 'UA', 'USA': 'US', 'UZB': 'UZ',
-            'VNM': 'VN', 'XXX': 'XX', 'YEM': 'YE'
-        };
-
-        // Reverse mapping for lookups
-        const ISO2_TO_ISO3 = Object.fromEntries(
-            Object.entries(ISO3_TO_ISO2).map(([k, v]) => [v, k])
-        );
-
         // --- LANDING PAGE ---
         function enterApp() {
             const landing = document.getElementById('landing-page');
@@ -425,8 +403,8 @@
                     style: { fillColor: '#E6DFD3', weight: 1, opacity: 1, color: '#B0A99F', fillOpacity: 1 },
                     onEachFeature: (f, l) => {
                         l.on('click', (e) => {
-                            const iso3 = f.id; // GeoJSON uses ISO-3
-                            const iso2 = ISO3_TO_ISO2[iso3] || iso3.substring(0, 2).toUpperCase();
+                            const iso3 = String(f.id || '').toUpperCase(); // GeoJSON uses ISO-3
+                            const iso2 = (GLOBAL_SCRIPT_DB.iso3_to_iso2 || {})[iso3] || '';
                             openCountry(iso3, iso2, f.properties.name);
                             L.DomEvent.stopPropagation(e);
                         });
@@ -461,7 +439,7 @@
                 return;
             }
             document.getElementById('countryName').innerText = name;
-            document.getElementById('countryCode').innerText = `${iso2} (${iso3})`;
+            document.getElementById('countryCode').innerText = iso2 ? `${iso2} (${iso3})` : `${iso3} (ISO-2 unavailable)`;
             document.getElementById('infoPanel').classList.add('open');
             
             const scripts = getScriptData(iso2);
