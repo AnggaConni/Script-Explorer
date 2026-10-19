@@ -453,7 +453,7 @@
 
             if (iso2Code && Object.prototype.hasOwnProperty.call(countries, iso2Code)) {
                 const scriptIds = countries[iso2Code];
-                const data = scriptIds.map(id => definitions[id]).filter(Boolean);
+                const data = scriptIds.map(id => definitions[id] ? { ...definitions[id], _block_id: id } : null).filter(Boolean);
                 debugArea.textContent = `Loaded ${iso2Code} (${code}): ${data.length} Unicode blocks with sourced script links`;
                 return data;
             }
@@ -538,6 +538,7 @@
         function openWritingPractice(script, fontFamily) {
             const params = new URLSearchParams({
                 name: script.name_en || 'Writing practice',
+                block: script._block_id || '',
                 code: script.code || '',
                 range: script.range || '',
                 sample: script.sample || '',
