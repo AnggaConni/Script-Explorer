@@ -1,0 +1,61 @@
+name: Refresh public datasets
+
+on:
+  workflow_dispatch:
+    inputs:
+      unicode_version:
+        description: "Use latest stable UCD, or pin an exact version such as 18.0.0"
+        required: true
+        default: "latest"
+        type: string
+  schedule:
+    # Monthly check; the generated output is committed only when data changes.
+    - cron: "17 4 1 * *"
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/**"
+      - "tests/**"
+      - ".github/workflows/update-public-data.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-public-datasets
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    name: Build and validate datasets
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Run offline tests
+        run: python -m unittest discover -s tests -v
+
+      - name: Build datasets from public sources
+        env:
+          UNICODE_VERSION: ${{ github.event.inputs.unicode_version || 'latest' }}
+        run: python scripts/build_datasets.py --unicode-version "$UNICODE_VERSION"
+
+      - name: Commit changes only when generated data changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add aksara.json data/languages.json data/script_relationships.json data/source_manifest.json
+          if git diff --cached --quiet; then
+            echo "Generated datasets are unchanged; nothing to commit."
+          else
+            git commit -m "chore(data): refresh Unicode and public relationships"
+            git push
+          fi
