@@ -64,6 +64,7 @@ jobs:
           assert "Accept either GeoJSON ISO-3 (e.g. RUS) or ISO-2 (e.g. RU)." in index_html, "Country lookup must accept ISO-2 and ISO-3 codes"
           assert "getScriptData(iso2 || iso3)" in index_html, "Country panel must fall back to the ISO-3 code when needed"
           assert "openWritingPractice(script, fontFamily)" in index_html, "Writing practice button must pass selected script metadata"
+          assert "block: script._block_id ||" in index_html, "Writing practice must receive a source block identifier"
           practice_html = Path("writing-practice.html").read_text(encoding="utf-8")
           for required in ("writingCanvas", "pointerdown", "pointermove", "Save PNG", "targetInput",
                            "sequenceMode", "characterPicker", "prevCharacterBtn", "nextCharacterBtn",
@@ -92,6 +93,7 @@ jobs:
           manifest = json.loads(Path("data/source_manifest.json").read_text(encoding="utf-8"))
           languages = json.loads(Path("data/languages.json").read_text(encoding="utf-8"))
           relationships = json.loads(Path("data/script_relationships.json").read_text(encoding="utf-8"))
+          practice_index = json.loads(Path("data/practice_character_index.json").read_text(encoding="utf-8"))
 
           definitions = app.get("definitions", {})
           countries = app.get("countries", {})
@@ -104,6 +106,10 @@ jobs:
           assert all(block_id in definitions for ids in countries.values() for block_id in ids), "Country mapping references an absent block"
           assert languages.get("languages"), "Language dataset is empty"
           assert relationships.get("relationships"), "Script relationship dataset is empty"
+          practice_blocks = practice_index.get("blocks", {})
+          assert practice_index.get("metadata", {}).get("unicode_version") == app.get("metadata", {}).get("unicode_version"), "Practice index UCD version must match the app dataset"
+          assert len(practice_blocks) == len(definitions), "Practice index must include every Unicode block"
+          assert practice_blocks.get("basic_latin", {}).get("letters") == list(range(0x41, 0x5B)) + list(range(0x61, 0x7B)), "Basic Latin practice deck must include A-Z and a-z"
           assert Path("data/UNICODE-LICENSE.txt").is_file(), "Unicode license notice is missing"
           assert manifest.get("unicode_source", {}).get("files"), "Unicode source checksums are missing"
           print(f"Validated {len(definitions)} blocks, {len(countries)} countries, {len(crosswalk)} ISO codes, and {len(languages['languages'])} languages.")
