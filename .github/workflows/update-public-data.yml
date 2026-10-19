@@ -19,6 +19,7 @@ on:
       - "tests/**"
       - "index.html"
       - "writing-practice.html"
+      - "favicon.svg"
       - ".github/workflows/update-public-data.yml"
 
 permissions:
