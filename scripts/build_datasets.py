@@ -7,7 +7,9 @@ from __future__ import annotations
 
 import argparse
 import collections
+import csv
 import hashlib
+import io
 import json
 import re
 import sys
@@ -22,6 +24,8 @@ REPO_URL = "https://github.com/AnggaConni/Script-Explorer"
 UNICODE_LATEST_BASE = "https://www.unicode.org/Public/UCD/latest/ucd"
 UNICODE_LICENSE_URL = "https://www.unicode.org/license.txt"
 WIKIDATA_ENDPOINT = "https://query.wikidata.org/sparql"
+LINGUAMETA_TSV_URL = "https://raw.githubusercontent.com/google-research/url-nlp/main/linguameta/linguameta.tsv"
+LINGUAMETA_LICENSE_URL = "https://creativecommons.org/licenses/by/4.0/"
 USER_AGENT = "WorldScriptExplorerDataPipeline/1.0 (public dataset build; " + REPO_URL + ")"
 UCD_FILES = (
     "Blocks.txt",
@@ -400,6 +404,134 @@ def build_practice_character_index(
     }
 
 
+def parse_linguameta_tsv(
+    text: str,
+    code_to_name: dict[str, str],
+) -> tuple[list[dict[str, str]], dict[str, object]]:
+    """Parse the public LinguaMeta TSV into country/language/script relations.
+
+    LinguaMeta provides language writing systems and country locales in a single
+    downloadable snapshot, which avoids relying solely on high-latency SPARQL joins.
+    The upstream dataset is CC BY 4.0 and is attributed in the manifest.
+    """
+    reader = csv.DictReader(io.StringIO(text), delimiter="\\t")
+    required = {"iso_639_3_code", "english_name", "writing_systems", "locales"}
+    if not reader.fieldnames or not required.issubset(set(reader.fieldnames)):
+        raise ValueError("LinguaMeta TSV is missing required columns: " + ", ".join(sorted(required)))
+
+    script_code_lookup = {str(code).casefold(): str(code) for code in code_to_name}
+    relation_map: dict[tuple[str, str, str], dict[str, str]] = {}
+    language_count: set[str] = set()
+    country_count: set[str] = set()
+    unknown_script_codes: collections.Counter[str] = collections.Counter()
+    input_rows = 0
+
+    for row in reader:
+        input_rows += 1
+        language_code = str(row.get("iso_639_3_code", "")).strip().lower()
+        language_name = str(row.get("english_name", "")).strip()
+        if not re.fullmatch(r"[a-z]{3}", language_code) or not language_name:
+            continue
+
+        country_codes = {
+            token.strip().upper()
+            for token in str(row.get("locales", "")).split(",")
+            if re.fullmatch(r"[A-Za-z]{2}", token.strip())
+        }
+        script_tokens = [
+            token.strip()
+            for token in str(row.get("writing_systems", "")).split(",")
+            if token.strip()
+        ]
+        if not country_codes or not script_tokens:
+            continue
+
+        canonical_scripts: set[str] = set()
+        for script_token in script_tokens:
+            canonical = script_code_lookup.get(script_token.casefold())
+            if not canonical:
+                unknown_script_codes[script_token] += 1
+                continue
+            if canonical not in GENERIC_SCRIPT_CODES:
+                canonical_scripts.add(canonical)
+
+        if not canonical_scripts:
+            continue
+
+        language_count.add(language_code)
+        for country_code in sorted(country_codes):
+            country_count.add(country_code)
+            for script_code in sorted(canonical_scripts):
+                key = (country_code, language_code, script_code)
+                relation_map[key] = {
+                    "country_iso2": country_code,
+                    "country_iso3": "",
+                    "country_label_en": "",
+                    "language_id": language_code,
+                    "language_label_en": language_name,
+                    "language_iso639_3": language_code,
+                    "script_id": script_code,
+                    "script_label_en": code_to_name.get(script_code, script_code),
+                    "script_code": script_code,
+                    "country_source_property": "LinguaMeta locales",
+                    "country_language_source_properties": "LinguaMeta locales",
+                    "writing_system_source_property": "LinguaMeta writing_systems",
+                    "script_code_source_property": "LinguaMeta writing_systems",
+                    "source": "LinguaMeta",
+                    "source_url": LINGUAMETA_TSV_URL,
+                    "source_license": "CC BY 4.0",
+                    "source_attribution": "Google Research LinguaMeta",
+                }
+
+    relationships = sorted(
+        relation_map.values(),
+        key=lambda item: (item["country_iso2"], item["language_iso639_3"], item["script_code"]),
+    )
+    if not relationships:
+        raise ValueError("LinguaMeta TSV did not yield any country/language/script relationships.")
+
+    manifest = {
+        "name": "Google Research LinguaMeta language writing systems and locales",
+        "url": LINGUAMETA_TSV_URL,
+        "license": "CC BY 4.0",
+        "license_url": LINGUAMETA_LICENSE_URL,
+        "attribution": "Google Research LinguaMeta",
+        "fields": {
+            "iso_639_3_code": "language identifier",
+            "english_name": "English language label",
+            "writing_systems": "comma-separated ISO 15924 script codes",
+            "locales": "comma-separated ISO 3166-1 alpha-2 country codes",
+        },
+        "input_rows": input_rows,
+        "language_count": len(language_count),
+        "country_count": len(country_count),
+        "relationship_count": len(relationships),
+        "unknown_script_codes": dict(sorted(unknown_script_codes.items())),
+        "normalized_data_sha256": hashlib.sha256(
+            json.dumps(relationships, sort_keys=True, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+        ).hexdigest(),
+    }
+    return relationships, manifest
+
+
+def fetch_linguameta_relationships(
+    code_to_name: dict[str, str],
+) -> tuple[list[dict[str, str]], dict[str, object]]:
+    payload, final_url = fetch_text(
+        LINGUAMETA_TSV_URL,
+        headers={"Accept": "text/tab-separated-values, text/plain;q=0.9, */*;q=0.8"},
+        timeout=90,
+    )
+    relationships, manifest = parse_linguameta_tsv(payload, code_to_name)
+    manifest["resolved_url"] = final_url
+    manifest["sha256"] = hashlib.sha256(payload.encode("utf-8")).hexdigest()
+    manifest["snapshot_note"] = (
+        "Country/script associations are taken from LinguaMeta writing_systems and locales. "
+        "They may be incomplete and do not imply exclusive script ownership by a country."
+    )
+    return relationships, manifest
+
+
 def wikidata_query(source_property: str = "P2936") -> str:
     """Return one bounded query per country/language source route.
 
@@ -437,7 +569,9 @@ LIMIT 10000
 def fetch_wikidata_relationships() -> tuple[list[dict[str, str]], dict[str, object]]:
     # Prefer the compact official-language and language-country routes first.
     # The broad P2936 route is last because it has the largest public result set.
-    source_routes = ("P37", "P17-language-country", "P2936")
+    # LinguaMeta is the primary bulk source; Wikidata remains supplemental.
+    # Keep the slow language-item P17 route last.
+    source_routes = ("P37", "P2936", "P17-language-country")
     relationships: dict[tuple[str, str, str], dict[str, str]] = {}
     query_runs: list[dict[str, object]] = []
     raw_row_count = 0
@@ -449,7 +583,7 @@ def fetch_wikidata_relationships() -> tuple[list[dict[str, str]], dict[str, obje
             payload, final_url = fetch_text(
                 url,
                 headers={"Accept": "application/sparql-results+json"},
-                timeout=90,
+                timeout=30,
                 max_attempts=1,
             )
             response = json.loads(payload)
