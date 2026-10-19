@@ -418,6 +418,9 @@ def fetch_wikidata_relationships() -> tuple[list[dict[str, str]], dict[str, obje
             "P220": "ISO 639-3 language code",
         },
         "records": len(results),
+        "normalized_data_sha256": hashlib.sha256(
+            json.dumps(results, sort_keys=True, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+        ).hexdigest(),
     }
     return results, manifest
 
@@ -460,6 +463,9 @@ SELECT DISTINCT ?countryCode2 ?countryCode3 WHERE {
         "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
         "properties": {"P297": "ISO 3166-1 alpha-2", "P298": "ISO 3166-1 alpha-3"},
         "records": len(crosswalk),
+        "normalized_data_sha256": hashlib.sha256(
+            json.dumps(crosswalk, sort_keys=True, separators=(",", ":")).encode("utf-8")
+        ).hexdigest(),
     }
 
 
