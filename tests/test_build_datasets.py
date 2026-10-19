@@ -52,10 +52,10 @@ class DatasetBuilderTests(unittest.TestCase):
 
     def test_linguameta_relations_map_indonesian_scripts_from_public_tsv(self):
         sample = (
-            "bcp_47_code\\tiso_639_3_code\\tenglish_name\\twriting_systems\\tlocales\\n"
-            "jav\\tjav\\tJavanese\\tJava, Latn\\tID\\n"
-            "ban\\tban\\tBalinese\\tBali, Java, Latn\\tID\\n"
-            "sun\\tsun\\tSundanese\\tSund, Latn\\tID\\n"
+            "bcp_47_code\tiso_639_3_code\tenglish_name\twriting_systems\tlocales\n"
+            "jav\tjav\tJavanese\tJava, Latn\tID\n"
+            "ban\tban\tBalinese\tBali, Java, Latn\tID\n"
+            "sun\tsun\tSundanese\tSund, Latn\tID\n"
         )
         code_to_name = {"Java": "Javanese", "Latn": "Latin", "Bali": "Balinese", "Sund": "Sundanese"}
         relationships, manifest = build.parse_linguameta_tsv(sample, code_to_name)
