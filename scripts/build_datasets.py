@@ -425,7 +425,7 @@ WHERE {{
   OPTIONAL {{ ?country wdt:P298 ?countryCode3. }}
   {source_clauses[source_property]}
   ?language wdt:P282 ?script.
-  OPTIONAL { ?script wdt:P506 ?scriptCode. }
+  OPTIONAL {{ ?script wdt:P506 ?scriptCode. }}
   OPTIONAL {{ ?language wdt:P220 ?languageCode. }}
   SERVICE wikibase:label {{ bd:serviceParam wikibase:language "en". }}
 }}
