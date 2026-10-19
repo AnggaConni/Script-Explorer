@@ -26,8 +26,9 @@ permissions:
   contents: write
 
 concurrency:
+  # New commits supersede stale builds; failed/cancelled builds never publish partial datasets.
   group: refresh-public-datasets
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   refresh:
