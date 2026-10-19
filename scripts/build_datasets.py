@@ -414,7 +414,7 @@ def parse_linguameta_tsv(
     downloadable snapshot, which avoids relying solely on high-latency SPARQL joins.
     The upstream dataset is CC BY 4.0 and is attributed in the manifest.
     """
-    reader = csv.DictReader(io.StringIO(text), delimiter="\\t")
+    reader = csv.DictReader(io.StringIO(text), delimiter=chr(9))
     required = {"iso_639_3_code", "english_name", "writing_systems", "locales"}
     if not reader.fieldnames or not required.issubset(set(reader.fieldnames)):
         raise ValueError("LinguaMeta TSV is missing required columns: " + ", ".join(sorted(required)))
@@ -814,16 +814,22 @@ def build_public_datasets(
             matched_relationship["script_code_resolution"] = resolution
             matched_relationships.append(matched_relationship)
 
+        source_name = str(relationship.get("source", "Wikidata"))
+        source_url = str(relationship.get("source_url", ""))
         language = language_map.setdefault(language_id, {
             "id": language_id,
             "name_en": relationship["language_label_en"],
             "iso639_3": relationship["language_iso639_3"],
-            "wikidata_url": f"https://www.wikidata.org/wiki/{language_id}",
+            "wikidata_url": f"https://www.wikidata.org/wiki/{language_id}" if language_id.startswith("Q") else "",
+            "source_url": source_url,
             "script_codes": set(),
             "script_names": set(),
             "country_codes": set(),
-            "source": "Wikidata",
+            "sources": set(),
         })
+        language["sources"].add(source_name)
+        if source_url and not language.get("source_url"):
+            language["source_url"] = source_url
         if script_code:
             language["script_codes"].add(script_code)
             language["script_names"].add(script_label or script_code)
@@ -835,7 +841,7 @@ def build_public_datasets(
 
     if not countries:
         raise RuntimeError(
-            "No country-to-block relationships could be resolved from Wikidata ISO 15924 codes or unique public script labels. "
+            "No country-to-block relationships could be resolved from LinguaMeta or Wikidata public-source records. "
             "The existing published datasets were left untouched."
         )
 
@@ -851,6 +857,7 @@ def build_public_datasets(
             "script_codes": sorted(language["script_codes"]),
             "script_names": sorted(language["script_names"]),
             "country_codes": sorted(language["country_codes"]),
+            "sources": sorted(language["sources"]),
         })
     normalized_languages.sort(key=lambda item: (str(item["name_en"]).casefold(), str(item["id"])))
 
@@ -865,19 +872,21 @@ def build_public_datasets(
     normalized_code_map = dict(sorted(country_code_map.items()))
     relationship_payload = {
         "metadata": {
-            "dataset": "Wikidata language-writing-system-country relationships",
+            "dataset": "Global country-language-writing-system relationships",
             "unicode_version_for_block_linking": unicode_version,
-            "source": "Wikidata SPARQL",
-            "license": "CC0 1.0",
-            "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+            "sources": ["Google Research LinguaMeta", "Wikidata SPARQL"],
+            "source_licenses": {
+                "Google Research LinguaMeta": "CC BY 4.0",
+                "Wikidata SPARQL": "CC0 1.0",
+            },
             "matching_note": (
-                "A country-to-block link is generated when a Wikidata language/country relationship "
-                "provides an ISO 15924 code matching a Unicode Script property, or when the public "
-                "English script label uniquely matches a Unicode Script name after generic wording "
-                "is normalized. Resolution method is recorded for each relation. Ambiguous labels "
-                "are not guessed. Absence of a link is not evidence that a script is not used."
+                "LinguaMeta country locales and writing_systems are combined with public Wikidata "
+                "language/country/script relationships. Script codes are matched to Unicode Script "
+                "properties or, when a Wikidata code is missing, a unique normalized public English "
+                "script label. Source and resolution details are retained per relation. Missing links "
+                "are not evidence that a script is absent from a country."
             ),
-            "records_from_source": len(relationships),
+            "records_from_sources": len(relationships),
             "records_matched_to_unicode_blocks": len(matched_relationships),
             "records_without_block_match": unmatched,
         },
@@ -886,7 +895,9 @@ def build_public_datasets(
     stats = {
         "country_count": len(normalized_countries),
         "language_count": len(normalized_languages),
-        "wikidata_relationship_count": len(relationships),
+        "relationship_input_count": len(relationships),
+        "linguameta_relationship_count": sum(1 for item in relationships if item.get("source") == "LinguaMeta"),
+        "wikidata_relationship_count": sum(1 for item in relationships if item.get("source") == "Wikidata"),
         "matched_relationship_count": len(matched_relationships),
         "unmatched_relationship_count": unmatched,
     }
@@ -933,8 +944,30 @@ def main() -> int:
             definitions, character_data, unicode_version
         )
 
-        relationships, wikidata_manifest = fetch_wikidata_relationships()
+        linguameta_relationships, linguameta_manifest = fetch_linguameta_relationships(code_to_name)
+        try:
+            wikidata_relationships, wikidata_manifest = fetch_wikidata_relationships()
+        except (RuntimeError, ValueError, json.JSONDecodeError) as exc:
+            print(
+                f"WARNING: all Wikidata relationship routes unavailable; continuing with LinguaMeta: {exc}",
+                file=sys.stderr,
+            )
+            wikidata_relationships = []
+            wikidata_manifest = {
+                "name": "Wikidata language, writing-system and country relationships",
+                "license": "CC0 1.0",
+                "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+                "error": str(exc),
+                "records": 0,
+            }
+
+        relationships = linguameta_relationships + wikidata_relationships
         iso3_to_iso2, country_code_manifest = fetch_country_code_crosswalk()
+        iso2_to_iso3 = {iso2: iso3 for iso3, iso2 in iso3_to_iso2.items()}
+        for relationship in relationships:
+            if not relationship.get("country_iso3"):
+                relationship["country_iso3"] = iso2_to_iso3.get(relationship["country_iso2"], "")
+
         countries, languages, relationship_result = build_public_datasets(
             definitions, relationships, unicode_version, iso3_to_iso2
         )
@@ -959,15 +992,19 @@ def main() -> int:
                 "licenses": {
                     "unicode": "Unicode License v3; retain attribution and license notice",
                     "wikidata": "CC0 1.0",
+                    "linguameta": "CC BY 4.0; attribute Google Research LinguaMeta",
                 },
             },
         }
         languages_payload = {
             "metadata": {
                 "dataset": "Languages linked to public writing-system records",
-                "source": "Wikidata SPARQL",
-                "license": "CC0 1.0",
-                "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+                "sources": ["Google Research LinguaMeta", "Wikidata SPARQL"],
+                "licenses": {
+                    "linguameta": "CC BY 4.0",
+                    "wikidata": "CC0 1.0",
+                },
+                "attribution": "Google Research LinguaMeta; Wikidata contributors",
                 "count": len(languages),
             },
             "languages": languages,
@@ -984,6 +1021,14 @@ def main() -> int:
                 "files": ucd_sources,
             },
             "relationship_source": wikidata_manifest,
+            "relationship_sources": {
+                "linguameta": linguameta_manifest,
+                "wikidata": wikidata_manifest,
+                "merge_rule": (
+                    "Country-language-script links from LinguaMeta and Wikidata are combined; "
+                    "source URL, license, properties, and script-code resolution are retained per record."
+                ),
+            },
             "country_code_crosswalk": country_code_manifest,
             "counts": {
                 "unicode_blocks": len(definitions),
@@ -993,7 +1038,8 @@ def main() -> int:
             },
             "notes": [
                 "Generated from public source datasets; no country/script links are manually inferred.",
-                "Country/language associations combine Wikidata P2936, P37, and language-item P17 statements, with source properties preserved per relation.",
+                "LinguaMeta supplies per-language writing_systems and locales under CC BY 4.0; its required attribution is recorded in source_manifest.json.",
+                "Wikidata P2936, P37, and language-item P17 routes enrich the LinguaMeta country-language-script snapshot where available.",
                 "A language may be used in several countries and several writing systems; country associations are not exclusive ownership claims.",
                 "Unicode blocks are codepoint ranges, not synonyms for writing systems or languages.",
                 "Script-to-block relationships are derived from Unicode Script and ScriptExtensions data.",
@@ -1016,7 +1062,9 @@ def main() -> int:
         print(f"Unicode UCD version: {unicode_version}")
         print(f"Unicode blocks generated: {len(definitions)}")
         print(f"Countries with sourced script/block links: {stats['country_count']}")
-        print(f"Languages linked in Wikidata results: {stats['language_count']}")
+        print(f"Languages linked from public sources: {stats['language_count']}")
+        print(f"LinguaMeta relationships matched: {stats['linguameta_relationship_count']}")
+        print(f"Wikidata relationships matched: {stats['wikidata_relationship_count']}")
         print(f"Public relationships matched to Unicode blocks: {stats['matched_relationship_count']}")
         print(
             "Generated: aksara.json, data/languages.json, data/script_relationships.json, "
