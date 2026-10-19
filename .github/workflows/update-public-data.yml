@@ -18,6 +18,7 @@ on:
       - "scripts/**"
       - "tests/**"
       - "index.html"
+      - "writing-practice.html"
       - ".github/workflows/update-public-data.yml"
 
 permissions:
@@ -48,18 +49,26 @@ jobs:
           import re
           from pathlib import Path
 
-          html = Path("index.html").read_text(encoding="utf-8")
-          scripts = re.findall(r"<script\b[^>]*>(.*?)</script\s*>", html, flags=re.I | re.S)
-          inline = "\n".join(script for script in scripts if script.strip())
-          if not inline:
-              raise SystemExit("No inline JavaScript block was found in index.html")
-          output = Path(os.environ["RUNNER_TEMP"]) / "index-inline.js"
-          output.write_text(inline, encoding="utf-8")
-          assert "Accept either GeoJSON ISO-3 (e.g. RUS) or ISO-2 (e.g. RU)." in html, "Country lookup must accept ISO-2 and ISO-3 codes"
-          assert "getScriptData(iso2 || iso3)" in html, "Country panel must fall back to the ISO-3 code when needed"
-          print(f"Extracted inline JavaScript to {output}")
+          html_pages = ("index.html", "writing-practice.html")
+          for filename in html_pages:
+              html = Path(filename).read_text(encoding="utf-8")
+              scripts = re.findall(r"<script\b[^>]*>(.*?)</script\s*>", html, flags=re.I | re.S)
+              inline = "\n".join(script for script in scripts if script.strip())
+              if not inline:
+                  raise SystemExit(f"No inline JavaScript block was found in {filename}")
+              output = Path(os.environ["RUNNER_TEMP"]) / filename.replace(".html", "-inline.js")
+              output.write_text(inline, encoding="utf-8")
+              print(f"Extracted inline JavaScript from {filename} to {output}")
+          index_html = Path("index.html").read_text(encoding="utf-8")
+          assert "Accept either GeoJSON ISO-3 (e.g. RUS) or ISO-2 (e.g. RU)." in index_html, "Country lookup must accept ISO-2 and ISO-3 codes"
+          assert "getScriptData(iso2 || iso3)" in index_html, "Country panel must fall back to the ISO-3 code when needed"
+          assert "openWritingPractice(script, fontFamily)" in index_html, "Writing practice button must pass selected script metadata"
+          practice_html = Path("writing-practice.html").read_text(encoding="utf-8")
+          for required in ("writingCanvas", "pointerdown", "pointermove", "Save PNG", "targetInput"):
+              assert required in practice_html, f"Writing practice page is missing {required}"
           PY
           node --check "$RUNNER_TEMP/index-inline.js"
+          node --check "$RUNNER_TEMP/writing-practice-inline.js"
 
       - name: Run offline tests
         run: python -m unittest discover -s tests -v
