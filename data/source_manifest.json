@@ -6,6 +6,7 @@
     "base_url": "https://www.unicode.org/Public/18.0.0/ucd",
     "license": "Unicode License v3",
     "license_url": "https://www.unicode.org/license.txt",
+    "license_sha256": "e7a93b009565cfce55919a381437ac4db883e9da2126fa28b91d12732bc53d96",
     "files": {
       "Blocks.txt": {
         "url": "https://www.unicode.org/Public/18.0.0/ucd/Blocks.txt",
@@ -45,6 +46,19 @@
       "P220": "ISO 639-3 language code"
     },
     "records": 2331
+  },
+  "country_code_crosswalk": {
+    "name": "Wikidata ISO country-code crosswalk",
+    "query_endpoint": "https://query.wikidata.org/sparql",
+    "query": "SELECT DISTINCT ?countryCode2 ?countryCode3 WHERE {\n  ?country wdt:P297 ?countryCode2;\n           wdt:P298 ?countryCode3.\n}",
+    "final_url": "https://query.wikidata.org/sparql",
+    "license": "CC0 1.0",
+    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "properties": {
+      "P297": "ISO 3166-1 alpha-2",
+      "P298": "ISO 3166-1 alpha-3"
+    },
+    "records": 255
   },
   "counts": {
     "unicode_blocks": 353,
