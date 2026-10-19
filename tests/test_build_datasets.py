@@ -46,6 +46,10 @@ class DatasetBuilderTests(unittest.TestCase):
         self.assertEqual(entries[0x41], ("Lu", "LATIN CAPITAL LETTER A"))
         self.assertEqual(entries[0x3401], ("Lo", "CJK Ideograph-3401"))
 
+    def test_public_script_label_normalization(self):
+        self.assertEqual(build.normalize_script_label("Javanese script"), "javanese")
+        self.assertEqual(build.normalize_script_label("Kawi writing system"), "kawi")
+
     def test_wikidata_queries_cover_multiple_country_language_sources(self):
         query_p2936 = build.wikidata_query("P2936")
         query_p37 = build.wikidata_query("P37")
