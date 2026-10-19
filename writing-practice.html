@@ -257,7 +257,7 @@
       const scriptRange = (params.get('range') || '—').slice(0, 40);
       const fontRaw = (params.get('font') || 'Noto Sans').slice(0, 120).replace(/\+/g, ' ');
       const sampleParam = params.get('sample') || '';
-      const rangeMatch = scriptRange.match(/^([0-9A-F]{1,6})\\s*-\\s*([0-9A-F]{1,6})$/i);
+      const rangeMatch = scriptRange.match(/^([0-9A-F]{1,6})\s*-\s*([0-9A-F]{1,6})$/i);
       const codepointRange = rangeMatch
         ? { start: parseInt(rangeMatch[1], 16), end: parseInt(rangeMatch[2], 16) }
         : null;
@@ -265,8 +265,8 @@
         const cp = char.codePointAt(0);
         return cp > 0x20 && !(cp >= 0x7F && cp <= 0x9F);
       });
-      const letterOrMark = /[\\p{L}\\p{M}]/u;
-      const nonPrintableCategory = /[\\p{C}\\p{Z}]/u;
+      const letterOrMark = /[\p{L}\p{M}]/u;
+      const nonPrintableCategory = /[\p{C}\p{Z}]/u;
       const pickerPageSize = 96;
       let deckMode = 'letters';
       let characterDeck = [];
