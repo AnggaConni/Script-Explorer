@@ -30,7 +30,7 @@ The generated files are **not intended to be edited manually**. The Python build
    - Terms: https://www.unicode.org/license.txt
 2. **Wikidata SPARQL** — publicly available structured statements relating countries, languages, writing systems, and ISO 15924 script codes.
    - Endpoint: https://query.wikidata.org/
-   - Query relationships: country language used (P2936) → language writing system (P282) → script ISO 15924 code (P506); country ISO alpha-2 (P297) / alpha-3 (P298) and language ISO 639-3 (P220) where available.
+   - Query relationships from three public routes: country language-used statements (P2936), country official-language statements (P37), and country statements on language items (P17), then language writing system (P282) → script ISO 15924 code (P506). Country ISO alpha-2 (P297) / alpha-3 (P298) and language ISO 639-3 (P220) are retained where available.
    - Structured data license: CC0 1.0, https://creativecommons.org/publicdomain/zero/1.0/
 
 The pipeline uses the Python standard library only. Source datasets are fetched at run time; no source data needs to be pasted into a notebook.
@@ -82,7 +82,7 @@ The ISO alpha-3 to alpha-2 crosswalk is also generated from Wikidata, so the map
 
 - A Unicode **block is not the same thing as a writing system, language, ethnicity, or country**. The app displays blocks because that is the granularity of its character explorer.
 - Script-to-block links are derived from UCD Scripts.txt and ScriptExtensions.txt.
-- Country mappings are generated only when public Wikidata statements provide a country/language/script relationship with a matching ISO 15924 script code. No missing relationship is filled by guessing.
+- Country mappings are generated from public Wikidata country/language/script relationships using P2936, P37, and language-item P17 links, matched to ISO 15924 script codes. The source-property path is retained in generated relationships. These links can still be incomplete or uneven across countries; no missing relationship is filled by guessing.
 - A missing country/script result is **not evidence** that a script is not used in that place. Public catalogues can be incomplete or inconsistent.
 - Wikidata records are not a substitute for community validation or specialist linguistic review. Use them as discoverable references, not authoritative claims about cultural ownership.
 - Font family names are best-effort Noto Sans family suggestions. Fonts may be unavailable for some historical or less-supported scripts.
